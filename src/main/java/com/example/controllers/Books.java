@@ -11,7 +11,15 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/books")
-public class PopularPageController {
+public class Books {
+
+    @GetMapping("/recent")
+    public String recentPage(Model model){
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        return "recent";
+    }
+
+
     @GetMapping("/popular")
     public String popularPage(Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
