@@ -35,11 +35,7 @@ public class MultiController {
         return "/signin/signin";
     }
 
-    @GetMapping("/documents")
-    public String documentsPage(Model model){
-        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-        return "/documents/index";
-    }
+
 
     @GetMapping("/about")
     public String aboutPage(Model model){

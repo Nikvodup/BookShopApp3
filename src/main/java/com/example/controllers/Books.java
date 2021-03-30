@@ -31,4 +31,11 @@ public class Books {
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         return "/books/slug";
     }
+
+    @GetMapping("/author")
+    public String authorPage(Model model){
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        return "/books/author";
+    }
+
 }
