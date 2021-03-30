@@ -16,13 +16,19 @@ public class Books {
     @GetMapping("/recent")
     public String recentPage(Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-        return "recent";
+        return "/books/recent";
     }
 
 
     @GetMapping("/popular")
     public String popularPage(Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-        return "popular";
+        return "/books/popular";
+    }
+
+    @GetMapping("/slug")
+    public String slugPage(Model model){
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        return "/books/slug";
     }
 }
