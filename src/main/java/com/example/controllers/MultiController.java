@@ -49,4 +49,10 @@ public class MultiController {
         return "signup";
     }
 
+    @GetMapping("/tags")
+    public String indexPage(Model model){
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        return "/tags/index";
+    }
+
 }
