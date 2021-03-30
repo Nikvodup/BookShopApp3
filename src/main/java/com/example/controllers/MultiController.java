@@ -47,5 +47,10 @@ public class MultiController {
         return "about";
     }
 
+    @GetMapping("/signup")
+    public String signupPage(Model model){
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        return "signup";
+    }
 
 }
