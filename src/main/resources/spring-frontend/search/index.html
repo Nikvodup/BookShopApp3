@@ -27,13 +27,13 @@
   <div class="Middle Middle_search">
     <div class="wrap">
       <main class="Middle-main">
-        <h1 class="Middle-title">Поиск
+        <h1 class="Middle-title" th:text="#{searchbutton}">Поиск
         </h1>
         <div class="Section">
           <div class="search">
             <form class="form form_search" action="#" method="post" data-searchlimit="20">
               <input class="search-input" id="querypage" name="querypage" type="text" placeholder="Search over 30 million book titles" value="Техника"/>
-              <button class="search-button" type="submit" name="searchpage" id="searchpage">Поиск
+              <button class="search-button" type="submit" name="searchpage" id="searchpage" th:text="#{searchbutton}">Поиск
               </button>
             </form>
           </div>

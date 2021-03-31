@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <title>Тут название страницы написать</title>
   <meta name="description" content="Описание страницы">
@@ -14,11 +15,10 @@
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
   <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/fonts.min.css?v=09585989">
-  <link rel="stylesheet" href="/assets/css/basic.min.css?v=09585989">
-  <link rel="stylesheet" href="/assets/css/extra.min.css?v=09585989"><!--[if lt IE 9]>
+  <link rel="stylesheet" href="/assets/css/fonts.min.css?v=64223515">
+  <link rel="stylesheet" href="/assets/css/basic.min.css?v=64223515">
+  <link rel="stylesheet" href="/assets/css/extra.min.css?v=64223515"><!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
   <script type="javascript">
@@ -26,15 +26,16 @@
       $("#locales").change(function (){
         var selectedOption=$("#locales").val();
         if(selectedOption!='') {
-          window.location.replace('?lang' + selectedOption);
+          window.location.replace('?lang' + selectedOption)
         }
       });
     });
   </script>
 
 
-  <script defer src="/assets/js/scripts.min.js?v=09585989"></script>
+  <script defer src="/assets/js/scripts.min.js?v=64223515"></script>
 </head>
+
 <body class="Site">
 
 
@@ -53,7 +54,7 @@
         </ul>
         <div class="Section">
           <div class="Section-header">
-            <h1 class="Section-title">Новинки
+            <h1 class="Section-title" th:text="#{recent}">Новинки
             </h1>
             <form class="form form_inline Section-header-form" action="#" method="post">
               <div class="form-group">
