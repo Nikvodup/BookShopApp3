@@ -48,12 +48,27 @@
                     <li class="menu-item"><a class="menu-link" href="/contacts/contacts.html" th:href="@{/contacts}" th:text="#{bottombar.contacts}">Контакты</a>
                     </li>
                     <li>
+                        <div>
+                            <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
+                            <script type="javascript">
+                                $(document).ready(function (){
+                                    $("#locales").change(function (){
+                                        var selectedOption=$("#locales").val();
+                                        if(selectedOption!='') {
+                                            window.location.replace('?lang' + selectedOption);
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+                        <div>
                         <span>Выбор языка</span>
                         <select id="locales">
                             <option value=" "> </option>
                             <option value="en">English</option>
                             <option value="ru">Русский</option>
                         </select>
+                        </div>
                     </li>
                 </ul>
             </div>

@@ -30,15 +30,19 @@ public class AuthorsController {
         return authorService.getAuthorsMap();
     }
 
+    @ModelAttribute("serverTime")
+    public String  date(){
+        return new SimpleDateFormat("hh:mm:ss").format(new Date());
+    }
+
+
     @GetMapping("")
-    public String authorsPage(Model model){
-        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+    public String authorsPage(){
         return "/authors/index";
     }
 
     @GetMapping("/slug")
-    public String slugPage(Model model){
-        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+    public String slugPage(){
         return "/authors/slug";
     }
 
