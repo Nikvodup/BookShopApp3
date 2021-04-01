@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-<header class="Header" th:fragment="popularFragment">
+<header class="Header" th:fragment="topmenuFragment(currentPage)">
     <div class="Header-rowMain">
         <div class="wrap">
             <div class="row">
                 <div class="row-block Header-logo"><a class="logo" href="/"><img class="logo-image"
                                                                                  src="/assets/img/logo.png"
                                                                                  alt="logo.png"/><span
-                        class="logo-text"th:text="'BOOKSHOP [FRAGMENT]' + ${#locale}" >BOOKSHOP </span></a>
+                        class="logo-text" th:text="'BOOKSHOP [FRAGMENT]' + ${#locale}">BOOKSHOP </span></a>
                 </div>
                 <div class="Header-searchWrap row-block">
                     <div class="Header-searchLink">
@@ -26,7 +26,7 @@
                             <form class="form form_search" action="#" method="post" data-searchlimit="20">
                                 <input class="search-input" id="query" name="query" type="text"
                                        placeholder="Search over 30 million book titles"  th:placeholder="${serverTime}" value=""/>
-                                <button class="search-button" type="submit" name="search" id="search" th:text="#{searchbutton}">Поиск
+                                <button class="search-button" type="submit" name="search" id="search"  th:text="#{searchbutton}">Поиск
                                 </button>
                             </form>
                         </div>
@@ -78,17 +78,19 @@
         <div class="wrap">
             <nav class="menuModal" id="navigate">
                 <ul class="menu menu_main">
-                    <li class="menu-item "><a class="menu-link" href="/" th:href="@{/}" th:text="#{topbar.main}">Главная</a>
+                    <li class="menu-item" th:classappend="${#strings.equals(currentPage, 'Main')} ? 'menu-item_ACTIVE'"> <a class="menu-link" th:href="@{/}" th:text="#{topbar.main}">Главная</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="/genres" th:href="@{/genres}"  th:text="#{topbar.genres}">Жанры</a>
+
+                    <li class="menu-item" th:classappend="${#strings.equals(currentPage, 'Genres')} ? 'menu-item_ACTIVE'"> <a class="menu-link" th:href="@{/genres}" th:text="#{topbar.genres}">Жанры</a>
                     </li>
-                    <li class="menu-item"><a class="menu-link" href="/books/recent"  th:href="@{/books/recent}"  th:text="#{topbar.news}">Новинки</a>
+
+                    <li class="menu-item" th:classappend="${#strings.equals(currentPage, 'Recent')} ? 'menu-item_ACTIVE'"> <a class="menu-link" th:href="@{/books/recent}" th:text="#{topbar.news}">Новинки</a>
                     </li>
-                    <li class="menu-item menu-item_ACTIVE"><a class="menu-link" href="/books/popular"  th:href="@{/books/popular}" th:text="#{topbar.popular}">Популярное</a>
+
+                    <li class="menu-item" th:classappend="${#strings.equals(currentPage, 'Popular')} ? 'menu-item_ACTIVE'"> <a class="menu-link" th:href="@{/books/popular}" th:text="#{topbar.popular}">Популярное</a>
                     </li>
-                    <li class="menu-item "><a class="menu-link" href="/authors/index.html"
-                                              th:href="@{/authors}"  th:text="#{topbar.authors}">
-                        Авторы</a>
+
+                    <li class="menu-item" th:classappend="${#strings.equals(currentPage, 'Authors')} ? 'menu-item_ACTIVE'"><a class="menu-link" href="/authors/index.html" th:href="@{/authors}" th:text="#{topbar.authors}">Авторы</a>
                     </li>
                 </ul>
             </nav>
