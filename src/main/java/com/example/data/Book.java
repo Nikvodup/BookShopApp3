@@ -18,6 +18,8 @@ public class Book {
     private String title;
     private String priceOld;
     private String price;
+    private String review;
+    private String description;
 
     public Integer getId() {
         return id;

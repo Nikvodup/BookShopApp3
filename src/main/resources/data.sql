@@ -1,31 +1,47 @@
-insert into authors (id, first_name, last_name) values (1, 'Tommi', 'Ripper');
-insert into authors (id, first_name, last_name) values (2, 'Carroll', 'Postians');
-insert into authors (id, first_name, last_name) values (3, 'Delmore', 'Kohnert');
-insert into authors (id, first_name, last_name) values (4, 'Drona', 'O''Shiel');
-insert into authors (id, first_name, last_name) values (5, 'Libbie', 'Epilet');
-insert into authors (id, first_name, last_name) values (6, 'Gilli', 'Jantot');
-insert into authors (id, first_name, last_name) values (7, 'Leonanie', 'Arblaster');
-insert into authors (id, first_name, last_name) values (8, 'Danni', 'Keyson');
-insert into authors (id, first_name, last_name) values (9, 'Petra', 'Gillson');
-insert into authors (id, first_name, last_name) values (10, 'Charlena', 'Jammes');
-insert into authors (id, first_name, last_name) values (11, 'Milly', 'Beardsdale');
-insert into authors (id, first_name, last_name) values (12, 'Frederic', 'McCaw');
-insert into authors (id, first_name, last_name) values (13, 'Westleigh', 'Willgoss');
-insert into authors (id, first_name, last_name) values (14, 'Franz', 'Dickings');
-insert into authors (id, first_name, last_name) values (15, 'Shelly', 'MacCahey');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (1, 'Margaret', 'Berndtssen', '30.10.2020', '9.2.2021', false, 'ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (2, 'Valera', 'Delort', '6.3.2021', '10.12.2020', true, 'pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (3, 'Wanids', 'Offa', '8.3.2021', '2.9.2020', false, 'dapibus duis at velit eu est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (4, 'Tobye', 'Merton', '2.10.2020', '2.9.2020', false, 'sodales scelerisque mauris sit amet eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas metus');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (5, 'Nobe', 'Snary', '18.8.2020', '28.8.2020', false, 'felis fusce posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (6, 'Jane', 'Peerless', '20.5.2020', '5.8.2020', true, 'mattis pulvinar nulla pede ullamcorper augue a suscipit nulla elit');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (7, 'Madlin', 'Wyness', '1.11.2020', '24.2.2021', true, 'posuere felis sed lacus morbi sem mauris laoreet ut rhoncus aliquet pulvinar');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (8, 'Milzie', 'Byng', '3.5.2020', '1.2.2021', true, 'et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis dis');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (9, 'Derron', 'Storror', '13.2.2021', '12.8.2020', false, 'proin risus praesent lectus vestibulum quam sapien varius ut blandit non interdum in ante vestibulum ante ipsum primis');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (10, 'Delmore', 'Chislett', '9.1.2021', '9.8.2020', false, 'nulla neque libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (11, 'Elvis', 'Gowthrop', '17.4.2020', '16.10.2020', false, 'nulla quisque arcu libero rutrum ac lobortis vel dapibus at diam');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (12, 'Jacinthe', 'Titmuss', '16.3.2021', '12.5.2020', false, 'a libero nam dui proin leo odio porttitor id consequat in');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (13, 'Natal', 'Erb', '26.11.2020', '26.2.2021', false, 'ac neque duis bibendum morbi non quam nec dui luctus');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (14, 'Bancroft', 'Montes', '21.5.2020', '9.6.2020', true, 'maecenas pulvinar lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (15, 'Ana', 'Canaan', '16.3.2021', '14.11.2020', true, 'leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (16, 'Titus', 'Poytress', '16.2.2021', '19.11.2020', false, 'eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (17, 'Brent', 'Escot', '11.2.2021', '27.12.2020', false, 'placerat praesent blandit nam nulla integer pede justo lacinia eget');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (18, 'Irving', 'Roote', '7.1.2021', '21.8.2020', false, 'neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (19, 'Hyman', 'Turfes', '13.9.2020', '10.12.2020', true, 'nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in');
+insert into authors (id, first_name, last_name, birth_date, death_date, alive, biography) values (20, 'Kalindi', 'Hake', '6.1.2021', '18.2.2021', false, 'duis aliquam convallis nunc proin at turpis a pede posuere nonummy integer non velit donec diam neque');
 
-insert into books (id, price, price_old, title, author_id) values (1, 4263, 7873, 'Geba', 97);
-insert into books (id, price, price_old, title, author_id) values (2, 2012, 3820, 'Browsecat', 29);
-insert into books (id, price, price_old, title, author_id) values (3, 2876, 4866, 'Skalith', 50);
-insert into books (id, price, price_old, title, author_id) values (4, 2316, 9266, 'Flipstorm', 31);
-insert into books (id, price, price_old, title, author_id) values (5, 2195, 6852, 'Wikizz', 77);
-insert into books (id, price, price_old, title, author_id) values (6, 1747, 9458, 'Mymm', 4);
-insert into books (id, price, price_old, title, author_id) values (7, 2873, 6714, 'Gigaclub', 41);
-insert into books (id, price, price_old, title, author_id) values (8, 3333, 9787, 'Thoughtstorm', 39);
-insert into books (id, price, price_old, title, author_id) values (9, 3147, 3406, 'Voonte', 8);
-insert into books (id, price, price_old, title, author_id) values (10, 832, 9061, 'Avavee', 60);
-insert into books (id, price, price_old, title, author_id) values (11, 1761, 7270, 'Kwideo', 37);
-insert into books (id, price, price_old, title, author_id) values (12, 4996, 2505, 'Feedspan', 10);
-insert into books (id, price, price_old, title, author_id) values (13, 3492, 3519, 'Wordware', 35);
-insert into books (id, price, price_old, title, author_id) values (14, 1769, 1235, 'Ainyx', 85);
-insert into books (id, price, price_old, title, author_id) values (15, 3537, 4683, 'Vimbo', 58);
+
+
+
+
+insert into books (id, title, price, price_old, review, description, author_id) values (1, 'Dragon Ball Z: Cooler''s Revenge (Doragon bôru Z 5: Tobikkiri no saikyô tai saikyô)', 543, 4322, 'nam dui proin leo odio porttitor id consequat in consequat ut nulla sed accumsan felis ut at', 'libero quis orci nullam molestie nibh in lectus pellentesque at nulla suspendisse potenti cras', 1);
+insert into books (id, title, price, price_old, review, description, author_id) values (2, 'Hans Christian Andersen', 766, 4937, 'id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum', 'tortor duis mattis egestas metus aenean fermentum donec ut mauris eget massa tempor convallis nulla', 2);
+insert into books (id, title, price, price_old, review, description, author_id) values (3, 'I Travel Alone', 743, 2938, 'justo etiam pretium iaculis justo in hac habitasse platea dictumst etiam faucibus cursus urna ut tellus', 'in felis donec semper sapien a libero nam dui proin leo odio porttitor id', 3);
+insert into books (id, title, price, price_old, review, description, author_id) values (4, 'Snipes', 780, 3916, 'quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus', 'integer a nibh in quis justo maecenas rhoncus aliquam lacus morbi quis tortor id nulla ultrices aliquet', 4);
+insert into books (id, title, price, price_old, review, description, author_id) values (5, 'Mommy', 923, 3720, 'non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet', 'eros elementum pellentesque quisque porta volutpat erat quisque erat eros', 5);
+insert into books (id, title, price, price_old, review, description, author_id) values (6, 'Hamoun', 872, 4176, 'sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam', 'in purus eu magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur', 6);
+insert into books (id, title, price, price_old, review, description, author_id) values (7, 'Alien Nation: The Udara Legacy', 637, 4207, 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam', 'turpis sed ante vivamus tortor duis mattis egestas metus aenean', 7);
+insert into books (id, title, price, price_old, review, description, author_id) values (8, 'Ichi', 750, 5089, 'sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et tempus', 'pellentesque ultrices mattis odio donec vitae nisi nam ultrices libero non mattis pulvinar nulla pede', 8);
+insert into books (id, title, price, price_old, review, description, author_id) values (9, 'Even Cowgirls Get the Blues', 549, 1387, 'elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget', 'diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum', 9);
+insert into books (id, title, price, price_old, review, description, author_id) values (10, 'Rules of Engagement', 775, 3042, 'congue elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum justo', 'nibh fusce lacus purus aliquet at feugiat non pretium quis lectus suspendisse potenti', 10);
+insert into books (id, title, price, price_old, review, description, author_id) values (11, 'Big Trouble', 569, 1202, 'nisl ut volutpat sapien arcu sed augue aliquam erat volutpat in congue etiam justo etiam pretium', 'massa quis augue luctus tincidunt nulla mollis molestie lorem quisque ut erat curabitur gravida nisi at nibh in hac habitasse', 11);
+insert into books (id, title, price, price_old, review, description, author_id) values (12, 'Pleasure of Being Robbed, The', 826, 1141, 'vel enim sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris', 'eu sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam turpis adipiscing', 12);
+insert into books (id, title, price, price_old, review, description, author_id) values (13, 'Sun, The (Solntse)', 971, 2975, 'curabitur gravida nisi at nibh in hac habitasse platea dictumst aliquam augue quam sollicitudin vitae consectetuer eget rutrum', 'posuere cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi', 13);
+insert into books (id, title, price, price_old, review, description, author_id) values (14, 'Swept from the Sea', 840, 3651, 'ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae donec pharetra magna vestibulum aliquet ultrices', 'venenatis non sodales sed tincidunt eu felis fusce posuere felis sed lacus morbi sem mauris laoreet ut', 14);
+insert into books (id, title, price, price_old, review, description, author_id) values (15, 'Kai Po Che!', 913, 3400, 'duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede', 'quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum', 15);
+insert into books (id, title, price, price_old, review, description, author_id) values (16, 'Pekka ja Pätkä salapoliiseina', 613, 2357, 'nullam orci pede venenatis non sodales sed tincidunt eu felis fusce posuere felis sed', 'lectus in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer', 16);
+insert into books (id, title, price, price_old, review, description, author_id) values (17, 'Lee Daniels'' The Butler', 810, 4606, 'aliquam quis turpis eget elit sodales scelerisque mauris sit amet eros suspendisse accumsan', 'amet cursus id turpis integer aliquet massa id lobortis convallis tortor risus dapibus augue vel accumsan', 17);
+insert into books (id, title, price, price_old, review, description, author_id) values (18, 'Bombardier', 550, 5037, 'quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere', 'purus aliquet at feugiat non pretium quis lectus suspendisse potenti in eleifend quam a odio in hac', 18);
+insert into books (id, title, price, price_old, review, description, author_id) values (19, 'Henry Kissinger: Secrets of a Superpower (Henry Kissinger - Geheimnisse einer Supermacht)', 651, 2188, 'nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit', 'praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras mi', 19);
+insert into books (id, title, price, price_old, review, description, author_id) values (20, '10 Years', 879, 1265, 'lacinia eget tincidunt eget tempus vel pede morbi porttitor lorem id ligula suspendisse ornare consequat lectus in', 'felis ut at dolor quis odio consequat varius integer ac leo', 20);
+
+

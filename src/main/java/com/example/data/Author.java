@@ -3,6 +3,7 @@ package com.example.data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,10 @@ public class Author {
     private Integer id;
     private String firstName;
     private String lastName;
+    private Date birthDate;
+    private Date deathDate;
+    private boolean alive;
+    private String biography;
 
     @OneToMany(mappedBy = "author")
     private List<Book> bookList = new ArrayList<>();
