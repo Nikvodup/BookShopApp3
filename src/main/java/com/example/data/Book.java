@@ -2,6 +2,7 @@ package com.example.data;
 
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "books")
@@ -11,15 +12,32 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "pub_date")
+    private Date pubDate;
+
+    @Column(name = "is_bestseller")
+    private Integer isBestseller;
+
+    private String title;
+    private String image;
+    private String slug;
+
+    @Column(columnDefinition = "Text")
+    private String description;
+
+    @Column(name = "price")
+    private Integer priceOld;
+
+    @Column(name = "discount")
+    private Double price;
+
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
 
-    private String title;
-    private String priceOld;
-    private String price;
-    private String review;
-    private String description;
+
+
+
 
     public Integer getId() {
         return id;
@@ -45,20 +63,60 @@ public class Book {
         this.title = title;
     }
 
-    public String getPriceOld() {
+    public Integer getPriceOld() {
         return priceOld;
     }
 
-    public void setPriceOld(String priceOld) {
+    public void setPriceOld(Integer priceOld) {
         this.priceOld = priceOld;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Date getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(Date pubDate) {
+        this.pubDate = pubDate;
+    }
+
+    public Integer getIsBestseller() {
+        return isBestseller;
+    }
+
+    public void setIsBestseller(Integer isBestseller) {
+        this.isBestseller = isBestseller;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
