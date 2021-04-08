@@ -1,5 +1,7 @@
 package com.example.data;
 
+
+
 public class SearchWordDto {
 
     private String example;
@@ -18,4 +20,5 @@ public class SearchWordDto {
         this.example = example;
     }
 }
+
 

@@ -23,7 +23,6 @@ public class BookService {
     }
 
     //NEW BOOK SEVICE METHODS
-
     public List<Book> getBooksByAuthor(String authorName){
         return bookRepository.findBooksByAuthorFirstNameContaining(authorName);
     }
@@ -57,5 +56,5 @@ public class BookService {
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBookByTitleContaining(searchWord,nextPage);
     }
-
 }
+
