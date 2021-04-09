@@ -1020,3 +1020,10 @@ insert into books (id, pub_date, is_bestseller, slug, title, image, description,
 insert into books (id, pub_date, is_bestseller, slug, title, image, description, price, discount, author_id) values (998, '2014/11/04', 0, 'book-nou-374', 'Redemption: For Robbing the Dead', 'http://dummyimage.com/724x363.png/5fa2dd/ffffff', 'Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem.', 341, 0.45, 18);
 insert into books (id, pub_date, is_bestseller, slug, title, image, description, price, discount, author_id) values (999, '2014/04/02', 0, 'book-mas-655', 'Misunderstood', 'http://dummyimage.com/785x363.png/dddddd/000000', 'Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', 383, 0.14, 10);
 insert into books (id, pub_date, is_bestseller, slug, title, image, description, price, discount, author_id) values (1000, '2013/01/04', 0, 'book-zjr-047', 'Thomas Crown Affair, The', 'http://dummyimage.com/275x387.png/5fa2dd/ffffff', 'In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus.', 371, 0.26, 5);
+
+
+insert into book_file (id, hash, type_id, path, book_id) values (1 , 'fsdl342ladads76432', 1, '/Sudden_Manhattan.pdf',  1);
+insert into book_file (id, hash, type_id, path, book_id) values (2 , 'asdl35436dads34235', 2, '/Sudden_Manhattan.epub', 1);
+insert into book_file (id, hash, type_id, path, book_id) values (3 , 'qwer342lafdss34123', 3, '/Sudden_Manhattan.fb2',  1);
+
+insert into book_file (id, hash, type_id, path, book_id) values (4 , 'hgfd342la543h34123', 1, '/Mysterious_Island.pdf', 2);

@@ -31,5 +31,12 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Book> getBooksWithMaxDiscount();
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
+
+      Book findBookBySlug(String slug);
+
+      Page findAll(Pageable pageable);
+
+    List<Book> findBooksBySlugIn(String[] slugs);
+
 }
 

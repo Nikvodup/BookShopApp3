@@ -26,12 +26,12 @@ public class Books {
         return "/books/popular";
     }
 
-    @GetMapping("/slug")
+ /**   @GetMapping("/slug")
     public String slugPage(Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         return "/books/slug";
     }
-
+  **/
     @GetMapping("/author")
     public String authorPage(Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));

@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -28,6 +30,11 @@ public class Book {
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonIgnore
     private Author author;
+
+    @JsonGetter("author")
+    public String authorsFullName(){
+        return author.toString();
+    }
 
     @Column(name = "is_bestseller")
     @ApiModelProperty("if isBestseller = 1 so the book is considered to be bestseller and  if 0 the book is not a " +
@@ -54,6 +61,26 @@ public class Book {
     @JsonProperty("discount")
     @ApiModelProperty("discount value for book")
     private Double price;
+
+    @JsonProperty
+    public Integer discountPrice(){
+        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round((price*priceOld)));
+        return discountedPriceInt;
+
+    }
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFileList = new ArrayList<>();
+
+    public List<BookFile> getBookFileList() {
+        return bookFileList;
+    }
+
+    public void setBookFileList(List<BookFile> bookFileList) {
+        this.bookFileList = bookFileList;
+    }
+
+
 
     public Date getPubDate() {
         return pubDate;
