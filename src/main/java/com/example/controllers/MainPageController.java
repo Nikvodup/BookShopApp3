@@ -60,7 +60,7 @@ public class MainPageController {
         if (searchWordDto != null) {
             model.addAttribute("searchWordDto", searchWordDto);
             model.addAttribute("searchResults",
-                    bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
+                    bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 10).getContent());
             return "/search/index";
         } else {
             throw new EmptySearchException("No search word entered!");

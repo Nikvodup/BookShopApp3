@@ -35,11 +35,12 @@ public class MultiController {
         return "faq";
     }
 
-    @GetMapping("/signin")
+ /**   @GetMapping("/signin")
     public String signinPage(){
 
         return "/signin";
     }
+  **/
 
 
 
@@ -49,11 +50,12 @@ public class MultiController {
         return "about";
     }
 
-    @GetMapping("/signup")
+ /**   @GetMapping("/signup")
     public String signupPage(){
 
         return "signup";
     }
+  **/
 
     @GetMapping("/tags")
     public String indexPage(){
