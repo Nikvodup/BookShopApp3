@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.security.ContactConfirmationResponse;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 public class AuthUserController {
     private final BookstoreUserRegister userRegister;
@@ -58,8 +61,12 @@ public class AuthUserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public  ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload){
-        return userRegister.login(payload);
-
+    public  ContactConfirmationResponse handleLogin(@RequestBody ContactConfirmationPayload payload,
+                                                    HttpServletResponse httpServletResponse){
+        ContactConfirmationResponse loginResponse = userRegister.jwtLogin(payload);
+        Cookie cookie = new Cookie("token",loginResponse.getResult());
+        httpServletResponse.addCookie(cookie);
+        return loginResponse;
     }
+
 }
