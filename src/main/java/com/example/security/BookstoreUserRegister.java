@@ -22,14 +22,17 @@ public class BookstoreUserRegister {
 
 
 
+
     @Autowired
     public BookstoreUserRegister(BookstoreUserRepository bookstoreUserRepository,
-                                 PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JWTUtil jwtUtil, BookstoreUserDetailsService bookstoreUserDetailsService) {
+                                 PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
+                                 JWTUtil jwtUtil, BookstoreUserDetailsService bookstoreUserDetailsService) {
         this.bookstoreUserRepository = bookstoreUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.bookstoreUserDetailsService = bookstoreUserDetailsService;
+
     }
 
     public void registerNewUser(RegistrationForm registrationForm) {
@@ -66,6 +69,12 @@ public class BookstoreUserRegister {
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult(jwtToken);
         return response;
+    }
+
+    public Object getCurrentUser() {
+        BookstoreUserDetails userDetails =
+                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getBookstoreUser();
     }
 
 

@@ -1,12 +1,15 @@
 package com.example.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+
 
 public class BookstoreUserDetails implements UserDetails {
 
@@ -21,6 +24,11 @@ public class BookstoreUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
     }
+
+    public BookstoreUser getBookstoreUser() {
+        return bookstoreUser;
+    }
+
 
     @Override
     public String getPassword() {

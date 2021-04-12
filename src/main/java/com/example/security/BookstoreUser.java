@@ -1,7 +1,10 @@
 package com.example.security;
 
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "users")
