@@ -22,6 +22,11 @@ public class BookstoreUserDetails implements UserDetails {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
+    public BookstoreUser getBookstoreUser() {
+        return bookstoreUser;
+    }
+
+
     @Override
     public String getPassword() {
         return bookstoreUser.getPassword();

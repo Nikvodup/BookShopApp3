@@ -1,13 +1,13 @@
 package com.example.security;
 
 public class ContactConfirmationResponse {
-    private String result;
+    private Boolean result;
 
-    public String getResult() {
+    public Boolean getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(Boolean result) {
         this.result = result;
     }
 }

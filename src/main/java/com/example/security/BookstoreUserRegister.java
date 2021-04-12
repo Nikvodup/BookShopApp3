@@ -44,10 +44,17 @@ public class BookstoreUserRegister {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
-        response.setResult("true");
+        response.setResult(true);
         return response;
 
 
     }
+
+    public Object getCurrentUser() {
+        BookstoreUserDetails userDetails =
+                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getBookstoreUser();
+    }
+
 
 }
