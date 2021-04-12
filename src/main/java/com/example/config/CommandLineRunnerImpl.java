@@ -1,4 +1,4 @@
-package com.example.config;
+/**package com.example.config;
 
 import com.example.data.BookRepository;
 import com.example.data.TestEntity;
@@ -73,3 +73,4 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         testEntityCrudRepository.save(entity);
     }
 }
+ **/
