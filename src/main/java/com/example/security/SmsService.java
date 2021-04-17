@@ -3,7 +3,8 @@ package com.example.security;
 import com.example.data.SmsCode;
 import com.example.data.SmsCodeRepository;
 import com.twilio.Twilio;
-import com.twilio.rest.conversations.v1.conversation.Message;
+//import com.twilio.rest.conversations.v1.conversation.Message;
+import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,10 @@ public class SmsService {
           Twilio.init(ACCOUNT_SID,AUTH_TOKEN);
           String formattedContact = contact.replaceAll("[( )-]", "");
           String generatedCode = generateCode();
-          Message.creator( new PhoneNumber(formattedContact), new PhoneNumber(TWILIO_NUMBER),"Your secret code is: " + generatedCode).create();
+          Message.creator( new PhoneNumber(formattedContact),
+                  new PhoneNumber(TWILIO_NUMBER),
+                  "Your secret code is: "+ generatedCode )
+                  .create();
                   return generatedCode;
       }
 
