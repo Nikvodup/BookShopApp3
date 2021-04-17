@@ -1,5 +1,7 @@
 package com.example.security.jwt;
 
+
+import org.springframework.security.core.userdetails.UserDetails;
 import com.example.security.BookstoreUserDetails;
 import com.example.security.BookstoreUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,8 +43,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 }
 
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    BookstoreUserDetails userDetails =
-                            (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(username);
+                    UserDetails userDetails =
+                             bookstoreUserDetailsService.loadUserByUsername(username);
                     if (jwtUtil.validateToken(token, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken =
                                 new UsernamePasswordAuthenticationToken(
