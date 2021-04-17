@@ -35,7 +35,7 @@ public class BookstoreUserRegister {
 
     }
 
-    public void registerNewUser(RegistrationForm registrationForm) {
+    public BookstoreUser registerNewUser(RegistrationForm registrationForm) {
         if (bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail()) == null) {
             BookstoreUser user = new BookstoreUser();
             user.setEmail(registrationForm.getEmail());
@@ -44,7 +44,9 @@ public class BookstoreUserRegister {
 
             user.setPhone(registrationForm.getPhone());
             bookstoreUserRepository.save(user);
+            return user;
         }
+        return null;
     }
 
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
