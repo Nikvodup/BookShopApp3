@@ -1,22 +1,29 @@
 package com.example.data;
 
+import com.example.data.google.api.books.Item;
+import com.example.data.google.api.books.Root;
 import com.example.errs.BookstoreApiWrongParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final RestTemplate restTemplate;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, RestTemplate restTemplate) {
         this.bookRepository = bookRepository;
+        this.restTemplate = restTemplate;
     }
 
     public List<Book> getBooksData() {
@@ -66,6 +73,39 @@ public class BookService {
     public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBookByTitleContaining(searchWord,nextPage);
+    }
+
+    @Value("${google.books.api.key}")
+     private String apiKey;
+
+    public List<Book> getPageOfGoogleBooksApiSearchResult(String searchWord, Integer offset, Integer limit){
+        String REQUEST_URL = "https://www.googleapis.com/books/v1/volumes" +
+                "?q=" + searchWord +
+                "&key=" + apiKey +
+                "&filter=paid-ebooks" +
+                "&startIndex=" + offset +
+                "&maxResults=" + limit;
+
+        Root root = restTemplate.getForEntity(REQUEST_URL, Root.class).getBody();
+        ArrayList<Book> list = new ArrayList<>();
+        if(root!=null){
+            for (Item item : root.getItems()){
+                Book book = new Book();
+                if (item.getVolumeInfo()!=null){
+                    book.setAuthor(new Author(item.getVolumeInfo().getAuthors()));
+                    book.setImage(item.getVolumeInfo().getImageLinks().getThumbnail());
+                    book.setTitle(item.getVolumeInfo().getTitle());
+                }
+
+                if(item.getSaleInfo()!=null){
+                    book.setPrice(item.getSaleInfo().getRetailPrice().getAmount());
+                    Double oldPrice = item.getSaleInfo().getListPrice().getAmount();
+                    book.setPriceOld(oldPrice.intValue());
+                }
+                list.add(book);
+            }
+        }
+        return list;
     }
 }
 
