@@ -25,11 +25,15 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Book> findBooksByPriceOldIs(Integer price);
 
     @Query("from Book where isBestseller=1")
-    List<Book> getBestsellers();
+  List<Book> getBestsellers();
 
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
+    @Query(value = "SELECT * FROM books WHERE pub_date BETWEEN '2020-10-01' AND '2021-05-01'", nativeQuery = true)
+    List<Book> getRecent();
+
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
+
 }
 

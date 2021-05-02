@@ -44,7 +44,11 @@ public class BookService {
     }
 
     public List<Book> getBestsellers(){
-        return bookRepository.getBestsellers();
+        return  bookRepository.getBestsellers();
+    }
+
+    public List<Book> getRecent(){
+        return bookRepository.getRecent();
     }
 
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){

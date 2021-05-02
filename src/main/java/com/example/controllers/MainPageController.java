@@ -6,6 +6,8 @@ import com.example.data.BookService;
 import com.example.data.BooksPageDto;
 import com.example.data.SearchWordDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,16 @@ public class MainPageController {
         return bookService.getPageOfRecommendedBooks(0, 6).getContent();
     }
 
+    @ModelAttribute("bestsellers")
+    public List<Book> bestsellers(){
+        return  bookService.getBestsellers();
+    }
+
+    @ModelAttribute("recent")
+    public List<Book> recent(){
+        return bookService.getRecent();
+    }
+
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
         return new SearchWordDto();
@@ -46,12 +58,13 @@ public class MainPageController {
         return "index";
     }
 
+
     @GetMapping("/books/recommended")
     @ResponseBody
-    public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset,
-                                     @RequestParam("limit") Integer limit) {
+    public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
+
 
     @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
