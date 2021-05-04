@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
@@ -30,8 +32,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
-    @Query(value = "SELECT * FROM books WHERE pub_date BETWEEN '2020-10-01' AND '2021-05-01'", nativeQuery = true)
-    List<Book> getRecent();
+    @Query(value = "SELECT * FROM books WHERE pub_date BETWEEN '2020-10-04' AND '2021-05-04'", nativeQuery = true)
+     List<Book> getRecent();
+
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 

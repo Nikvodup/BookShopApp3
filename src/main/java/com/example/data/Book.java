@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "books")
@@ -23,6 +24,11 @@ public class Book {
     @Column(name = "pub_date")
     @ApiModelProperty("date of book publication")
     private Date pubDate;
+
+ //   private Date from;
+ //   private Date upTo;
+
+
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
@@ -54,6 +60,23 @@ public class Book {
     @JsonProperty("discount")
     @ApiModelProperty("discount value for book")
     private Double price;
+
+ /**   public Date getFrom() {
+        return from;
+    }
+
+    public void setFrom(Date from) {
+        this.from = from;
+    }
+
+    public Date getUpTo() {
+        return upTo;
+    }
+
+    public void setUpTo(Date upTo) {
+        this.upTo = upTo;
+    }
+  **/
 
     public Date getPubDate() {
         return pubDate;
