@@ -45,13 +45,17 @@ public class BookService {
         return bookRepository.getBooksWithMaxDiscount();
     }
 
-    public List<Book> getBestsellers(){
-        return  bookRepository.getBestsellers();
+    public Page<Book> getPageOfBestsellers(Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset,limit);
+        return  bookRepository.getBestsellers(nextPage);
     }
 
-    public List<Book> getRecent(){
-        return bookRepository.getRecent();
+   public Page<Book> getRecentPage(Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of( offset,limit);
+        return bookRepository.getRecent(nextPage);
     }
+
+
 
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);

@@ -53,9 +53,9 @@ public class BooksRestApiController {
 
     @GetMapping("/books/bestsellsers")
     @ApiOperation("get bestseller books (which is_bestseller = 1)")
-    public ResponseEntity<List<Book>> bestSellerBooks(){
+    public ResponseEntity<Page<Book>> bestSellerBooks(Integer offset, Integer limit){
 
-        return ResponseEntity.ok(bookService.getBestsellers());
+        return ResponseEntity.ok(bookService.getPageOfBestsellers(offset,limit));
     }
 }
 

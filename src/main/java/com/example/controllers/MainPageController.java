@@ -27,20 +27,62 @@ public class MainPageController {
         this.bookService = bookService;
     }
 
+
+    @GetMapping("/")
+    public String mainPage(Model model) {
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        return "index";
+    }
+
+
+   //-------------------Bestsellers carousal----------------
+
+    @ModelAttribute("bestsellers")
+    public List<Book> bestsellers(){
+        return  bookService.getPageOfBestsellers(0,6).getContent();
+
+    }
+
+    @GetMapping("/books/bestsellers")
+    @ResponseBody
+    public BooksPageDto getBestsellersPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfBestsellers(offset, limit).getContent());
+    }
+
+
+    //-------------------Recent carousal------------------
+
+    @ModelAttribute("recentLine")
+    public List<Book> recent(){
+        return bookService.getRecentPage(0,6).getContent();
+    }
+
+
+    @GetMapping("/books/recentLine")
+    @ResponseBody
+    public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getRecentPage(offset, limit).getContent());
+    }
+
+
+    //------------------------Recommended carousal-----------------------
+
+
     @ModelAttribute("recommendedBooks")
     public List<Book> recommendedBooks() {
         return bookService.getPageOfRecommendedBooks(0, 6).getContent();
     }
 
-    @ModelAttribute("bestsellers")
-    public List<Book> bestsellers(){
-        return  bookService.getBestsellers();
+
+    @GetMapping("/books/recommended")
+    @ResponseBody
+    public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 
-    @ModelAttribute("recent")
-    public List<Book> recent(){
-        return bookService.getRecent();
-    }
+
+   //----------------------------Searching-----------------------
+
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
@@ -50,19 +92,6 @@ public class MainPageController {
     @ModelAttribute("searchResults")
     public List<Book> searchResults() {
         return new ArrayList<>();
-    }
-
-    @GetMapping("/")
-    public String mainPage(Model model) {
-        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-        return "index";
-    }
-
-
-    @GetMapping("/books/recommended")
-    @ResponseBody
-    public BooksPageDto getBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfRecommendedBooks(offset, limit).getContent());
     }
 
 
