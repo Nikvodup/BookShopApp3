@@ -44,6 +44,7 @@ public class Book {
     private String slug;
     @ApiModelProperty("book title")
     private String title;
+
     @ApiModelProperty("image url")
     private String image;
 
