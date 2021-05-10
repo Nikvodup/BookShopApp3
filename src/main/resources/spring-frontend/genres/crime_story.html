@@ -1,25 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <title>Тут название страницы написать</title>
-    <meta name="description" content="Описание страницы">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <!--meta( http-equiv="cache-control" content="no-cache")-->
-    <!--meta( http-equiv="expires" content="0")-->
-    <!--link(rel="preload" href="assets/css/extra.min.css?v=" + version as="style" crossorigin="anonymous")-->
-    <link href="favicon.ico" rel="shortcut icon">
-    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-SemiBold.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Light.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-Medium.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="/assets/fonts/Montserrat/Montserrat-ExtraBold.woff2" as="font" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/css/fonts.min.css?v=56375974">
-    <link rel="stylesheet" href="/assets/css/basic.min.css?v=56375974">
-    <link rel="stylesheet" href="/assets/css/extra.min.css?v=56375974"><!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <script defer src="/assets/js/scripts.min.js?v=56375974"></script>
-</head>
+<head th:replace="~{fragments/tophead_fragment::topheadFragment}"></head>
 
 
 <body>
@@ -34,13 +16,13 @@
                 </li>
                 <li class="breadcrumbs-item"><a href="/genres">Жанры</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span>Серьёзное чтение</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span>Детективы</span>
                 </li>
             </ul>
 
             <div class="Section">
                 <div class="Section-header">
-                    <h2 class="Section-title" >Фантастика
+                    <h2 class="Section-title" >Триллер
                     </h2>
                 </div>
                 <div class="Slider Slider_carousel">
@@ -78,7 +60,7 @@
 
                 <div class="Section">
                     <div class="Section-header">
-                        <h2 class="Section-title" >Боевики
+                        <h2 class="Section-title" >Шпионский детектив
                         </h2>
                     </div>
                     <div class="Slider Slider_carousel">
@@ -114,9 +96,86 @@
 
 
 
+
                     <div class="Section">
                         <div class="Section-header">
-                            <h2 class="Section-title" >Фэнтези
+                            <h2 class="Section-title" >Политический детектив
+                            </h2>
+                        </div>
+                        <div class="Slider Slider_carousel">
+
+                            <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
+                                <div class="Slider-item" th:each="book : ${recommendedBooks}">
+                                    <div class="Slider-content">
+                                        <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
+                                                th:src="${book.image}" alt="card.jpg"/></a>
+                                            <div class="Card-content">
+                                                <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
+                                                </strong>
+                                                <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
+                                                </div>
+                                                <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
+                                                        class="Card-price" th:text="${book.price}">₽190
+                        .00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Slider-navigateWrap">
+                                <div class="Slider-navigate">
+                                </div>
+                            </div>
+                            <div class="Slider-load">
+                                <div class="Slider-load-text">Идет загрузка данных
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="Section">
+                            <div class="Section-header">
+                                <h2 class="Section-title" >Классический детектив
+                                </h2>
+                            </div>
+                            <div class="Slider Slider_carousel">
+
+                                <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
+                                    <div class="Slider-item" th:each="book : ${recommendedBooks}">
+                                        <div class="Slider-content">
+                                            <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
+                                                    th:src="${book.image}" alt="card.jpg"/></a>
+                                                <div class="Card-content">
+                                                    <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
+                                                    </strong>
+                                                    <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
+                                                    </div>
+                                                    <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
+                                                            class="Card-price" th:text="${book.price}">₽190
+                        .00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Slider-navigateWrap">
+                                    <div class="Slider-navigate">
+                                    </div>
+                                </div>
+                                <div class="Slider-load">
+                                    <div class="Slider-load-text">Идет загрузка данных
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                    <div class="Section">
+                        <div class="Section-header">
+                            <h2 class="Section-title" >Иронический детектив
                             </h2>
                         </div>
                         <div class="Slider Slider_carousel">
@@ -151,6 +210,8 @@
                         </div>
 
                     </div>
+                </div>
+            </div>
                 </div>
             </div>
         </main>

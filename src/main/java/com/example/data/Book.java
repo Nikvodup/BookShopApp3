@@ -62,7 +62,21 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
- /**   public Date getFrom() {
+
+    @Column(name = "genre")
+    @JsonProperty("genre")
+    @ApiModelProperty("the genre book belongs to")
+    private String genre;
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    /**   public Date getFrom() {
         return from;
     }
 
@@ -78,6 +92,8 @@ public class Book {
         this.upTo = upTo;
     }
   **/
+
+
 
     public Date getPubDate() {
         return pubDate;

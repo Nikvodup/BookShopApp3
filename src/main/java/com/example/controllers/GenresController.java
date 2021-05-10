@@ -62,6 +62,11 @@ public class GenresController {
         return "/genres/drama";
     }
 
+    @GetMapping("/crime_story")
+    public String crimeStoryPage(){
+        return "/genres/crime_story";
+    }
+
 
 
 
