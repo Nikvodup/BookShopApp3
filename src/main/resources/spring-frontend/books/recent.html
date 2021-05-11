@@ -41,8 +41,8 @@
 
 
 
-            <div data-load="recent" data-loadoffset="0" data-loadlimit="6">
-            <div class="Card" th:each="book : ${recentBooks}">
+
+            <div class="Card" th:each="book : ${recentBooks}"  data-load="recent" data-loadoffset="0" data-loadlimit="6">
               <div class="Card-picture"><a href="#"><img th:src="${book.image}" alt="card.jpg"/></a>
               </div>
               <div class="Card-content">
@@ -60,7 +60,8 @@
             <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#" data-refreshshow="recent" data-refreshoffset="20" data-refreshlimit="20">Показать еще</a>
             </div>
           </div>
-        </div>
+
+
       </main>
     </div>
   </div>
