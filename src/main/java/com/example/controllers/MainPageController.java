@@ -52,7 +52,7 @@ public class MainPageController {
 
     //-------------------Recent carousal------------------
 
-    @ModelAttribute("recentLine")
+    @ModelAttribute("recent")
     public List<Book> recent(){
         return bookService.getRecentPage(0,6).getContent();
     }

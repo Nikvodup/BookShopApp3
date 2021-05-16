@@ -8,8 +8,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
@@ -25,8 +26,8 @@ public class Book {
     @ApiModelProperty("date of book publication")
     private Date pubDate;
 
- //   private Date from;
- //   private Date upTo;
+ //  private Date from;
+ //  private Date upTo;
 
 
 
@@ -65,7 +66,7 @@ public class Book {
 
     @Column(name = "genre")
     @JsonProperty("genre")
-    @ApiModelProperty("the genre book belongs to")
+    @ApiModelProperty("the genre a book belongs to")
     private String genre;
 
     public String getGenre() {
@@ -76,7 +77,9 @@ public class Book {
         this.genre = genre;
     }
 
-    /**   public Date getFrom() {
+
+
+ /**     public Date getFrom() {
         return from;
     }
 
@@ -95,6 +98,7 @@ public class Book {
 
 
 
+
     public Date getPubDate() {
         return pubDate;
     }
@@ -102,6 +106,8 @@ public class Book {
     public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
     }
+
+
 
     public Integer getIsBestseller() {
         return isBestseller;

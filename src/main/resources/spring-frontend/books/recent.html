@@ -37,10 +37,32 @@
               </div>
             </form>
           </div>
+
+
+
+         <form>
+            <table>
+              <tr>
+                <td>Select books for the period of</td>
+                <td>
+                  <select >
+                    <option>1 month</option>
+                    <option>3 months </option>
+                    <option>6 months</option>
+                    <option>9 months</option>
+                    <option>12 months</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><input name="submit" type="submit" value="submit" /></td>
+              </tr>
+            </table>
+          </form>
+
+
+
           <div class="Cards Cards_refresh">
-
-
-
 
             <div class="Card" th:each="book : ${recentBooks}"  data-load="recent" data-loadoffset="0" data-loadlimit="6">
               <div class="Card-picture"><a href="#"><img th:src="${book.image}" alt="card.jpg"/></a>
