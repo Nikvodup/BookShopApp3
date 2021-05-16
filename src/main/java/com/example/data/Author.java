@@ -24,10 +24,13 @@ public class Author {
     private String lastName;
 
     @ApiModelProperty(value = "picture of the author")
-    private String photo;
+    private String image;
 
     @ApiModelProperty(value = "biography of the author")
     private String biography;
+
+    private String slug;
+
 
     @OneToMany(mappedBy = "author")
     @JsonIgnore
@@ -46,12 +49,12 @@ public class Author {
         return firstName + ' ' + lastName;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getImage() {
+        return image;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getBiography() {
@@ -86,5 +89,11 @@ public class Author {
         this.lastName = lastName;
     }
 
+    public String getSlug() {
+        return slug;
+    }
 
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 }

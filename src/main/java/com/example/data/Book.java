@@ -46,6 +46,11 @@ public class Book {
     @ApiModelProperty("book title")
     private String title;
 
+    @ApiModelProperty("full name of the author")
+    public String authorsFullName(){
+        return author.toString();
+    }
+
     @ApiModelProperty("image url")
     private String image;
 
@@ -191,4 +196,6 @@ public class Book {
                 ", price='" + price + '\'' +
                 '}';
     }
+
+
 }

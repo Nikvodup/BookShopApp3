@@ -9,4 +9,6 @@ public interface AuthorRepository extends JpaRepository<Author,Integer> {
 
     @Query("from Author")
     List<Author> findAll();
+
+    Author findAuthorBySlug(String slug);
 }

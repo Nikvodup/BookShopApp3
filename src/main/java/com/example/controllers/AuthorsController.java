@@ -1,12 +1,14 @@
 package com.example.controllers;
 
 import com.example.data.Author;
+import com.example.data.AuthorRepository;
 import com.example.data.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.text.SimpleDateFormat;
@@ -19,10 +21,12 @@ import java.util.Map;
 public class AuthorsController {
 
     private final AuthorService authorService;
+    private final AuthorRepository authorRepository;
 
     @Autowired
-    public AuthorsController(AuthorService authorService) {
+    public AuthorsController(AuthorService authorService, AuthorRepository authorRepository) {
         this.authorService = authorService;
+        this.authorRepository = authorRepository;
     }
 
     @ModelAttribute("authorsMap")
@@ -41,10 +45,20 @@ public class AuthorsController {
         return "/authors/index";
     }
 
-    @GetMapping("/slug")
-    public String slugPage(){
+   // @GetMapping("/slug")
+  //  public String slugPage(){return "/authors/slug";}
+
+    @GetMapping("/{slug}")
+    public String bookPage(@PathVariable("slug") String  slug, Model model){
+
+
+        Author author = authorRepository.findAuthorBySlug(slug);
+
+        model.addAttribute("authorSlug", author);
+
         return "/authors/slug";
     }
+
 
 
 }
