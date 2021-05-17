@@ -49,7 +49,7 @@ public class AuthorsController {
    // @GetMapping("/slug")
   //  public String slugPage(){return "/authors/slug";}
 
-    @GetMapping("/{firstname}{lastname}")
+    @GetMapping("/{firstname}+{lastname}")
     public String bookPage( @PathVariable("firstname") String  firstName, @PathVariable("lastname") String  lastName, Model model){
 
 
