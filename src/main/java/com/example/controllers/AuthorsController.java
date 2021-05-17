@@ -3,6 +3,7 @@ package com.example.controllers;
 import com.example.data.Author;
 import com.example.data.AuthorRepository;
 import com.example.data.AuthorService;
+import com.example.data.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,11 +49,11 @@ public class AuthorsController {
    // @GetMapping("/slug")
   //  public String slugPage(){return "/authors/slug";}
 
-    @GetMapping("/{slug}")
-    public String bookPage(@PathVariable("slug") String  slug, Model model){
+    @GetMapping("/{firstname}{lastname}")
+    public String bookPage( @PathVariable("firstname") String  firstName, @PathVariable("lastname") String  lastName, Model model){
 
 
-        Author author = authorRepository.findAuthorBySlug(slug);
+        Author author = authorRepository.findAuthorByFirstNameAndLastNameContaining(firstName,lastName);
 
         model.addAttribute("authorSlug", author);
 
