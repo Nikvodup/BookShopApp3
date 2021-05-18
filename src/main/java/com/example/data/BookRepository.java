@@ -32,7 +32,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
-    @Query(value = "SELECT * FROM books WHERE pub_date BETWEEN '2020.03.03' AND '2021.03.03'", nativeQuery = true)
+   // @Query("select b from Book b where b.pubDate between b.since and b.today")
+    @Query("select b from Book b where b.pubDate between '2020/07/01' and '2021/05/17'")
      Page<Book> getRecent(Pageable pageable);
 
 

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.time.Period;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,10 +25,10 @@ public class Book {
 
     @Column(name = "pub_date")
     @ApiModelProperty("date of book publication")
-    private Date pubDate;
+    private LocalDate pubDate;
 
- //  private Date from;
- //  private Date upTo;
+   private LocalDate since=LocalDate.now().minusMonths(6);
+   private LocalDate today=LocalDate.now();
 
 
 
@@ -84,31 +85,31 @@ public class Book {
 
 
 
- /**     public Date getFrom() {
-        return from;
+      public LocalDate getSince() {
+        return since;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
+    public void setSince(LocalDate since) {
+        this.since = since;
     }
 
-    public Date getUpTo() {
-        return upTo;
+    public LocalDate getToday() {
+        return today;
     }
 
-    public void setUpTo(Date upTo) {
-        this.upTo = upTo;
+    public void setToday(LocalDate today) {
+        this.today = today;
     }
-  **/
 
 
 
 
-    public Date getPubDate() {
+
+    public LocalDate getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(Date pubDate) {
+    public void setPubDate(LocalDate pubDate) {
         this.pubDate = pubDate;
     }
 

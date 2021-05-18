@@ -39,6 +39,8 @@
             <div class="Card"   th:each="book : ${bestsellers}">
               <div class="Card-picture"><a href="#"><img th:src="${book.image}" alt="card.jpg"/></a>
               </div>
+              <div class="Card-ribbon"><span class="Card-ribbonText">Бестселлер</span>
+              </div>
               <div class="Card-content">
                 <strong class="Card-title"><a href="#"   th:text="${book.title}">Техника</a>
                 </strong>
