@@ -37,6 +37,9 @@ public class Book {
     @JsonIgnore
     private Author author;
 
+
+
+
     @Column(name = "is_bestseller")
     @ApiModelProperty("if isBestseller = 1 so the book is considered to be bestseller and  if 0 the book is not a " +
             "bestseller")
@@ -44,10 +47,12 @@ public class Book {
 
     @ApiModelProperty("mnemonical identity sequence of characters")
     private String slug;
+
     @ApiModelProperty("book title")
     private String title;
 
     @ApiModelProperty("full name of the author")
+    @JsonGetter("authors")
     public String authorsFullName(){
         return author.toString();
     }
@@ -70,6 +75,13 @@ public class Book {
     private Double price;
 
 
+    @JsonProperty
+    private Integer discountPrice(){
+        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price*priceOld));
+        return discountedPriceInt;
+    }
+
+
     @Column(name = "genre")
     @JsonProperty("genre")
     @ApiModelProperty("the genre a book belongs to")
@@ -85,7 +97,8 @@ public class Book {
 
 
 
-      public LocalDate getSince() {
+
+    public LocalDate getSince() {
         return since;
     }
 

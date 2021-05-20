@@ -33,8 +33,9 @@ public class GenresController {
     }
 
     @GetMapping("")
-    public String genresPage(Model model){
+    public String genresPage(BookService bookService,Book book,Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+
         return "/genres/index";
     }
 

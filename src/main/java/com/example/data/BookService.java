@@ -6,18 +6,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
     public List<Book> getBooksData() {
@@ -62,9 +62,20 @@ public class BookService {
         return bookRepository.findAll(nextPage);
     }
 
+    //-----------------------Searching start---------------------
+
     public Page<Book> getPageOfSearchResultBooks(String searchWord, Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBookByTitleContaining(searchWord,nextPage);
+    }
+
+
+
+    //----------------------Searching end---------------------
+
+    
+    public Integer getCount(String genre){
+        return bookRepository.getBookCountByGenreContaining(genre);
     }
 }
 

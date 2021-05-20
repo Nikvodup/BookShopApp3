@@ -24,6 +24,7 @@ public class AuthorsController {
     private final AuthorService authorService;
     private final AuthorRepository authorRepository;
 
+
     @Autowired
     public AuthorsController(AuthorService authorService, AuthorRepository authorRepository) {
         this.authorService = authorService;
@@ -49,11 +50,11 @@ public class AuthorsController {
    // @GetMapping("/slug")
   //  public String slugPage(){return "/authors/slug";}
 
-    @GetMapping("/{firstname}+{lastname}")
-    public String bookPage( @PathVariable("firstname") String  firstName, @PathVariable("lastname") String  lastName, Model model){
+    @GetMapping("/{lastname}/{firstname}")
+    public String authorPage(@PathVariable("lastname") String lastName, @PathVariable("firstname") String firstName,  Model model){
 
 
-        Author author = authorRepository.findAuthorByFirstNameAndLastNameContaining(firstName,lastName);
+        Author author = authorRepository.findAuthorByLastNameAndFirstNameContaining(lastName,firstName);
 
         model.addAttribute("authorSlug", author);
 

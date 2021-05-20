@@ -1,13 +1,8 @@
 package com.example.controllers;
 
 
-import com.example.data.Book;
-import com.example.data.BookService;
-import com.example.data.BooksPageDto;
-import com.example.data.SearchWordDto;
+import com.example.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +16,12 @@ import java.util.List;
 public class MainPageController {
 
     private final BookService bookService;
+    private final AuthorService authorService;
 
     @Autowired
-    public MainPageController(BookService bookService) {
+    public MainPageController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
 
@@ -81,13 +78,14 @@ public class MainPageController {
     }
 
 
-   //----------------------------Searching-----------------------
+   //----------------------------Searching by title-----------------------
 
 
     @ModelAttribute("searchWordDto")
     public SearchWordDto searchWordDto() {
         return new SearchWordDto();
     }
+
 
     @ModelAttribute("searchResults")
     public List<Book> searchResults() {
@@ -111,4 +109,7 @@ public class MainPageController {
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
     }
+
+
+
 }

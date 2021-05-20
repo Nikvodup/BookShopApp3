@@ -39,5 +39,13 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
+
+
+    //just for fun
+    @Query(value = "SELECT COUNT(*) as count FROM books WHERE genre=:gen", nativeQuery = true)
+     Integer getBookCountByGenreContaining(@Param("gen") String genre);
+
+
+
 }
 
