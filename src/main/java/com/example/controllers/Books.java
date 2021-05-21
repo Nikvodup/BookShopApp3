@@ -27,7 +27,7 @@ public class Books {
     }
 //--------------------------------Recent-----------------
    @ModelAttribute("recentBooks")
-   public List recentBooks(){
+   public List recentBooks(LocalDate pubDate,LocalDate since){
     return bookService.getRecentPage(0, 6).getContent();
 }
 
@@ -43,7 +43,7 @@ public class Books {
 
     @GetMapping("/books/recentBooks")
     @ResponseBody
-    public BooksPageDto getRecentPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
+    public BooksPageDto getRecentPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit,LocalDate pubDate, LocalDate since) {
         return new BooksPageDto(bookService.getRecentPage(offset, limit).getContent());
     }
 

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,12 +17,13 @@ import java.util.List;
 public class MainPageController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
+
+
+
 
     @Autowired
-    public MainPageController(BookService bookService, AuthorService authorService) {
+    public MainPageController(BookService bookService) {
         this.bookService = bookService;
-        this.authorService = authorService;
     }
 
 
@@ -53,6 +55,11 @@ public class MainPageController {
     public List<Book> recent(){
         return bookService.getRecentPage(0,6).getContent();
     }
+
+ /**   @ModelAttribute("recent")
+    public List<Book> recent(LocalDate pubDate, LocalDate since){
+        return bookService.getRecent(pubDate,since,0,6).getContent();
+    } **/
 
 
     @GetMapping("/books/recentLine")

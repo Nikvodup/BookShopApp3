@@ -1,10 +1,7 @@
 package com.example.controllers;
 
 
-import com.example.data.Book;
-import com.example.data.BookService;
-import com.example.data.BooksPageDto;
-import com.example.data.GenresService;
+import com.example.data.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +30,9 @@ public class GenresController {
     }
 
     @GetMapping("")
-    public String genresPage(BookService bookService,Book book,Model model){
+    public String genresPage( Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-
+        model.addAttribute("countSF", bookService.getCount("science_fiction"));
         return "/genres/index";
     }
 
@@ -81,6 +78,7 @@ public class GenresController {
     @GetMapping("/science_fiction")
     public String scienceFictionPage(Model model){
         model.addAttribute("sciencefiction", genresService.getScienceFictionBooksPage(0,6).getContent());
+        model.addAttribute("countSF", bookService.getCount("science_fiction"));
         return  "/genres/science_fiction";
     }
 
@@ -96,6 +94,7 @@ public class GenresController {
     @GetMapping("/action_story")
     public String actionStoryPage(Model model){
         model.addAttribute("actionstory", genresService.getActionStoryBooksPage(0,6).getContent());
+        model.addAttribute("countAS",  bookService.getCount("action_story"));
         return  "/genres/action_story";
     }
 
@@ -110,6 +109,7 @@ public class GenresController {
     @GetMapping("/fantasy")
     public String fantasyStoryPage(Model model){
         model.addAttribute("fantasy", genresService.getFantasyBooksPage(0,6).getContent());
+        model.addAttribute("countFan", bookService.getCount("fantasy"));
         return  "/genres/fantasy";
     }
 
@@ -124,6 +124,7 @@ public class GenresController {
     @GetMapping("/horror")
     public String horrorStoryPage(Model model){
         model.addAttribute("horror", genresService.getHorrorBooksPage(0,6).getContent());
+        model.addAttribute("countHorror", bookService.getCount("horror_story"));
         return  "/genres/horror";
     }
 
@@ -138,6 +139,7 @@ public class GenresController {
     @GetMapping("/adventures")
     public String adventuresStoryPage(Model model){
         model.addAttribute("adventures", genresService.getAdventuresBooksPage(0,6).getContent());
+        model.addAttribute("countAdventures", bookService.getCount("adventures"));
         return  "/genres/adventures";
     }
 
@@ -158,6 +160,7 @@ public class GenresController {
     @GetMapping("/thriller")
     public String thrillerPage(Model model){
         model.addAttribute("thriller", genresService.getThrillerPage(0,6).getContent());
+        model.addAttribute("countThriller", bookService.getCount("thriller"));
         return  "/genres/thriller";
     }
 
@@ -172,6 +175,7 @@ public class GenresController {
     @GetMapping("/ironic_crime")
     public String ironicCrimePage(Model model){
         model.addAttribute("ironiccrime", genresService.getIronicCrimePage(0,6).getContent());
+        model.addAttribute("countIronic", bookService.getCount("ironic_detective"));
         return  "/genres/ironic_crime";
     }
 
@@ -186,6 +190,7 @@ public class GenresController {
     @GetMapping("/spy_crime")
     public String spyCrimePage(Model model){
         model.addAttribute("spycrime", genresService.getSpyStoryPage(0,6).getContent());
+        model.addAttribute("countSpy", bookService.getCount("spy_story"));
         return  "/genres/spy_crime";
     }
 
@@ -200,6 +205,7 @@ public class GenresController {
     @GetMapping("/classic_crime")
     public String classicCrimePage(Model model){
         model.addAttribute("classiccrime", genresService.getClassicalCrimePage(0,6).getContent());
+        model.addAttribute("countClassic", bookService.getCount("classical_detective"));
         return  "/genres/classic_crime";
     }
 
@@ -214,6 +220,7 @@ public class GenresController {
     @GetMapping("/political_crime")
     public String politicalCrimePage(Model model){
         model.addAttribute("politicalcrime", genresService.getPoliticalCrimePage(0,6).getContent());
+        model.addAttribute("countPolitical", bookService.getCount("political_detective"));
         return  "/genres/political_crime";
     }
 
@@ -230,6 +237,7 @@ public class GenresController {
     @GetMapping("/life_story")
     public String lifeStoryPage(Model model){
         model.addAttribute("lifestory", genresService.getLifeStoryPage(0,6).getContent());
+        model.addAttribute("countLifestory", bookService.getCount("life_story"));
         return  "/genres/life_story";
     }
 

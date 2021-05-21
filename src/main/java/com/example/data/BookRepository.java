@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -32,20 +33,17 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
-   // @Query("select b from Book b where b.pubDate between b.since and b.today")
-    @Query("select b from Book b where b.pubDate between '2020/07/01' and '2021/05/17'")
+   // @Query("select b from Book b where b.pubDate > b.since ")
+    @Query("select b from Book b where b.pubDate between '2020-08-01' and '2021-05-20'")
      Page<Book> getRecent(Pageable pageable);
+
+    Page<Book> findBooksByPubDateGreaterThanOrSince(LocalDate pubDate, LocalDate since,Pageable pageable);
 
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
 
-
-    //just for fun
-    @Query(value = "SELECT COUNT(*) as count FROM books WHERE genre=:gen", nativeQuery = true)
-     Integer getBookCountByGenreContaining(@Param("gen") String genre);
-
-
+     Integer countBooksByGenre(String genre);
 
 }
 

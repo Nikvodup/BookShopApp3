@@ -18,53 +18,54 @@
 
 
            <!--/*@thymesVar id="bookService" type=""*/-->
+            <form th:object="${bookService}" method="post">
 
             <div class="Tags Tags_embed">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/light_reading">Лёгкое чтение<span class="undefined-amount">(15638)</span></a>
+                <div class="Tag"><a href="/genres/light_reading"><span style="color: red"> <strong>Лёгкое чтение</strong></span></a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/science_fiction">Фантастика<span class="undefined-amount" >(44333)</span></a>
+              <div class="Tag"><a href="/genres/science_fiction">Фантастика (<span th:text="${countSF}">(0)</span>) </a>
               </div>
-              <div class="Tag"><a href="/genres/action_story">Боевики<span class="undefined-amount">(158)</span></a>
+              <div class="Tag"><a href="/genres/action_story">Боевики<span class="undefined-amount"  ></span></a>
               </div>
               <div class="Tags">
                 <div class="Tags-title">
-                  <div class="Tag"><a href="/genres/crime_story">Детективы<span class="undefined-amount">(10)</span></a>
+                  <div class="Tag"><a href="/genres/crime_story"><span style="color: #ff0000"> <strong>Детективы</strong></span></a>
                   </div>
                 </div>
-                <div class="Tag"><a href="/genres/thriller">Триллер<span class="undefined-amount">(134)</span></a>
+                <div class="Tag"><a href="/genres/thriller">Триллер<span class="undefined-amount"></span></a>
                 </div>
-                <div class="Tag"><a href="/genres/ironic_crime">Иронический детектив<span class="undefined-amount">(143443)</span></a>
+                <div class="Tag"><a href="/genres/ironic_crime">Иронический детектив<span class="undefined-amount"></span></a>
                 </div>
-                <div class="Tag"><a href="/genres/spy_crime">Шпионский детектив<span class="undefined-amount">(94)</span></a>
+                <div class="Tag"><a href="/genres/spy_crime">Шпионский детектив<span class="undefined-amount"></span></a>
                 </div>
-                <div class="Tag"><a href="/genres/classic_crime">Классический детектив<span class="undefined-amount">(4488)</span></a>
+                <div class="Tag"><a href="/genres/classic_crime">Классический детектив<span class="undefined-amount"></span></a>
                 </div>
-                <div class="Tag"><a href="/genres/political_crime">Политический детектив<span class="undefined-amount">(1)</span></a>
+                <div class="Tag"><a href="/genres/political_crime">Политический детектив<span class="undefined-amount"></span></a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/fantasy">Фэнтези<span class="undefined-amount">(14338)</span></a>
+              <div class="Tag"><a href="/genres/fantasy">Фэнтези<span class="undefined-amount"></span></a>
               </div>
-              <div class="Tag"><a href="/genres/horror">Ужасы<span class="undefined-amount">(156)</span></a>
+              <div class="Tag"><a href="/genres/horror">Ужасы<span class="undefined-amount"></span></a>
               </div>
-              <div class="Tag"><a href="/genres/adventures">Приключения<span class="undefined-amount">(1538)</span></a>
+              <div class="Tag"><a href="/genres/adventures">Приключения<span class="undefined-amount"></span></a>
               </div>
             </div>
 
-
+            </form>
 
             <div class="Tags">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/serious_reading">Серьёзное чтение<span class="undefined-amount">(18)</span></a>
+                <div class="Tag"><a href="/genres/serious_reading"><span style="color: red"> <strong>Серьезное чтение</strong></span></a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/life_story">Биографии<span class="undefined-amount">(18)</span></a>
+              <div class="Tag"><a href="/genres/life_story">Биографии<span class="undefined-amount"></span></a>
               </div>
             </div>
             <div class="Tags">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/business_books">Деловая литература<span class="undefined-amount">(158)</span></a>
+                <div class="Tag"><a href="/genres/business_books"><span style="color: red"> <strong>Деловая литература</strong></span></a>
                 </div>
               </div>
 
@@ -95,7 +96,7 @@
             </div>
             <div class="Tags">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/drama">Драматургия<span class="undefined-amount">(15638)</span></a>
+                <div class="Tag"><a href="/genres/drama"><span style="color: red"> <strong>Драматургия</strong></span></a>
                 </div>
               </div>
               <div class="Tag"><a href="/genres/slug.html">Античная драма<span class="undefined-amount">(15638)</span></a>

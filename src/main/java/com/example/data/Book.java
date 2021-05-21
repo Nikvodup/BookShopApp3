@@ -6,13 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.time.Period;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+@Controller
 @Entity
 @Table(name = "books")
 @ApiModel(description = "entity representing a book")
@@ -29,6 +31,7 @@ public class Book {
 
    private LocalDate since=LocalDate.now().minusMonths(6);
    private LocalDate today=LocalDate.now();
+   private Integer period;
 
 
 
@@ -96,7 +99,13 @@ public class Book {
     }
 
 
+    public Integer getPeriod() {
+        return period;
+    }
 
+    public void setPeriod(Integer period) {
+        this.period = period;
+    }
 
     public LocalDate getSince() {
         return since;

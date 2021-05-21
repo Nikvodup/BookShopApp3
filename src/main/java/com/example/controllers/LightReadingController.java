@@ -2,6 +2,7 @@ package com.example.controllers;
 
 
 import com.example.data.Book;
+import com.example.data.BookService;
 import com.example.data.BooksPageDto;
 import com.example.data.GenresService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,12 @@ import java.util.List;
  class LightReadingPageController {
 
     private final GenresService genresService;
+    private final BookService bookService;
 
     @Autowired
-    public LightReadingPageController(GenresService genresService){
+    public LightReadingPageController(GenresService genresService, BookService bookService){
         this.genresService=genresService;
+        this.bookService = bookService;
     }
 
     @GetMapping("/genres/light_reading")
@@ -36,6 +39,11 @@ import java.util.List;
         return genresService.getScienceFictionBooksPage(0,6).getContent();
      }
 
+     @ModelAttribute("countScienceFiction")
+     public Integer countSFBooks(){
+        return bookService.getCount("science_fiction");
+     }
+
 
      @GetMapping("/books/sciencefictionLine")
      @ResponseBody
@@ -48,6 +56,11 @@ import java.util.List;
     @ModelAttribute("actionstory")
     public List<Book> actionStory(){
       return genresService.getActionStoryBooksPage(0,6).getContent();
+    }
+
+    @ModelAttribute("countAction")
+    public Integer countAction(){
+        return bookService.getCount("action_story");
     }
 
     @GetMapping("/books/actionstoryLine")

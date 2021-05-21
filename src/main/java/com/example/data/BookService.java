@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -14,11 +15,16 @@ public class BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
+
+
     @Autowired
     public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+
     }
+
+
 
     public List<Book> getBooksData() {
         return bookRepository.findAll();
@@ -55,6 +61,19 @@ public class BookService {
         return bookRepository.getRecent(nextPage);
     }
 
+    //just for fun
+ /**   public Page<Book> getRecent(LocalDate pubDate,LocalDate since, Integer offset, Integer limit){
+        if(book.getPeriod()==1){
+            since=LocalDate.now().minusMonths(1);
+        }else if(book.getPeriod()==3){
+            since=LocalDate.now().minusMonths(3);
+        } else if (book.getPeriod()==6){
+            since=LocalDate.now().minusMonths(6);
+        }
+        Pageable nextPage = PageRequest.of(offset,limit);
+        return bookRepository.findBooksByPubDateGreaterThanOrSince(pubDate,since,nextPage);
+    } **/
+
 
 
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){
@@ -73,9 +92,9 @@ public class BookService {
 
     //----------------------Searching end---------------------
 
-    
+
     public Integer getCount(String genre){
-        return bookRepository.getBookCountByGenreContaining(genre);
+        return bookRepository.countBooksByGenre(genre);
     }
 }
 
