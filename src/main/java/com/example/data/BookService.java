@@ -56,20 +56,23 @@ public class BookService {
         return  bookRepository.getBestsellers(nextPage);
     }
 
+   //-------------recent books-----------------
+
    public Page<Book> getRecentPage(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of( offset,limit);
         return bookRepository.getRecent(nextPage);
     }
 
     //just for fun
- /**   public Page<Book> getRecent(LocalDate pubDate,LocalDate since, Integer offset, Integer limit){
-        if(book.getPeriod()==1){
+ /**  public Page<Book> getRecentBooks(LocalDate pubDate,LocalDate since, Integer offset, Integer limit){
+     if(book.getPeriod()==1){
             since=LocalDate.now().minusMonths(1);
         }else if(book.getPeriod()==3){
             since=LocalDate.now().minusMonths(3);
         } else if (book.getPeriod()==6){
             since=LocalDate.now().minusMonths(6);
         }
+         since=LocalDate.now().minusMonths(6);
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBooksByPubDateGreaterThanOrSince(pubDate,since,nextPage);
     } **/
@@ -90,11 +93,21 @@ public class BookService {
 
 
 
-    //----------------------Searching end---------------------
 
 
+   // -------------------Counting Books By Genres---------------
     public Integer getCount(String genre){
         return bookRepository.countBooksByGenre(genre);
     }
+
+    //------------------Finding Books By Id-----------------
+
+    public Page<Book> findBooksByAuthorId(Integer offset, Integer limit, Integer id){
+        Pageable nextPage = PageRequest.of(offset,limit);
+        return bookRepository.findBooksByAuthorId(nextPage,id);
+
+    }
+
+
 }
 

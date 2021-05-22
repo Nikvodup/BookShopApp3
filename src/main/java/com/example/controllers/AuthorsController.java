@@ -1,9 +1,6 @@
 package com.example.controllers;
 
-import com.example.data.Author;
-import com.example.data.AuthorRepository;
-import com.example.data.AuthorService;
-import com.example.data.Book;
+import com.example.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +20,14 @@ public class AuthorsController {
 
     private final AuthorService authorService;
     private final AuthorRepository authorRepository;
+    private final BookService bookService;
 
 
     @Autowired
-    public AuthorsController(AuthorService authorService, AuthorRepository authorRepository) {
+    public AuthorsController(AuthorService authorService, AuthorRepository authorRepository, BookService bookService) {
         this.authorService = authorService;
         this.authorRepository = authorRepository;
+        this.bookService = bookService;
     }
 
     @ModelAttribute("authorsMap")
@@ -50,13 +49,14 @@ public class AuthorsController {
    // @GetMapping("/slug")
   //  public String slugPage(){return "/authors/slug";}
 
-    @GetMapping("/{lastname}/{firstname}")
-    public String authorPage(@PathVariable("lastname") String lastName, @PathVariable("firstname") String firstName,  Model model){
+    @GetMapping("/{id}")
+    public String authorPage(@PathVariable("id") Integer id,  Model model){
 
 
-        Author author = authorRepository.findAuthorByLastNameAndFirstNameContaining(lastName,firstName);
+        Author author = authorRepository.findAuthorById(id);
 
         model.addAttribute("authorSlug", author);
+        model.addAttribute("thisauthorLine", bookService.findBooksByAuthorId(0,6,id));
 
         return "/authors/slug";
     }

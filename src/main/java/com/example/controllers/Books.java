@@ -1,6 +1,8 @@
 package com.example.controllers;
 
 
+import com.example.data.Author;
+import com.example.data.AuthorRepository;
 import com.example.data.BookService;
 import com.example.data.BooksPageDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,16 @@ import java.util.List;
 public class Books {
 
     private BookService bookService;
+    private AuthorRepository authorRepository;
+    private AuthorsController authorsController;
 
      @Autowired
     public Books(BookService bookService) {
         this.bookService = bookService;
     }
-//--------------------------------Recent-----------------
+//--------------------------------Recent Page-----------------
    @ModelAttribute("recentBooks")
-   public List recentBooks(LocalDate pubDate,LocalDate since){
+   public List recentBooks(LocalDate pubDate, LocalDate since){
     return bookService.getRecentPage(0, 6).getContent();
 }
 
@@ -47,7 +51,7 @@ public class Books {
         return new BooksPageDto(bookService.getRecentPage(offset, limit).getContent());
     }
 
-//--------------------------Popular--------------------------
+//--------------------------Popular Page--------------------------
 
     @ModelAttribute("bestsellers")
     public List bestsellerBooks(){
@@ -68,16 +72,21 @@ public class Books {
         return new BooksPageDto(bookService.getPageOfBestsellers(offset, limit).getContent());
     }
 
-    //------------------------------Slug----------------------------
+    //------------------------------Slug Page----------------------------
     @GetMapping("/slug")
     public String slugPage(Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         return "/books/slug";
     }
 
-    @GetMapping("/author")
-    public String authorPage(Model model){
+
+
+    @GetMapping("/{authorSlug.id}")
+    public String authorListPage(@PathVariable("authorSlug.id") Integer id, Model model){
+       Author  author = authorRepository.findAuthorById(id);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        model.addAttribute("author", author);
+        model.addAttribute("thisauthorPage", bookService.findBooksByAuthorId(0,6,id));
         return "/books/author";
     }
 

@@ -30,21 +30,21 @@
           <li class="breadcrumbs-item breadcrumbs-item_current"><span>Борис Васильевич Бедный</span>
           </li>
         </ul>
-        <h1 class="Middle-title">Борис Васильевич Бедный
+        <h1 class="Middle-title" th:text="${author.toString()}">Борис Васильевич Бедный
         </h1>
         <div class="Section">
           <div class="Cards Cards_refresh">
 
 
-            <div class="Card">
-              <div class="Card-picture"><a href="#"><img src="/assets/img/content/main/card.jpg" alt="card.jpg"/></a>
+            <div class="Card" th:each="book : ${thisauthorPage}">
+              <div class="Card-picture"><a href="#"><img th:src="${book.image}" alt="card.jpg"/></a>
               </div>
               <div class="Card-content">
-                <strong class="Card-title"><a href="#">Техника</a>
+                <strong class="Card-title"><a href="#"  th:text="${book.title}" >Техника</a>
                 </strong>
-                <div class="Card-description">Кондратенко Александр Петрович
+                <div class="Card-description" th:text="${book.authorsFullName()}">Кондратенко Александр Петрович
                 </div>
-                <div class="Card-cost"><span class="Card-priceOld">₽300.00</span><span class="Card-price">₽190.00</span>
+                <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span class="Card-price" th:text="${book.price}">₽190.00</span>
                 </div>
               </div>
             </div>

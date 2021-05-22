@@ -34,16 +34,20 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     List<Book> getBooksWithMaxDiscount();
 
    // @Query("select b from Book b where b.pubDate > b.since ")
-    @Query("select b from Book b where b.pubDate between '2020-08-01' and '2021-05-20'")
-     Page<Book> getRecent(Pageable pageable);
+    @Query(value = "SELECT * FROM books WHERE pub_Date BETWEEN '2020-08-01' AND '2021-05-20'", nativeQuery = true)
+    Page<Book> getRecent(Pageable pageable);
 
-    Page<Book> findBooksByPubDateGreaterThanOrSince(LocalDate pubDate, LocalDate since,Pageable pageable);
+   // Page<Book> findBooksByPubDateGreaterThanOrSince(LocalDate pubDate, LocalDate since,Pageable pageable);
 
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
 
      Integer countBooksByGenre(String genre);
+
+
+     @Query(value = "SELECT * FROM books WHERE author_id =:id", nativeQuery = true)
+     Page<Book> findBooksByAuthorId(Pageable pageable, @Param(value ="id") Integer id);
 
 }
 

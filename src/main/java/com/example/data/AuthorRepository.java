@@ -12,6 +12,5 @@ public interface AuthorRepository extends JpaRepository<Author,Integer> {
     @Query("from Author")
     List<Author> findAll();
 
-    Author findAuthorByLastNameAndFirstNameContaining(String lastName, String firstName);
-
+    Author findAuthorById(Integer slug);
 }

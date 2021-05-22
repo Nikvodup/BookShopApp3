@@ -1,6 +1,7 @@
 package com.example.data;
 
 
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -72,5 +73,10 @@ public class GenresService {
         return genresRepository.getIronicCrime(nextPage);
     }
 
+
+    public Page<Book> getGenreBooks(String genre,Integer offset, Integer limit){
+        Pageable nextPage = PageRequest.of(offset,limit);
+        return genresRepository.findBooksByGenre(genre, nextPage);
+    }
 
 }

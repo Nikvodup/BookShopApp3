@@ -33,6 +33,7 @@ public class GenresController {
     public String genresPage( Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("countSF", bookService.getCount("science_fiction"));
+        model.addAttribute("countAD", bookService.getCount("ancient_drama"));
         return "/genres/index";
     }
 
@@ -57,10 +58,10 @@ public class GenresController {
         return "/genres/business_books";
     }
 
-    @GetMapping("/drama")
+  /**  @GetMapping("/drama")
     public String dramaReadingPage(){
         return "/genres/drama";
-    }
+    } **/
 
   /**  @GetMapping("/crime_story")
     public String crimeStoryPage(){
@@ -245,6 +246,23 @@ public class GenresController {
     @ResponseBody
     public BooksPageDto getLifeStoryPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
         return new BooksPageDto(genresService.getLifeStoryPage(offset,limit).getContent());
+    }
+
+    //======================Dramaturgy===============
+
+    //------------------------Ancient Drama------------
+
+    @GetMapping("/ancientdrama")
+    public String ancientDramaPage(String genre, Model model){
+        model.addAttribute("ancientdrama", genresService.getGenreBooks("ancient_drama",0,6).getContent());
+                model.addAttribute("countAncientDrama", bookService.getCount("ancient_drama"));
+                return "/genres/ancientdrama";
+    }
+
+    @GetMapping("/books/ancientdrama")
+    @ResponseBody
+    public BooksPageDto getAncientDramaPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
     }
 
 }
