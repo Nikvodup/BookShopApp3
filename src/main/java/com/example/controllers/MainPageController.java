@@ -62,11 +62,11 @@ public class MainPageController {
     } **/
 
 
-    @GetMapping("/books/recentLine")
+ /**   @GetMapping("/books/recentLine")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getRecentPage(offset, limit).getContent());
-    }
+    } **/
 
 
     //------------------------Recommended carousal-----------------------

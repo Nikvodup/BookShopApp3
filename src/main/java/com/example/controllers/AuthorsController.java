@@ -1,13 +1,12 @@
 package com.example.controllers;
 
 import com.example.data.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/authors")
+//@RequestMapping("/authors")
+@Api(description = "authors data")
 public class AuthorsController {
 
     private final AuthorService authorService;
@@ -41,7 +41,7 @@ public class AuthorsController {
     }
 
 
-    @GetMapping("")
+    @GetMapping("/authors")
     public String authorsPage(){
         return "/authors/index";
     }
@@ -49,7 +49,7 @@ public class AuthorsController {
    // @GetMapping("/slug")
   //  public String slugPage(){return "/authors/slug";}
 
-    @GetMapping("/{id}")
+    @GetMapping("/authors/{id}")
     public String authorPage(@PathVariable("id") Integer id,  Model model){
 
 
@@ -57,10 +57,30 @@ public class AuthorsController {
 
         model.addAttribute("authorSlug", author);
         model.addAttribute("thisauthorLine", bookService.findBooksByAuthorId(0,6,id));
+        model.addAttribute("countBooksByAuthorId", bookService.getCount(id));
 
         return "/authors/slug";
     }
 
 
+
+    @ApiOperation("method to get a map of authors")
+     @GetMapping("/api/authors")
+     @ResponseBody
+    public Map<String,List<Author>> authors(){
+        return authorService.getAuthorsMap();
+     }
+
+
+     //---------------------------------Controller to gain access to a specific author's page-------------
+    // on this page it's possible to get this author's id
+    @GetMapping("/books/{authorSlug.id}")
+    public String authorListPage(@PathVariable("authorSlug.id") Integer id, Model model){
+        Author  author = authorRepository.findAuthorById(id);
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        model.addAttribute("author", author);
+        model.addAttribute("thisauthorPage", bookService.findBooksByAuthorId(0,6,id));
+        return "/books/author";
+    }
 
 }

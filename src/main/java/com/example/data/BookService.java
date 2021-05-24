@@ -100,6 +100,12 @@ public class BookService {
         return bookRepository.countBooksByGenre(genre);
     }
 
+    //-------------------Counting Books By Id----------------
+
+    public Integer getCount(Integer id){
+        return bookRepository.countBooksByAuthorId(id);
+    }
+
     //------------------Finding Books By Id-----------------
 
     public Page<Book> findBooksByAuthorId(Integer offset, Integer limit, Integer id){

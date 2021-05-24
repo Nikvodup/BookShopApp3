@@ -30,7 +30,7 @@ public class Book {
     private LocalDate pubDate;
 
    private LocalDate since=LocalDate.now().minusMonths(6);
- //  private LocalDate today=LocalDate.now();
+   private LocalDate today=LocalDate.now();
  //  private Integer period;
 
 
@@ -115,13 +115,13 @@ public class Book {
         this.since = since;
     }
 
- /**   public LocalDate getToday() {
+    public LocalDate getToday() {
         return today;
     }
 
     public void setToday(LocalDate today) {
         this.today = today;
-    }  **/
+    }
 
 
 

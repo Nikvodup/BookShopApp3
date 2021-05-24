@@ -13,7 +13,8 @@
 
   <div class="Middle">
     <div class="wrap">
-      <main class="Middle-main">
+      <!--/*@thymesVar id="bookService" type=""*/-->
+      <main class="Middle-main"  th:object="${bookService}">
         <ul class="breadcrumbs">
           <li class="breadcrumbs-item"><a href="/">Главная</a>
           </li>
@@ -44,7 +45,7 @@
         </article>
         <div class="Section">
           <header class="Section-header">
-            <h2 class="Section-title">Книги автора
+            <h2 class="Section-title">Книги автора     (<span th:text="${countBooksByAuthorId}">(0)</span>)
             </h2>
           </header>
           <div class="Slider Slider_carousel">
@@ -75,7 +76,7 @@
             </div>
           </div>
 
-          <footer class="Section-footer"><a class="Author-books" th:href="@{'/books/' + ${authorSlug.id}}">Все книги автора<span class="Author-amount">(55)</span></a>
+          <footer class="Section-footer"><a class="Author-books" th:href="@{'/books/' + ${authorSlug.id}}">Все книги автора     (<span th:text="'Найдено книг - '  +   ${countBooksByAuthorId}">(0)</span>)</a>
           </footer>
 
         </div>

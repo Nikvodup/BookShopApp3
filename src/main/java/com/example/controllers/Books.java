@@ -53,15 +53,16 @@ public class Books {
 
 //--------------------------Popular Page--------------------------
 
-    @ModelAttribute("bestsellers")
+ /**   @ModelAttribute("bestsellers")
     public List bestsellerBooks(){
         return bookService.getPageOfBestsellers(0,6).getContent();
-    }
+    }  **/
 
 
     @GetMapping("/popular")
     public String popularPage( Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        model.addAttribute("bestsellers", bookService.getPageOfBestsellers(0,6).getContent());
         return "/books/popular";
     }
 
@@ -79,15 +80,15 @@ public class Books {
         return "/books/slug";
     }
 
+   //----------------------------Page of a specific author----------------------
 
-
-    @GetMapping("/{authorSlug.id}")
+ /**   @GetMapping("/{authorSlug.id}")
     public String authorListPage(@PathVariable("authorSlug.id") Integer id, Model model){
        Author  author = authorRepository.findAuthorById(id);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("author", author);
         model.addAttribute("thisauthorPage", bookService.findBooksByAuthorId(0,6,id));
         return "/books/author";
-    }
+    }  **/
 
 }

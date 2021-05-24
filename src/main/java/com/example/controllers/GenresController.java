@@ -34,6 +34,21 @@ public class GenresController {
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("countSF", bookService.getCount("science_fiction"));
         model.addAttribute("countAD", bookService.getCount("ancient_drama"));
+        model.addAttribute("countActionStory", bookService.getCount("action_story"));
+        model.addAttribute("countScript", bookService.getCount("movie_script"));
+        model.addAttribute("countDrama", bookService.getCount("drama"));
+        model.addAttribute("countComedy", bookService.getCount("ironic_detective"));
+        model.addAttribute("countLifeStory", bookService.getCount("life_story"));
+        model.addAttribute("countFantasy", bookService.getCount("fantasy"));
+        model.addAttribute("countHorror", bookService.getCount("horror_story"));
+        model.addAttribute("countAdventures", bookService.getCount("adventures"));
+        model.addAttribute("countThriller", bookService.getCount("thriller"));
+        model.addAttribute("countIronicDetective", bookService.getCount("ironic_detective"));
+        model.addAttribute("countSpyDetective", bookService.getCount("spy_story"));
+        model.addAttribute("countClassicDetective", bookService.getCount("classical_detective"));
+        model.addAttribute("countPoliticalDetective", bookService.getCount("political_detective"));
+
+
         return "/genres/index";
     }
 
@@ -43,30 +58,14 @@ public class GenresController {
         return "/genres/slug";
     }
 
-  /**  @GetMapping("/light_reading")
-    public String lightReadingPage(){
-        return "/genres/light_reading";
-    }
 
-    @GetMapping("/serious_reading")
-    public String seriousReadingPage(){
-        return "/genres/serious_reading";
-    } **/
 
     @GetMapping("/business_books")
     public String businessReadingPage(){
         return "/genres/business_books";
     }
 
-  /**  @GetMapping("/drama")
-    public String dramaReadingPage(){
-        return "/genres/drama";
-    } **/
 
-  /**  @GetMapping("/crime_story")
-    public String crimeStoryPage(){
-        return "/genres/crime_story";
-    } **/
 
     //=================================Specific Genres Pages===================
 

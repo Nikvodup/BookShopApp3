@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "authors")
-@ApiModel(description = "data model of author enrity")
+@ApiModel(description = "data model of author entity")
 public class Author {
 
     @Id

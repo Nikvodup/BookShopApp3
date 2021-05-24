@@ -39,11 +39,17 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
    // Page<Book> findBooksByPubDateGreaterThanOrSince(LocalDate pubDate, LocalDate since,Pageable pageable);
 
+   // Page<Book> findBooksByPubDateAndSince(LocalDate pubDate, LocalDate since,Pageable pageable);
+
 
     Page<Book> findBookByTitleContaining(String bookTitle, Pageable nextPage);
 
 
      Integer countBooksByGenre(String genre);
+
+
+     @Query(value = "SELECT COUNT(*) FROM books WHERE author_id =:id", nativeQuery = true)
+     Integer countBooksByAuthorId(@Param(value = "id") Integer id);
 
 
      @Query(value = "SELECT * FROM books WHERE author_id =:id", nativeQuery = true)
