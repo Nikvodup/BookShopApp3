@@ -73,7 +73,7 @@ public class AuthorsController {
 
 
      //---------------------------------Controller to gain access to a specific author's page-------------
-    // on this page it's possible to get this author's id
+    // only on this page it's possible to get this author's id
     @GetMapping("/books/{authorSlug.id}")
     public String authorListPage(@PathVariable("authorSlug.id") Integer id, Model model){
         Author  author = authorRepository.findAuthorById(id);
