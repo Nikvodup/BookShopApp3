@@ -5,8 +5,6 @@ import com.example.data.BookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,9 +51,8 @@ public class BooksRestApiController {
 
     @GetMapping("/books/bestsellsers")
     @ApiOperation("get bestseller books (which is_bestseller = 1)")
-    public ResponseEntity<Page<Book>> bestSellerBooks(Integer offset, Integer limit){
-
-        return ResponseEntity.ok(bookService.getPageOfBestsellers(offset,limit));
+    public ResponseEntity<List<Book>> bestSellerBooks(){
+        return ResponseEntity.ok(bookService.getBestsellers());
     }
 }
 

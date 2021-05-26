@@ -6,19 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.sql.Date;
 
-@Controller
 @Entity
 @Table(name = "books")
 @ApiModel(description = "entity representing a book")
@@ -31,23 +22,12 @@ public class Book {
 
     @Column(name = "pub_date")
     @ApiModelProperty("date of book publication")
-    private LocalDate pubDate;
-
-   //private LocalDate since=LocalDate.now().minusMonths(6);
-   //private LocalDate today=LocalDate.now();
-
-
-
-
-
+    private Date pubDate;
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonIgnore
     private Author author;
-
-
-
 
     @Column(name = "is_bestseller")
     @ApiModelProperty("if isBestseller = 1 so the book is considered to be bestseller and  if 0 the book is not a " +
@@ -56,16 +36,8 @@ public class Book {
 
     @ApiModelProperty("mnemonical identity sequence of characters")
     private String slug;
-
     @ApiModelProperty("book title")
     private String title;
-
-    @ApiModelProperty("full name of the author")
-    @JsonGetter("authors")
-    public String authorsFullName(){
-        return author.toString();
-    }
-
     @ApiModelProperty("image url")
     private String image;
 
@@ -83,59 +55,13 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
-
-    @JsonProperty
-    private Integer discountPrice(){
-        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price*priceOld));
-        return discountedPriceInt;
-    }
-
-
-    @Column(name = "genre")
-    @JsonProperty("genre")
-    @ApiModelProperty("the genre a book belongs to")
-    private String genre;
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-
-
-
- /**   public LocalDate getSince() {
-        return since;
-    }
-
-    public void setSince(LocalDate since) {
-        this.since = since;
-    }
-
-    public LocalDate getToday() {
-        return today;
-    }
-
-    public void setToday(LocalDate today) {
-        this.today = today;
-    } **/
-
-
-
-
-
-    public LocalDate getPubDate() {
+    public Date getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(LocalDate pubDate) {
+    public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
     }
-
-
 
     public Integer getIsBestseller() {
         return isBestseller;
@@ -219,6 +145,4 @@ public class Book {
                 ", price='" + price + '\'' +
                 '}';
     }
-
-
 }

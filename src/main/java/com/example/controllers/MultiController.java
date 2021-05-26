@@ -2,7 +2,6 @@ package com.example.controllers;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -17,11 +16,12 @@ public class MultiController {
         return new SimpleDateFormat("hh:mm:ss").format(new Date());
     }
 
-    @GetMapping("/cart")
+  /**  @GetMapping("/cart")
     public String cartPage(){
 
         return "/cart/cart";
     }
+   **/
 
     @GetMapping("/contacts")
     public String contactsPage(){
@@ -38,7 +38,7 @@ public class MultiController {
     @GetMapping("/signin")
     public String signinPage(){
 
-        return "/signin/signin";
+        return "/signin";
     }
 
 
