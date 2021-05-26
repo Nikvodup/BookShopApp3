@@ -6,12 +6,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.lang.reflect.Array;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Controller
 @Entity
 @Table(name = "books")
 @ApiModel(description = "entity representing a book")
@@ -24,17 +31,23 @@ public class Book {
 
     @Column(name = "pub_date")
     @ApiModelProperty("date of book publication")
-    private Date pubDate;
+    private LocalDate pubDate;
+
+   //private LocalDate since=LocalDate.now().minusMonths(6);
+   //private LocalDate today=LocalDate.now();
+
+
+
+
+
 
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonIgnore
     private Author author;
 
-    @JsonGetter("author")
-    public String authorsFullName(){
-        return author.toString();
-    }
+
+
 
     @Column(name = "is_bestseller")
     @ApiModelProperty("if isBestseller = 1 so the book is considered to be bestseller and  if 0 the book is not a " +
@@ -43,8 +56,16 @@ public class Book {
 
     @ApiModelProperty("mnemonical identity sequence of characters")
     private String slug;
+
     @ApiModelProperty("book title")
     private String title;
+
+    @ApiModelProperty("full name of the author")
+    @JsonGetter("authors")
+    public String authorsFullName(){
+        return author.toString();
+    }
+
     @ApiModelProperty("image url")
     private String image;
 
@@ -62,33 +83,59 @@ public class Book {
     @ApiModelProperty("discount value for book")
     private Double price;
 
+
     @JsonProperty
-    public Integer discountPrice(){
-        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round((price*priceOld)));
+    private Integer discountPrice(){
+        Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price*priceOld));
         return discountedPriceInt;
-
-    }
-
-    @OneToMany(mappedBy = "book")
-    private List<BookFile> bookFileList = new ArrayList<>();
-
-    public List<BookFile> getBookFileList() {
-        return bookFileList;
-    }
-
-    public void setBookFileList(List<BookFile> bookFileList) {
-        this.bookFileList = bookFileList;
     }
 
 
+    @Column(name = "genre")
+    @JsonProperty("genre")
+    @ApiModelProperty("the genre a book belongs to")
+    private String genre;
 
-    public Date getPubDate() {
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+
+
+
+ /**   public LocalDate getSince() {
+        return since;
+    }
+
+    public void setSince(LocalDate since) {
+        this.since = since;
+    }
+
+    public LocalDate getToday() {
+        return today;
+    }
+
+    public void setToday(LocalDate today) {
+        this.today = today;
+    } **/
+
+
+
+
+
+    public LocalDate getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(Date pubDate) {
+    public void setPubDate(LocalDate pubDate) {
         this.pubDate = pubDate;
     }
+
+
 
     public Integer getIsBestseller() {
         return isBestseller;
@@ -172,4 +219,6 @@ public class Book {
                 ", price='" + price + '\'' +
                 '}';
     }
+
+
 }

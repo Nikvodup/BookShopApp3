@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "authors")
-@ApiModel(description = "data model of author enrity")
+@ApiModel(description = "data model of author entity")
 public class Author {
 
     @Id
@@ -22,6 +22,15 @@ public class Author {
     private String firstName;
     @ApiModelProperty(value = "last name of author",example = "Blaskovits", position = 3)
     private String lastName;
+
+    @ApiModelProperty(value = "picture of the author")
+    private String image;
+
+    @ApiModelProperty(value = "biography of the author")
+    private String biography;
+
+    private String slug;
+
 
     @OneToMany(mappedBy = "author")
     @JsonIgnore
@@ -38,6 +47,22 @@ public class Author {
     @Override
     public String toString() {
         return firstName + ' ' + lastName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     public Integer getId() {
@@ -64,5 +89,11 @@ public class Author {
         this.lastName = lastName;
     }
 
+    public String getSlug() {
+        return slug;
+    }
 
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 }

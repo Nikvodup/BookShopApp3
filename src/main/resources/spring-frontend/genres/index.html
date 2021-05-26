@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
- <html lang="ru" xmlns:th="http://www.thymeleaf.org"> <
+ <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/tophead_fragment::topheadFragment}"></head>
 
@@ -10,151 +10,102 @@
 
   <div class="Middle">
     <div class="wrap">
-      <main class="Middle-main">
+      <main class="Middle-main" >
         <h1 class="Middle-title" th:text="#{genres}">Жанры
         </h1>
         <div class="Section">
           <div class="Tags Tags_genres">
+
+
+           <!--/*@thymesVar id="bookService" type=""*/-->
+            <form th:object="${bookService}" method="post">
+
             <div class="Tags Tags_embed">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/slug">Лёгкое чтение<span class="undefined-amount">(15638)</span></a>
+                <div class="Tag"><a href="/genres/light_reading"><span style="color: red"> <strong>Лёгкое чтение</strong></span></a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/slug">Фантастика<span class="undefined-amount">(44333)</span></a>
+              <div class="Tag"><a href="/genres/science_fiction">Фантастика (<span th:text="${countSF}">(0)</span>) </a>
               </div>
-              <div class="Tag"><a href="/genres/slug">Боевики<span class="undefined-amount">(158)</span></a>
+              <div class="Tag"><a href="/genres/action_story">Боевики    (<span th:text="${countActionStory}">(0)</span>) </a>
               </div>
               <div class="Tags">
                 <div class="Tags-title">
-                  <div class="Tag"><a href="/genres/slug">Детективы<span class="undefined-amount">(10)</span></a>
+                  <div class="Tag"><a href="/genres/crime_story"><span style="color: #ff0000"> <strong>Детективы</strong></span></a>
                   </div>
                 </div>
-                <div class="Tag"><a href="/genres/slug">Триллер<span class="undefined-amount">(134)</span></a>
+                <div class="Tag"><a href="/genres/thriller">Триллер   (<span th:text="${countThriller}">(0)</span>)</a>
                 </div>
-                <div class="Tag"><a href="/genres/slug">Крутой детектив<span class="undefined-amount">(934)</span></a>
+                <div class="Tag"><a href="/genres/ironic_crime">Иронический детектив   (<span th:text="${countIronicDetective}">(0)</span>) </a>
                 </div>
-                <div class="Tag"><a href="/genres/slug">Иронический детектив<span class="undefined-amount">(143443)</span></a>
+                <div class="Tag"><a href="/genres/spy_crime">Шпионский детектив   (<span th:text="${countSpyDetective}">(0)</span>) </a>
                 </div>
-                <div class="Tag"><a href="/genres/slug">Про маньяков<span class="undefined-amount">(3331)</span></a>
+                <div class="Tag"><a href="/genres/classic_crime">Классический детектив    (<span th:text="${countClassicDetective}">(0)</span>)</a>
                 </div>
-                <div class="Tag"><a href="/genres/slug">Шпионский детектив<span class="undefined-amount">(94)</span></a>
-                </div>
-                <div class="Tag"><a href="/genres/slug">Криминальный детектив<span class="undefined-amount">(4839)</span></a>
-                </div>
-                <div class="Tag"><a href="/genres/slug.">Классический детектив<span class="undefined-amount">(4488)</span></a>
-                </div>
-                <div class="Tag"><a href="/genres/slug">Политический детектив<span class="undefined-amount">(1)</span></a>
+                <div class="Tag"><a href="/genres/political_crime">Политический детектив   (<span th:text="${countPoliticalDetective}">(0)</span>)</a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Фэнтези<span class="undefined-amount">(14338)</span></a>
+              <div class="Tag"><a th:href="@{/genres/fantasy_page}">Фэнтези    (<span th:text="${countFantasy}">(0)</span>) </a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Романы<span class="undefined-amount">(1438)</span></a>
+              <div class="Tag"><a href="/genres/horror">Ужасы    (<span th:text="${countHorror}">(0)</span>)</a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Ужасы<span class="undefined-amount">(156)</span></a>
+              <div class="Tag"><a href="/genres/adventures">Приключения    (<span th:text="${countAdventures}">(0)</span>)</a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Приключения<span class="undefined-amount">(1538)</span></a>
+            </div>
+
+            </form>
+
+            <div class="Tags">
+              <div class="Tags-title">
+                <div class="Tag"><a href="/genres/serious_reading"><span style="color: red"> <strong>Серьезное чтение</strong></span></a>
+                </div>
+              </div>
+              <div class="Tag"><a href="/genres/life_story">Биографии   (<span th:text="${countLifeStory}">(0)</span>) </a>
               </div>
             </div>
             <div class="Tags">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/slug.html">Серьёзное чтение<span class="undefined-amount">(18)</span></a>
+                <div class="Tag"><a href="/genres/business_books"><span style="color: red"> <strong>Деловая литература</strong></span></a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Биографии<span class="undefined-amount">(18)</span></a>
+
+              <div class="Tag"><a href="/genres/slug.html">О бизнесе популярно<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Ценные бумаги / инвестиции<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Бухучет / налогообложение / аудит<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Российская практика<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Истории успеха<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Интернет-маркетинг<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Лидерство<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Проектный менеджмент<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Управление качеством<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Финансовый менеджмент<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Управление персоналом<span class="undefined-amount"></span></a>
+              </div>
+              <div class="Tag"><a href="/genres/slug.html">Управление бизнесом<span class="undefined-amount"></span></a>
               </div>
             </div>
             <div class="Tags">
               <div class="Tags-title">
-                <div class="Tag"><a href="/genres/slug.html">Деловая литература<span class="undefined-amount">(158)</span></a>
+                <div class="Tag"><a th:href="@{/genres/dramaturgy}"><span style="color: red"> <strong>Драматургия</strong></span></a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Деловая литература<span class="undefined-amount">(138)</span></a>
+              <div class="Tag"><a th:href="@{/genres/ancientdrama}">Античная драма    (<span th:text="${countAD}">(0)</span>)</a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление экономикой<span class="undefined-amount">(158)</span></a>
+              <div class="Tag"><a th:href="@{/genres/comedy}">Комедия   (<span th:text="${countComedy}">(0)</span>)</a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Карьера<span class="undefined-amount">(15638)</span></a>
+              <div class="Tag"><a th:href="@{/genres/movie_script}">Сценарий    (<span th:text="${countScript}">(0)</span>) </a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Маркетинг, PR, реклама<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Финансы<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Бизнес-справочники<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Личные финансы<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Менеджмент<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Зарубежная деловая литература<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Личная эффективность<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Тайм-менеджмент<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Малый бизнес<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Продажи<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Стартапы и создание бизнеса<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Корпоративная культура<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Банковское дело<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Логистика<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Недвижимость<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Интернет-бизнес<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Ораторское искусство / риторика<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Привлечение клиентов и лояльность<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Делопроизводство<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Переговоры<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Государственное и муниципальное управление, политическое управление<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">О бизнесе популярно<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Ценные бумаги / инвестиции<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Бухучет / налогообложение / аудит<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Российская практика<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Истории успеха<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Интернет-маркетинг<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Лидерство<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Проектный менеджмент<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление качеством<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Финансовый менеджмент<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление персоналом<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Бизнес-процессы<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление бизнесом<span class="undefined-amount">(15638)</span></a>
-              </div>
-            </div>
-            <div class="Tags">
-              <div class="Tags-title">
-                <div class="Tag"><a href="/genres/slug.html">Драматургия<span class="undefined-amount">(15638)</span></a>
-                </div>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Античная драма<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Комедия<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Сценарий<span class="undefined-amount">(15638)</span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Драма, пьеса<span class="undefined-amount">(15638)</span></a>
+              <div class="Tag"><a th:href="@{/genres/drama}">Драма, пьеса   (<span th:text="${countDrama}">(0)</span>) </a>
               </div>
             </div>
           </div>
