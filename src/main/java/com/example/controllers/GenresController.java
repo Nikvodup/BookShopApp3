@@ -82,7 +82,7 @@ public class GenresController {
         return  "/genres/science_fiction";
     }
 
-    @GetMapping("/books/sciencefiction")
+    @GetMapping("/books/genre/'sciencefiction'")
     @ResponseBody
     public BooksPageDto getSFPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
         return new BooksPageDto(genresService.getScienceFictionBooksPage(offset,limit).getContent());
@@ -106,14 +106,14 @@ public class GenresController {
 
     //---------------------------Fantasy------------------------
 
-    @GetMapping("/fantasy")
+    @GetMapping("/fantasy_page")
     public String fantasyStoryPage(Model model){
         model.addAttribute("fantasy", genresService.getFantasyBooksPage(0,6).getContent());
         model.addAttribute("countFan", bookService.getCount("fantasy"));
-        return  "/genres/fantasy";
+        return "/genres/fantasy_page";
     }
 
-    @GetMapping("/books/fantasystory")
+    @GetMapping("/books/genre/fantasy")
     @ResponseBody
     public BooksPageDto getFantasyPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
         return new BooksPageDto(genresService.getFantasyBooksPage(offset,limit).getContent());
@@ -263,5 +263,49 @@ public class GenresController {
     public BooksPageDto getAncientDramaPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
         return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
     }
+
+    //--------------------------Movie Script-----------------------
+
+    @GetMapping("/movie_script")
+    public String moviescriptPage( Model model){
+        model.addAttribute("moviescipt", genresService.getGenreBooks("movie_script",0,6).getContent());
+        model.addAttribute("countMovieScript", bookService.getCount("movie_script"));
+        return "/genres/movie_script";
+    }
+
+    @GetMapping("/books/movie_script")
+    @ResponseBody
+    public BooksPageDto getMovieScriptPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
+    }
+
+    //-------------------------Comedy-----------------
+    @GetMapping("/comedy")
+    public String comedyPage( Model model){
+        model.addAttribute("comedy", genresService.getGenreBooks("ironic_detective",0,6).getContent());
+        model.addAttribute("countComedy", bookService.getCount("ironic_detective"));
+        return "/genres/comedy";
+    }
+
+    @GetMapping("/books/comedy")
+    @ResponseBody
+    public BooksPageDto getComedyPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
+    }
+
+    //-----------------------Drama----------------------
+    @GetMapping("/drama")
+    public String dramaPage( Model model){
+        model.addAttribute("drama", genresService.getGenreBooks("drama",0,6).getContent());
+        model.addAttribute("countDrama", bookService.getCount("drama"));
+        return "/genres/drama";
+    }
+
+    @GetMapping("/books/drama")
+    @ResponseBody
+    public BooksPageDto getDramaPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
+    }
+
 
 }

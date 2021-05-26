@@ -40,17 +40,15 @@
 
 
 
-         <form >
+         <form th:object="${bookService}">
             <table>
               <tr>
                 <td>Select books for the period of</td>
                 <td>
-                  <select>
-                    <option>3 months</option>
-                    <option>1 month </option>
-                    <option>6 months</option>
-                    <option>9 months</option>
-                    <option>12 months</option>
+                  <select th:field="*{period}" th:method="Post">
+                    <option th:each="i : ${period}" th:value="${i}" th:text="${i}"
+                            th:selected="${i=='3 months'}" > 3 months </option>
+
                   </select>
                 </td>
               </tr>
@@ -73,7 +71,7 @@
               <div class="Card-content">
                 <strong class="Card-title"><a href="#"  th:text="${book.title}" >Техника</a>
                 </strong>
-                <div class="Card-description" th:text="${book.author}" >Кондратенко Александр Петрович
+                <div class="Card-description" th:text="${book.authorsFullName()}" >Кондратенко Александр Петрович
                 </div>
                 <div class="Card-cost"><span class="Card-priceOld"  th:text="${book.priceOld}">₽300.00</span><span class="Card-price"  th:text="${book.price}">₽190.00</span>
                 </div>
@@ -82,7 +80,7 @@
             </div>
 
 
-            <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#" data-refreshshow="recent" data-refreshoffset="20" data-refreshlimit="20">Показать еще</a>
+            <div class="Cards-footer Cards-footer_center"><a class="btn btn_primary" href="#" data-refreshshow="recent" data-refreshoffset="0" data-refreshlimit="5">Показать еще</a>
             </div>
           </div>
 

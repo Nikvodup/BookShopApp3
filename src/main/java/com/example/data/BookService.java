@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +15,9 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+
+    List<String> period= List.of("1 month","2 months","3 months","6 months","9 months","12 months");
+
 
 
 
@@ -56,28 +60,37 @@ public class BookService {
         return  bookRepository.getBestsellers(nextPage);
     }
 
-   //-------------recent books-----------------
-
-   public Page<Book> getRecentPage(Integer offset, Integer limit){
+   //-------------Recent Books-----------------
+    //------------Carousal on the main page-----------
+   public Page<Book> getRecentBooks(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of( offset,limit);
         return bookRepository.getRecent(nextPage);
     }
+   //-----------List of books on the Recent page-----------------
 
-    //just for fun
- /**  public Page<Book> getRecentBooks(LocalDate pubDate,LocalDate since, Integer offset, Integer limit){
-     if(book.getPeriod()==1){
-            since=LocalDate.now().minusMonths(1);
-        }else if(book.getPeriod()==3){
-            since=LocalDate.now().minusMonths(3);
-        } else if (book.getPeriod()==6){
-            since=LocalDate.now().minusMonths(6);
+   public Page<Book> getRecentPage(LocalDate since,Integer offset,Integer limit){
+      // List<String> period= List.of("1 month","2 months","3 months","6 months","9 months","12 months");
+        for(String m : period) {
+            if (m == "1 months") {
+                since = LocalDate.now().minusMonths(1);
+            } else if (m =="2 months") {
+                since = LocalDate.now().minusMonths(2);
+            } else if (m =="3 months") {
+                since = LocalDate.now().minusMonths(3);
+            } else if (m =="6 months") {
+                since = LocalDate.now().minusMonths(6);
+            } else if (m =="9 months") {
+                since = LocalDate.now().minusMonths(9);
+            } else if (m =="12 months") {
+                since = LocalDate.now().minusMonths(12);
+            }
         }
-         since=LocalDate.now().minusMonths(6);
+
         Pageable nextPage = PageRequest.of(offset,limit);
-        return bookRepository.findBooksByPubDateGreaterThanOrSince(pubDate,since,nextPage);
-    } **/
+        return bookRepository.findBooksByPubDateGreaterThan(since,nextPage);
+    }
 
-
+    //-----------------------Recommended Books----------------------
 
     public Page<Book> getPageOfRecommendedBooks(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
@@ -113,6 +126,10 @@ public class BookService {
         return bookRepository.findBooksByAuthorId(nextPage,id);
 
     }
+
+    public List<String> getPeriod() {return period;}
+
+    public void setPeriod(List<String> period) {this.period = period;}
 
 
 }

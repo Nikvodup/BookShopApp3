@@ -46,4 +46,57 @@ public class DramaturgyController {
     public BooksPageDto getAncientDramaPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
         return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
     }
+
+    //--------------------------Comedy--------------------
+    @ModelAttribute("comedy")
+    public List<Book> comedyPage(){
+        return genresService.getGenreBooks("ironic_detective",0,6).getContent();
+    }
+
+    @ModelAttribute("countComedy")
+    public Integer countComedyBooks(){
+        return bookService.getCount("ironic_detective");
+    }
+
+    @GetMapping("/books/drama")
+    @ResponseBody
+    public BooksPageDto getComedy(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
+    }
+
+    //------------------------Modern Drama------------------
+
+    @ModelAttribute("drama")
+    public List<Book> dramaPage(){
+        return genresService.getGenreBooks("drama",0,6).getContent();
+    }
+
+    @ModelAttribute("countDrama")
+    public Integer countDramaBooks(){
+        return bookService.getCount("drama");
+    }
+
+    @GetMapping("/books/dramaLine")
+    @ResponseBody
+    public BooksPageDto getDramaPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
+    }
+
+    //---------------------------Movie Script------------------
+    @ModelAttribute("script")
+    public List<Book> scriptPage(){
+        return genresService.getGenreBooks("movie_script",0,6).getContent();
+    }
+
+    @ModelAttribute("countScript")
+    public Integer countMovieScript(){
+        return bookService.getCount("movie_script");
+    }
+
+    @GetMapping("/books/movie_script")
+    @ResponseBody
+    public BooksPageDto getScriptPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
+        return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
+    }
+
 }

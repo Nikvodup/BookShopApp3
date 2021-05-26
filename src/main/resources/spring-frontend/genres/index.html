@@ -45,7 +45,7 @@
                 <div class="Tag"><a href="/genres/political_crime">Политический детектив   (<span th:text="${countPoliticalDetective}">(0)</span>)</a>
                 </div>
               </div>
-              <div class="Tag"><a href="/genres/fantasy">Фэнтези    (<span th:text="${countFantasy}">(0)</span>) </a>
+              <div class="Tag"><a th:href="@{/genres/fantasy_page}">Фэнтези    (<span th:text="${countFantasy}">(0)</span>) </a>
               </div>
               <div class="Tag"><a href="/genres/horror">Ужасы    (<span th:text="${countHorror}">(0)</span>)</a>
               </div>
@@ -101,11 +101,11 @@
               </div>
               <div class="Tag"><a th:href="@{/genres/ancientdrama}">Античная драма    (<span th:text="${countAD}">(0)</span>)</a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Комедия   (<span th:text="${countComedy}">(0)</span>)</a>
+              <div class="Tag"><a th:href="@{/genres/comedy}">Комедия   (<span th:text="${countComedy}">(0)</span>)</a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Сценарий    (<span th:text="${countScript}">(0)</span>) </a>
+              <div class="Tag"><a th:href="@{/genres/movie_script}">Сценарий    (<span th:text="${countScript}">(0)</span>) </a>
               </div>
-              <div class="Tag"><a href="/genres/slug.html">Драма, пьеса   (<span th:text="${countDrama}">(0)</span>) </a>
+              <div class="Tag"><a th:href="@{/genres/drama}">Драма, пьеса   (<span th:text="${countDrama}">(0)</span>) </a>
               </div>
             </div>
           </div>

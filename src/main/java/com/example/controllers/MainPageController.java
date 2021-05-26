@@ -42,7 +42,7 @@ public class MainPageController {
 
     }
 
-    @GetMapping("/books/bestsellers")
+    @GetMapping("/books/popular")
     @ResponseBody
     public BooksPageDto getBestsellersPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfBestsellers(offset, limit).getContent());
@@ -53,7 +53,7 @@ public class MainPageController {
 
     @ModelAttribute("recent")
     public List<Book> recent(){
-        return bookService.getRecentPage(0,6).getContent();
+        return bookService.getRecentBooks(0,6).getContent();
     }
 
  /**   @ModelAttribute("recent")
@@ -62,11 +62,11 @@ public class MainPageController {
     } **/
 
 
- /**   @GetMapping("/books/recentLine")
+    @GetMapping("/books/recent")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getRecentPage(offset, limit).getContent());
-    } **/
+        return new BooksPageDto(bookService.getRecentBooks(offset, limit).getContent());
+    }
 
 
     //------------------------Recommended carousal-----------------------

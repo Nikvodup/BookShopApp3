@@ -1,12 +1,8 @@
 package com.example.controllers;
 
 
-import com.example.data.Author;
-import com.example.data.AuthorRepository;
-import com.example.data.BookService;
-import com.example.data.BooksPageDto;
+import com.example.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,25 +26,29 @@ public class Books {
         this.bookService = bookService;
     }
 //--------------------------------Recent Page-----------------
-   @ModelAttribute("recentBooks")
-   public List recentBooks(LocalDate pubDate, LocalDate since){
-    return bookService.getRecentPage(0, 6).getContent();
+  @ModelAttribute("recentBooks")
+   public List recentBooks(LocalDate since){
+
+    return bookService.getRecentPage(since,0,6).getContent();
 }
 
 
 
-    @GetMapping("/recent")
+    @GetMapping("/recent_page")
     public String getRecentBooks( Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("from", LocalDate.now().minus(Period.ofMonths(6)));
         model.addAttribute("upTo", LocalDate.now());
-        return "/books/recent";
+        model.addAttribute("bookService", bookService);
+        model.addAttribute("period", bookService.getPeriod());
+
+        return "/books/recent_page";
     }
 
-    @GetMapping("/books/recentBooks")
+    @GetMapping("/books/recent")
     @ResponseBody
-    public BooksPageDto getRecentPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit,LocalDate pubDate, LocalDate since) {
-        return new BooksPageDto(bookService.getRecentPage(offset, limit).getContent());
+    public BooksPageDto getRecentPage(LocalDate since,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
+        return new BooksPageDto(bookService.getRecentPage(since,offset, limit).getContent());
     }
 
 //--------------------------Popular Page--------------------------
@@ -59,15 +59,15 @@ public class Books {
     }  **/
 
 
-    @GetMapping("/popular")
+    @GetMapping("/popular_page")
     public String popularPage( Model model){
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("bestsellers", bookService.getPageOfBestsellers(0,6).getContent());
-        return "/books/popular";
+        return "/books/popular_page";
     }
 
 
-    @GetMapping("/books/bestsellers")
+    @GetMapping("/books/popular")
     @ResponseBody
     public BooksPageDto getBestSellersPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPageOfBestsellers(offset, limit).getContent());

@@ -10,10 +10,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Controller
 @Entity
 @Table(name = "books")
@@ -29,9 +33,11 @@ public class Book {
     @ApiModelProperty("date of book publication")
     private LocalDate pubDate;
 
-   private LocalDate since=LocalDate.now().minusMonths(6);
-   private LocalDate today=LocalDate.now();
- //  private Integer period;
+   //private LocalDate since=LocalDate.now().minusMonths(6);
+   //private LocalDate today=LocalDate.now();
+
+
+
 
 
 
@@ -99,15 +105,9 @@ public class Book {
     }
 
 
- /**   public Integer getPeriod() {
-        return period;
-    }
 
-    public void setPeriod(Integer period) {
-        this.period = period;
-    } **/
 
-    public LocalDate getSince() {
+ /**   public LocalDate getSince() {
         return since;
     }
 
@@ -121,7 +121,7 @@ public class Book {
 
     public void setToday(LocalDate today) {
         this.today = today;
-    }
+    } **/
 
 
 
