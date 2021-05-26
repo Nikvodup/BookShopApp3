@@ -1025,3 +1025,10 @@ insert into books (id, pub_date, is_bestseller, slug, title, image, description,
 insert into books (id, pub_date, is_bestseller, slug, title, image, description, price, discount, genre, author_id) values (998, '2020/03/11', 0, 'book-pvc-013', 'Little City', 'http://dummyimage.com/368x740.png/dddddd/000000', 'Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.', 623, 0.16, 'classical_detective', 2);
 insert into books (id, pub_date, is_bestseller, slug, title, image, description, price, discount, genre, author_id) values (999, '2018/07/31', 0, 'book-ufg-769', 'Get on Up', 'http://dummyimage.com/774x272.png/ff4444/ffffff', 'In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.', 1181, 0.22, 'success_story', 19);
 insert into books (id, pub_date, is_bestseller, slug, title, image, description, price, discount, genre, author_id) values (1000, '2017/10/02', 1, 'book-xrz-375', 'Natural Born Killers', 'http://dummyimage.com/277x550.png/ff4444/ffffff', 'In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.', 322, 0.23, 'action_story', 6);
+
+
+insert into book_file (id, hash, type_id, path, book_id) values (2 , 'fsdl342ladads76432', 1, '/Seven_Invisible_Men.pdf',  2);
+insert into book_file (id, hash, type_id, path, book_id) values (3 , 'asdl35436dads34235', 2, '/Seven_Invisible_Men.epub', 2);
+insert into book_file (id, hash, type_id, path, book_id) values (4, 'qwer342lafdss34123', 3, '/Seven_Invisible_Men.fb2',  2);
+
+insert into book_file (id, hash, type_id, path, book_id) values (5 , 'hgfd342la543h34123', 1, '/Burglar.pdf', 4);

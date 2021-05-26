@@ -2,13 +2,13 @@ package com.example.controllers;
 
 
 import com.example.data.*;
+import com.example.errors.EmptySearchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -100,14 +100,23 @@ public class MainPageController {
     }
 
 
+
+
     @GetMapping(value = {"/search", "/search/{searchWord}"})
     public String getSearchResults(@PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto,
-                                   Model model) {
-        model.addAttribute("searchWordDto", searchWordDto);
-        model.addAttribute("searchResults",
-                bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
-        return "/search/index";
+                                   Model model) throws EmptySearchException {
+        if (searchWordDto != null) {
+            model.addAttribute("searchWordDto", searchWordDto);
+            model.addAttribute("searchResults",
+                    bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), 0, 5).getContent());
+            return "/search/index";
+        } else {
+            throw new EmptySearchException("No search word entered!");
+        }
     }
+
+
+
 
     @GetMapping("/search/page/{searchWord}")
     @ResponseBody

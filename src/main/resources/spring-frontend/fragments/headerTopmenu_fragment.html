@@ -34,7 +34,8 @@
                     </div>
 
 
-
+                    <span th:if="${searchError}" th:text="${searchError.getLocalizedMessage()}"
+                          style="color: red"></span>
 
 
                 </div>

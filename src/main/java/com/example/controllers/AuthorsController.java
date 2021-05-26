@@ -74,16 +74,16 @@ public class AuthorsController {
 
      //---------------------------------Controller to gain access to a specific author's page with a list of his books
     // only on this page it's possible to get this author's id ----------------------
-    @GetMapping("/books/{authorSlug.id}")
-    public String authorListPage(@PathVariable("authorSlug.id") Integer id, Model model){
+ /**   @GetMapping("/books/{authorSlug.id}")
+    public String authorListPage(@PathVariable Integer id, Model model){
         Author  author = authorRepository.findAuthorById(id);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("author", author);
-        model.addAttribute("thisauthorPage", bookService.findBooksByAuthorId(0,6,id));
+        model.addAttribute("thisauthorPage", bookService.findBooksByAuthorId(0,6,id).getContent());
         return "/books/author";
-    }
+    }  **/
 
-  @GetMapping("/books/author ")
+  @GetMapping("/books/author.id ")
     @ResponseBody
     public BooksPageDto getNextPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,  Integer id) {

@@ -41,6 +41,7 @@ public class Book {
 
 
 
+
     @ManyToOne
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @JsonIgnore
@@ -85,7 +86,8 @@ public class Book {
 
 
     @JsonProperty
-    private Integer discountPrice(){
+
+   public Integer discountPrice(){
         Integer discountedPriceInt = priceOld - Math.toIntExact(Math.round(price*priceOld));
         return discountedPriceInt;
     }
@@ -122,6 +124,20 @@ public class Book {
     public void setToday(LocalDate today) {
         this.today = today;
     } **/
+
+ @OneToMany(mappedBy = "book")
+ private List<BookFile> bookFileList = new ArrayList<>();
+
+
+    public List<BookFile> getBookFileList() {
+     return bookFileList;
+ }
+
+
+    public void setBookFileList(List<BookFile> bookFileList) {
+        this.bookFileList = bookFileList;
+    }
+
 
 
 
