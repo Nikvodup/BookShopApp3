@@ -24,10 +24,7 @@ public class GenresController {
         this.genresService = genresService;
     }
 
-    @ModelAttribute("recommendedBooks")
-    public List<Book> recommendedBooks() {
-        return bookService.getPageOfRecommendedBooks(0, 6).getContent();
-    }
+
 
     @GetMapping("")
     public String genresPage( Model model){
@@ -57,14 +54,6 @@ public class GenresController {
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         return "/genres/slug";
     }
-
-
-
-    @GetMapping("/business_books")
-    public String businessReadingPage(){
-        return "/genres/business_books";
-    }
-
 
 
     //=================================Specific Genres Pages===================
@@ -306,6 +295,10 @@ public class GenresController {
     public BooksPageDto getDramaPage(String genre,@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit ){
         return new BooksPageDto(genresService.getGenreBooks(genre,offset,limit).getContent());
     }
+
+    //===================================Business Books==================
+
+
 
 
 }

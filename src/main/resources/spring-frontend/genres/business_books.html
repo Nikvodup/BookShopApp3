@@ -34,26 +34,26 @@
                 </li>
                 <li class="breadcrumbs-item"><a href="/genres">Жанры</a>
                 </li>
-                <li class="breadcrumbs-item breadcrumbs-item_current"><span>Лёгкое чтение</span>
+                <li class="breadcrumbs-item breadcrumbs-item_current"><span>Деловая литература</span>
                 </li>
             </ul>
 
             <div class="Section">
                 <div class="Section-header">
-                    <h2 class="Section-title" >Фантастика
+                    <h2 class="Section-title" >О бизнесе популярно   (<span th:text="${countAboutBusiness}">(0)</span>)
                     </h2>
                 </div>
                 <div class="Slider Slider_carousel">
 
                     <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
-                        <div class="Slider-item" th:each="book : ${recommendedBooks}">
+                        <div class="Slider-item" th:each="book : ${aboutbusiness}">
                             <div class="Slider-content">
                                 <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
                                         th:src="${book.image}" alt="card.jpg"/></a>
                                     <div class="Card-content">
                                         <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
                                         </strong>
-                                        <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
+                                        <div class="Card-description" th:text="${book.authorsFullName()}">Кондратенко Валерий Петрович
                                         </div>
                                         <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
                                                 class="Card-price" th:text="${book.price}">₽190
@@ -78,20 +78,20 @@
 
                 <div class="Section">
                     <div class="Section-header">
-                        <h2 class="Section-title" >Боевики
+                        <h2 class="Section-title" >Ценные бумаги/Инвестиции    (<span th:text="${countStocksBonds}">(0)</span>)
                         </h2>
                     </div>
                     <div class="Slider Slider_carousel">
 
                         <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
-                            <div class="Slider-item" th:each="book : ${recommendedBooks}">
+                            <div class="Slider-item" th:each="book : ${stocksbonds}">
                                 <div class="Slider-content">
                                     <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
                                             th:src="${book.image}" alt="card.jpg"/></a>
                                         <div class="Card-content">
                                             <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
                                             </strong>
-                                            <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
+                                            <div class="Card-description" th:text="${book.authorsFullName()}">Кондратенко Валерий Петрович
                                             </div>
                                             <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
                                                     class="Card-price" th:text="${book.price}">₽190
@@ -111,25 +111,26 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
 
 
                     <div class="Section">
                         <div class="Section-header">
-                            <h2 class="Section-title" >Фэнтези
+                            <h2 class="Section-title" >Бухучет/Налогообложение/Аудит   (<span th:text="${countAccounting}">(0)</span>)
                             </h2>
                         </div>
                         <div class="Slider Slider_carousel">
 
                             <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
-                                <div class="Slider-item" th:each="book : ${recommendedBooks}">
+                                <div class="Slider-item" th:each="book : ${accounting}">
                                     <div class="Slider-content">
                                         <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
                                                 th:src="${book.image}" alt="card.jpg"/></a>
                                             <div class="Card-content">
                                                 <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
                                                 </strong>
-                                                <div class="Card-description" th:text="${book.author}">Кондратенко Валерий Петрович
+                                                <div class="Card-description" th:text="${book.authorsFullName()}">Кондратенко Валерий Петрович
                                                 </div>
                                                 <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
                                                         class="Card-price" th:text="${book.price}">₽190
@@ -149,14 +150,91 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                     </div>
-        </main>
-    </div>
+
+
+
+                        <div class="Section">
+                            <div class="Section-header">
+                                <h2 class="Section-title" >Русский Бизнес   (<span th:text="${countRussianBusiness}">(0)</span>)
+                                </h2>
+                            </div>
+                            <div class="Slider Slider_carousel">
+
+                                <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
+                                    <div class="Slider-item" th:each="book : ${russianBusiness}">
+                                        <div class="Slider-content">
+                                            <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
+                                                    th:src="${book.image}" alt="card.jpg"/></a>
+                                                <div class="Card-content">
+                                                    <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
+                                                    </strong>
+                                                    <div class="Card-description" th:text="${book.authorsFullName()}">Кондратенко Валерий Петрович
+                                                    </div>
+                                                    <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
+                                                            class="Card-price" th:text="${book.price}">₽190
+                        .00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="Slider-navigateWrap">
+                                    <div class="Slider-navigate">
+                                    </div>
+                                </div>
+                                <div class="Slider-load">
+                                    <div class="Slider-load-text">Идет загрузка данных
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+
+
+
+                <div class="Section">
+                    <div class="Section-header">
+                        <h2 class="Section-title" >История успеха  (<span th:text="${countSuccessStory}">(0)</span>)
+                        </h2>
+                    </div>
+                    <div class="Slider Slider_carousel">
+
+                        <div class="Slider-box Cards" data-load="recommended" data-loadoffset="0" data-loadlimit="6">
+                            <div class="Slider-item" th:each="book : ${russianBusiness}">
+                                <div class="Slider-content">
+                                    <div class="Card"><a class="Card-picture" href="/books/slug.html"><img
+                                            th:src="${book.image}" alt="card.jpg"/></a>
+                                        <div class="Card-content">
+                                            <strong class="Card-title"><a href="/books/slug.html" th:text="${book.title}">Техника</a>
+                                            </strong>
+                                            <div class="Card-description" th:text="${book.authorsFullName()}">Кондратенко Валерий Петрович
+                                            </div>
+                                            <div class="Card-cost"><span class="Card-priceOld" th:text="${book.priceOld}">₽300.00</span><span
+                                                    class="Card-price" th:text="${book.price}">₽190
+                        .00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Slider-navigateWrap">
+                            <div class="Slider-navigate">
+                            </div>
+                        </div>
+                        <div class="Slider-load">
+                            <div class="Slider-load-text">Идет загрузка данных
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                </div>
+            </div>
+
     </main>
 </div>
 </div>
