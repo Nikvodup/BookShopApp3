@@ -54,7 +54,7 @@ public class BooksController {
         bookToUpdate.setImage(savePath);
         bookRepository.save(bookToUpdate); //save new path in db here
 
-        return ("redirect:/books/" + slug);
+        return "redirect:/books/" + slug ;
     }
 
 

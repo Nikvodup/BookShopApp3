@@ -36,9 +36,9 @@
         </li>
         <li class="breadcrumbs-item"><a href="/genres/index">Книги</a>
         </li>
- <!--       <li class="breadcrumbs-item breadcrumbs-item_current" th:text="${slugBook.title}">
+        <li class="breadcrumbs-item breadcrumbs-item_current" th:object="${slugBook}" th:text="${slugBook.title}">
           <span>Мара и морок</span>
-        </li>  -->
+        </li>
       </ul>
       <div class="Product">
         <div class="ProductCard">
@@ -420,7 +420,7 @@
               </div>
               <div class="ProductCard-cartElement">
                 <a class="btn btn_primary btn_outline" data-sendstatus="CART" data-bookid="[1111]"
-                        th:attr="data-bookid = ${slugBook.slug}" data-btntype="check"
+                        th:attr="data-bookId = ${slugBook.slug}" data-btntype="check"
                         data-btnradio="buyblock"
                         data-check="false"
                         data-alttext="В корзине"  ><span class="btn-icon"><img
