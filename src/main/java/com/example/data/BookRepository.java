@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
@@ -35,7 +35,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
    //============================Finding Recent Books====================
 
-   //-----------------Query for carousal------------------------
+   //-----------------Query for Recent carousal------------------------
     @Query(value = "SELECT * FROM books WHERE pub_date BETWEEN '2020-06-20' AND '2021-05-20'", nativeQuery = true)
     Page<Book> getRecent(Pageable pageable);
 
@@ -47,7 +47,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
          //   @Query("select b from Book b where b.pubDate>=b.since")
           //  List<Book> findRecentBooks(LocalDate since);
 
-   //------------------------Query for a page--------------------------
+   //------------------------Query for a Recent page--------------------------
 
        Page<Book> findBooksByPubDateGreaterThan(LocalDate since, Pageable pageable);
 
@@ -67,7 +67,14 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
      Page<Book> findBooksByAuthorId(Pageable pageable, @Param(value ="id") Integer id);
 
      Book findBookBySlug(String slug);
-     List<Book> findBooksBySlug(String slug);
+
+     Page<Book> findBooksByTag(String tag, Pageable pageable);
+
+     Integer countBooksByTag(String tag);
+
+     Page<Book> findPageOfBooksByPubDateBetweenOrderByPubDate(java.sql.Date dateFrom, java.sql.Date dateTo, Pageable pageable);
+
+    List<Book> findBooksBySlugIn(String[] slugs);
 
 }
 

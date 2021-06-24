@@ -39,7 +39,10 @@ public class Book {
 
 
 
-
+    @Column(name = "tag")
+    @JsonProperty("tag")
+    @ApiModelProperty("short description of the book")
+     private String tag;
 
 
     @ManyToOne

@@ -17,11 +17,7 @@ public class MultiController {
         return new SimpleDateFormat("hh:mm:ss").format(new Date());
     }
 
-    @GetMapping("/cart")
-    public String cartPage(){
 
-        return "/cart/cart";
-    }
 
     @GetMapping("/contacts")
     public String contactsPage(){

@@ -18,9 +18,6 @@ public class MainPageController {
 
     private final BookService bookService;
 
-
-
-
     @Autowired
     public MainPageController(BookService bookService) {
         this.bookService = bookService;
@@ -62,7 +59,7 @@ public class MainPageController {
     } **/
 
 
-    @GetMapping("/books/recent")
+    @GetMapping("/books/recent/page")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getRecentBooks(offset, limit).getContent());

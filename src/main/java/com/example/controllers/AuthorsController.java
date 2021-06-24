@@ -66,7 +66,7 @@ public class AuthorsController {
 
     @ApiOperation("method to get a map of authors")
      @GetMapping("/api/authors")
-     @ResponseBody
+     @ResponseBody  // something to memorize!!!
     public Map<String,List<Author>> authors(){
         return authorService.getAuthorsMap();
      }
@@ -74,7 +74,7 @@ public class AuthorsController {
 
      //---------------------------------Controller to gain access to a specific author's page with a list of his books
     // only on this page it's possible to get this author's id ----------------------
- /**   @GetMapping("/books/{authorSlug.id}")
+   /** @GetMapping("/books/{authorSlug.id}")
     public String authorListPage(@PathVariable Integer id, Model model){
         Author  author = authorRepository.findAuthorById(id);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
@@ -83,11 +83,38 @@ public class AuthorsController {
         return "/books/author";
     }  **/
 
-  @GetMapping("/books/author.id ")
+
+
+/**    @GetMapping("/books/{id}")
+    public String authorBooks(@PathVariable("id") Integer authorId, Model model) {
+        Author author = authorRepository.findAuthorById(authorId);
+        model.addAttribute("author", author);
+        model.addAttribute("authorBooks", bookService.findBooksByAuthorId(authorId, 0, 5).getContent());
+        return "/books/author";
+    } **/
+
+
+
+  /**  @GetMapping(value = "/books/author/{id}")
+    @ResponseBody
+    public BooksPageDto getNextAuthorBooksPage(
+            @PathVariable Integer id,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("limit") Integer limit
+    ) {
+        return new BooksPageDto( bookService.findBooksByAuthorId(id, offset, limit).getContent());
+    } **/
+
+
+
+
+
+
+ /** @GetMapping("/books/author.id ")
     @ResponseBody
     public BooksPageDto getNextPage(@RequestParam("offset") Integer offset,
                                           @RequestParam("limit") Integer limit,  Integer id) {
         return new BooksPageDto(bookService.findBooksByAuthorId(id,offset, limit).getContent());
-    }
+    }  **/
 
 }

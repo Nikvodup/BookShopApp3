@@ -41,6 +41,8 @@ public interface GenresRepository extends JpaRepository<Book,Integer> {
     @Query("select b from Book b where b.genre='ironic_detective'")
     Page<Book> getIronicCrime(Pageable pageable);
 
+
+    //one method to find all books by a certain genre
     Page<Book> findBooksByGenre(String genre,Pageable pageable);
 
 }

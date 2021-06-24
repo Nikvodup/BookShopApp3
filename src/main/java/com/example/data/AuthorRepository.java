@@ -13,4 +13,9 @@ public interface AuthorRepository extends JpaRepository<Author,Integer> {
     List<Author> findAll();
 
     Author findAuthorById(Integer slug);
+
+    List<Author> getAuthorsById(Integer authorId);
+
+
+
 }

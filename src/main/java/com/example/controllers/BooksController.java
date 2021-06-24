@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
-//@RequestMapping("/books")
+@RequestMapping("/books")
 public class BooksController {
 
     private final BookRepository bookRepository;
@@ -35,7 +35,7 @@ public class BooksController {
         this.storage = storage;
     }
 
-    @GetMapping("/books/{slug}")
+    @GetMapping("/{slug}")
     public String bookPage(@PathVariable(value = "slug") String slug, Model model){
          Book book = bookRepository.findBookBySlug(slug);
 
@@ -46,8 +46,8 @@ public class BooksController {
 
 
 
-    @PostMapping("/books/{slug}/img/save")
-    public String saveNewBoookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws IOException, IOException {
+    @PostMapping("/{slug}/img/save")
+    public String saveNewBookImage(@RequestParam("file") MultipartFile file, @PathVariable("slug") String slug) throws  IOException {
 
         String savePath = storage.saveNewBookImage(file, slug);
         Book bookToUpdate = bookRepository.findBookBySlug(slug);
@@ -58,7 +58,7 @@ public class BooksController {
     }
 
 
-    @GetMapping("/books/download/{hash}")
+    @GetMapping("/download/{hash}")
     public ResponseEntity<ByteArrayResource> bookFile(@PathVariable("hash") String hash) throws IOException {
 
         Path path = storage.getBookFilePath(hash);
@@ -85,8 +85,10 @@ public class BooksController {
 
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("slugBook", book);
-        return "/postponed/postponed";
+        return "postponed";
     }
+
+
 
 /**    @GetMapping("/{slug}")
     @ResponseBody

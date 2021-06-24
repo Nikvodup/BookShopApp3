@@ -36,7 +36,7 @@
           <div class="Cards Cards_refresh">
 
 
-            <div class="Card" th:each="book : ${thisauthorPage}">
+            <div class="Card" th:each="book : ${authorBooks}">
               <div class="Card-picture"><a href="#"><img th:src="${book.image}" alt="card.jpg"/></a>
               </div>
               <div class="Card-content">
