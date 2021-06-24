@@ -90,7 +90,7 @@ import java.util.StringJoiner;
             model.addAttribute("isCartEmpty", false);
         }
 
-        return "redirect:/books/"+slug;
+        return "redirect:/books/" + slug;
     }
 
 }

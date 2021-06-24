@@ -59,7 +59,7 @@ public class MainPageController {
     } **/
 
 
-    @GetMapping("/books/recent/page")
+    @GetMapping("/books/recent")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getRecentBooks(offset, limit).getContent());

@@ -78,15 +78,15 @@ p.error-browser
     <div class="wrap">
       <nav class="menuModal" id="navigate">
         <ul class="menu menu_main">
-          <li class="menu-item"><a class="menu-link" href="/index.html">Главная</a>
+          <li class="menu-item"><a class="menu-link" href="/">Главная</a>
           </li>
-          <li class="menu-item"><a class="menu-link" href="/genres/index.html">Жанры</a>
+          <li class="menu-item"><a class="menu-link" href="/genres">Жанры</a>
           </li>
-          <li class="menu-item"><a class="menu-link" href="/books/recent.html">Новинки</a>
+          <li class="menu-item"><a class="menu-link" th:href="@{/books/recent_page}">Новинки</a>
           </li>
-          <li class="menu-item"><a class="menu-link" href="/books/popular.html">Популярное</a>
+          <li class="menu-item"><a class="menu-link" th:href="@{/books/popular_page}">Популярное</a>
           </li>
-          <li class="menu-item"><a class="menu-link" href="/authors/index.html">Авторы</a>
+          <li class="menu-item"><a class="menu-link"  th:href="@{/authors}">Авторы</a>
           </li>
         </ul>
       </nav>
@@ -179,8 +179,8 @@ p.error-browser
 
         <div class="Cart-total">
           <div class="Cart-block Cart-block_total">
-            <strong class="Cart-title">Итого:
-            </strong><span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span>
+            <strong class="Cart-title">Итого: </strong>
+    <!--        <span class="Cart-price">534 р.</span><span class="Cart-price_old">658 р.</span> -->
           </div>
           <div class="Cart-block"><a class="btn btn_success btn_md" href="/order.html">Купить</a>
           </div>
@@ -189,6 +189,9 @@ p.error-browser
     </main>
   </div>
 </div>
+
+
+
 <footer class="Footer">
   <div class="wrap">
     <div class="row Footer-main">
