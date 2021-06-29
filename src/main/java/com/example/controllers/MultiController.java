@@ -31,11 +31,7 @@ public class MultiController {
         return "faq";
     }
 
-    @GetMapping("/signin")
-    public String signinPage(){
 
-        return "/signin/signin";
-    }
 
 
 
@@ -45,11 +41,7 @@ public class MultiController {
         return "about";
     }
 
-    @GetMapping("/signup")
-    public String signupPage(){
 
-        return "signup";
-    }
 
     @GetMapping("/tags")
     public String indexPage(){
