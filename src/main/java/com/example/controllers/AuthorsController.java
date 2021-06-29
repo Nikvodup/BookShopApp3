@@ -72,30 +72,22 @@ public class AuthorsController {
      }
 
 
-     //---------------------------------Controller to gain access to a specific author's page with a list of his books
-    // only on this page it's possible to get this author's id ----------------------
-   /** @GetMapping("/books/{authorSlug.id}")
+
+   @GetMapping("/author/{id}")
     public String authorListPage(@PathVariable Integer id, Model model){
         Author  author = authorRepository.findAuthorById(id);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("author", author);
-        model.addAttribute("thisauthorPage", bookService.findBooksByAuthorId(0,6,id).getContent());
-        return "/books/author";
-    }  **/
+        model.addAttribute("authorBooks", bookService.findBooksByAuthorId(0,6,id).getContent());
+        return "/author/author";
+    }
 
 
 
-/**    @GetMapping("/books/{id}")
-    public String authorBooks(@PathVariable("id") Integer authorId, Model model) {
-        Author author = authorRepository.findAuthorById(authorId);
-        model.addAttribute("author", author);
-        model.addAttribute("authorBooks", bookService.findBooksByAuthorId(authorId, 0, 5).getContent());
-        return "/books/author";
-    } **/
 
 
 
-  /**  @GetMapping(value = "/books/author/{id}")
+  @GetMapping(value = "/author/author/{id}")
     @ResponseBody
     public BooksPageDto getNextAuthorBooksPage(
             @PathVariable Integer id,
@@ -103,18 +95,13 @@ public class AuthorsController {
             @RequestParam("limit") Integer limit
     ) {
         return new BooksPageDto( bookService.findBooksByAuthorId(id, offset, limit).getContent());
-    } **/
+    }
 
 
 
 
 
 
- /** @GetMapping("/books/author.id ")
-    @ResponseBody
-    public BooksPageDto getNextPage(@RequestParam("offset") Integer offset,
-                                          @RequestParam("limit") Integer limit,  Integer id) {
-        return new BooksPageDto(bookService.findBooksByAuthorId(id,offset, limit).getContent());
-    }  **/
+
 
 }

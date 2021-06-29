@@ -46,6 +46,7 @@ import java.util.StringJoiner;
             String[] cookieSlugs = cartContents.split("/");
             List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
             model.addAttribute("bookCart", booksFromCookieSlugs);
+            model.addAttribute("total", booksFromCookieSlugs.stream().reduce(0,(sum,p)->sum+=p.discountPrice(),(sum1,sum2)->sum1 + sum2));
         }
 
         return "cart";
