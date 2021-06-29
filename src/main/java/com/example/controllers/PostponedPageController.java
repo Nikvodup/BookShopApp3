@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 
 @Controller
 @RequestMapping("/books")
@@ -59,6 +56,25 @@ public class PostponedPageController {
         }
 
         return "postponed";
+    }
+
+
+    @PostMapping("/changeBookStatus/postponed/remove/{slug}")
+    public String handleRemoveBookFromPostponedRequest(@PathVariable("slug") String slug, @CookieValue(name =
+            "postponedContents", required = false) String postponedContents, HttpServletResponse response, Model model){
+
+        if (postponedContents != null && !postponedContents.equals("")){
+            ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(postponedContents.split("/")));
+            cookieBooks.remove(slug);
+            Cookie cookie = new Cookie("postponedContents", String.join("/", cookieBooks));
+            cookie.setPath("/books");
+            response.addCookie(cookie);
+            model.addAttribute("isPostponedEmpty", false);
+        }else {
+            model.addAttribute("isPostponedEmpty", true);
+        }
+
+        return "redirect:/books/postponed";
     }
 
 
