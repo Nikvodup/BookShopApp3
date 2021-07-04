@@ -10,17 +10,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import static com.example.Util.StringToDateFormatter.formatToDate;
 
 @Controller
 public class MainPageController {
 
     private final BookService bookService;
+    final Calendar calendar = Calendar.getInstance();
 
     @Autowired
     public MainPageController(BookService bookService) {
         this.bookService = bookService;
+        calendar.add(Calendar.MONTH, -3);
     }
 
 
@@ -31,7 +35,7 @@ public class MainPageController {
     }
 
 
-   //-------------------Bestsellers carousal----------------
+   //-------------------Popular----------------
 
     @ModelAttribute("bestsellers")
     public List<Book> bestsellers(){
@@ -46,25 +50,18 @@ public class MainPageController {
     }
 
 
-    //-------------------Recent carousal------------------
+    //-------------------Recent------------------
 
-    @ModelAttribute("recent")
-    public List<Book> recent(){
-        return bookService.getRecentBooks(0,6).getContent();
+    @ModelAttribute("recentBooks")
+    public List<Book> recentBooks() {
+        return bookService.getPageOfRecentBooksData(calendar.getTime(), new Date(), 0, 6).getContent();
     }
-
- /**   @ModelAttribute("recent")
-    public List<Book> recent(LocalDate pubDate, LocalDate since){
-        return bookService.getRecent(pubDate,since,0,6).getContent();
-    } **/
-
 
     @GetMapping("/books/recent")
     @ResponseBody
     public BooksPageDto getRecentBooksPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getRecentBooks(offset, limit).getContent());
+        return new BooksPageDto(bookService.getPageOfRecentBooksData(calendar.getTime(), new Date(), offset, limit).getContent());
     }
-
 
     //------------------------Recommended carousal-----------------------
 

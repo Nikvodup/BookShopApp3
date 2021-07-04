@@ -31,12 +31,19 @@ public class Book {
 
     @Column(name = "pub_date")
     @ApiModelProperty("date of book publication")
-    private LocalDate pubDate;
+    private Date pubDate;
 
-   //private LocalDate since=LocalDate.now().minusMonths(6);
-   //private LocalDate today=LocalDate.now();
+    @Column(name="cart_number")
+private Integer cartNumber;
 
+    @Column(name = "postponed_number")
+    private Integer postponedNumber;
 
+    @Column(name = "buy_number")
+    private Integer buyNumber;
+
+    @Column(name = "pop_rating")
+    private Integer popRating;
 
 
     @Column(name = "tag")
@@ -111,23 +118,6 @@ public class Book {
 
 
 
-
- /**   public LocalDate getSince() {
-        return since;
-    }
-
-    public void setSince(LocalDate since) {
-        this.since = since;
-    }
-
-    public LocalDate getToday() {
-        return today;
-    }
-
-    public void setToday(LocalDate today) {
-        this.today = today;
-    } **/
-
  @OneToMany(mappedBy = "book")
  private List<BookFile> bookFileList = new ArrayList<>();
 
@@ -142,19 +132,53 @@ public class Book {
     }
 
 
+    public String getTag() {
+        return tag;
+    }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
-
-
-    public LocalDate getPubDate() {
+    public Date getPubDate() {
         return pubDate;
     }
 
-    public void setPubDate(LocalDate pubDate) {
+    public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
     }
 
+    public Integer getCartNumber() {
+        return cartNumber;
+    }
 
+    public void setCartNumber(Integer cartNumber) {
+        this.cartNumber = cartNumber;
+    }
+
+    public Integer getPostponedNumber() {
+        return postponedNumber;
+    }
+
+    public void setPostponedNumber(Integer postponedNumber) {
+        this.postponedNumber = postponedNumber;
+    }
+
+    public Integer getBuyNumber() {
+        return buyNumber;
+    }
+
+    public void setBuyNumber(Integer buyNumber) {
+        this.buyNumber = buyNumber;
+    }
+
+    public Integer getPopRating() {
+        return popRating;
+    }
+
+    public void setPopRating(Integer popRating) {
+        this.popRating = popRating;
+    }
 
     public Integer getIsBestseller() {
         return isBestseller;

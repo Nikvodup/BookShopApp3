@@ -3,14 +3,18 @@ package com.example.data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
+
+
 
     List<Book> findBooksByAuthor_FirstName(String name);
 
@@ -33,23 +37,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "SELECT * FROM books WHERE discount = (SELECT MAX(discount) FROM books)", nativeQuery = true)
     List<Book> getBooksWithMaxDiscount();
 
-   //============================Finding Recent Books====================
-
-   //-----------------Query for Recent carousal------------------------
-    @Query(value = "SELECT * FROM books WHERE pub_date BETWEEN '2020-06-20' AND '2021-05-20'", nativeQuery = true)
-    Page<Book> getRecent(Pageable pageable);
 
 
-         //   @Query("select b from Book b where b.pubDate>=b.since and b.since=:fn")
-        //  List<Book> findRecentBooks(@Param(value = "fn") LocalDate since);
-
-
-         //   @Query("select b from Book b where b.pubDate>=b.since")
-          //  List<Book> findRecentBooks(LocalDate since);
-
-   //------------------------Query for a Recent page--------------------------
-
-       Page<Book> findBooksByPubDateGreaterThan(LocalDate since, Pageable pageable);
 
      //===========================================================================
 
@@ -72,9 +61,46 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
      Integer countBooksByTag(String tag);
 
-     Page<Book> findPageOfBooksByPubDateBetweenOrderByPubDate(java.sql.Date dateFrom, java.sql.Date dateTo, Pageable pageable);
+     Page<Book> findPageOfBooksByPubDateBetweenOrderByPubDate(Date dateFrom, Date dateTo, Pageable pageable);
 
     List<Book> findBooksBySlugIn(String[] slugs);
 
+    //============================================Popularity and Rating=============================
+
+    @Query("update Book b set b.popRating =:p where b.slug=:slug")
+    void updatePopRating(@Param("p") Double popRating, @Param("slug") String slug);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE books SET cart_number = cart_number+1 WHERE slug=:slug", nativeQuery = true)
+    void updateCartNumber(@Param("slug") String slug);
+
+    @Modifying
+    @Query( "UPDATE Book b SET b.postponedNumber =?1 where b.slug = ?2")
+    void updatePostponedNumber(@Param("postponedNumber") Integer postponedNumber, @Param("slug") String slug);
+
+
+    @Modifying
+    @Query(value = "UPDATE Book b SET b.postponedNumber =?1 where b.slug = ?2")
+    void updateBuyNumber(@Param("buyNumber") Integer buyNumber, @Param("slug") String slug);
+
+
+    @Query(value = "SELECT b.buyNumber FROM Book b WHERE b.slug =:slug")
+    Integer findBuyNumberBySlug(@Param("slug") String slug);
+
+
+
+    @Query(value = "SELECT cart_number FROM books WHERE slug =:slug", nativeQuery = true)
+    Integer findCartNumberBySlug(@Param("slug") String slug);
+
+    @Query(value = "SELECT b.postponedNumber FROM Book b WHERE b.slug =:slug")
+    Integer findPostponedNumberBySlug(@Param("slug") String slug);
+
+    @Query(value = "SELECT * FROM books ORDER BY pop_rating", nativeQuery = true)
+    Page<Book> findBooksByPopRating (Double popRating, Pageable pageable);
+
 }
+
+
+
 

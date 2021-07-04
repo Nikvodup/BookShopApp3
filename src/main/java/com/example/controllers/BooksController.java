@@ -38,7 +38,7 @@ public class BooksController {
     @GetMapping("/{slug}")
     public String bookPage(@PathVariable(value = "slug") String slug, Model model){
          Book book = bookRepository.findBookBySlug(slug);
-
+        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
        model.addAttribute("slugBook", book);
 
         return "/books/slug";
