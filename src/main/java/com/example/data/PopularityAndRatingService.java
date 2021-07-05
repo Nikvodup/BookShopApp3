@@ -14,10 +14,6 @@ public class PopularityAndRatingService {
      }
 
 
-
-
-
-
      public void updateCartNumberAndPopRating(String slug){
          bookRepository.updateCartNumber(slug);
          Integer cartNumber = bookRepository.findCartNumberBySlug(slug);
