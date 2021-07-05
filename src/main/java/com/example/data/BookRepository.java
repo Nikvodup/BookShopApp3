@@ -72,7 +72,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE books SET cart_number = cart_number+1 WHERE slug=:slug", nativeQuery = true)
+    @Query(value = "UPDATE books SET cart_number=cart_number+1 WHERE slug=:slug",nativeQuery = true)
     void updateCartNumber(@Param("slug") String slug);
 
     @Modifying
@@ -90,11 +90,17 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
 
 
-    @Query(value = "SELECT cart_number FROM books WHERE slug =:slug", nativeQuery = true)
+    @Query( "select b.cartNumber from Book b WHERE b.slug =:slug")
     Integer findCartNumberBySlug(@Param("slug") String slug);
+
+
 
     @Query(value = "SELECT b.postponedNumber FROM Book b WHERE b.slug =:slug")
     Integer findPostponedNumberBySlug(@Param("slug") String slug);
+
+
+    @Query("select b.popRating from Book b where b.slug=:slug")
+    Double findPopRatingBySlug(@Param("slug") String slug);
 
     @Query(value = "SELECT * FROM books ORDER BY pop_rating", nativeQuery = true)
     Page<Book> findBooksByPopRating (Double popRating, Pageable pageable);

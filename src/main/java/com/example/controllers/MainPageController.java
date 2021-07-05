@@ -24,7 +24,7 @@ public class MainPageController {
     @Autowired
     public MainPageController(BookService bookService) {
         this.bookService = bookService;
-        calendar.add(Calendar.MONTH, -3);
+        calendar.add(Calendar.MONTH, -12);
     }
 
 

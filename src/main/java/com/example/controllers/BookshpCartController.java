@@ -5,6 +5,8 @@ package com.example.controllers;
 
 import com.example.data.Book;
 import com.example.data.BookRepository;
+import com.example.data.PopularityAndRatingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +29,12 @@ import java.util.StringJoiner;
     }
 
     private final BookRepository bookRepository;
+    private final PopularityAndRatingService popularityAndRatingService;
 
-
-    public BookshpCartController(BookRepository bookRepository) {
+    @Autowired
+    public BookshpCartController(BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService) {
         this.bookRepository = bookRepository;
+        this.popularityAndRatingService = popularityAndRatingService;
     }
 
 
@@ -47,7 +51,10 @@ import java.util.StringJoiner;
             List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
             model.addAttribute("bookCart", booksFromCookieSlugs);
             model.addAttribute("total", booksFromCookieSlugs.stream().reduce(0,(sum,p)->sum+=p.discountPrice(),(sum1,sum2)->sum1 + sum2));
+
         }
+
+
 
         return "cart";
     }
@@ -77,21 +84,33 @@ import java.util.StringJoiner;
     public String handleChangeBookStatus(@PathVariable("slug") String slug, @CookieValue(name = "cartContents",
             required = false) String cartContents, HttpServletResponse response, Model model) {
 
+
+
+
         if (cartContents == null || cartContents.equals("")) {
+
             Cookie cookie = new Cookie("cartContents", slug);
             cookie.setPath("/books");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
+
         } else if (!cartContents.contains(slug)) {
+
             StringJoiner stringJoiner = new StringJoiner("/");
             stringJoiner.add(cartContents).add(slug);
             Cookie cookie = new Cookie("cartContents", stringJoiner.toString());
             cookie.setPath("/books");
             response.addCookie(cookie);
             model.addAttribute("isCartEmpty", false);
+
         }
 
+        popularityAndRatingService.updateCartNumberAndPopRating(slug);
+
+
+
         return "redirect:/books/" + slug;
+
     }
 
 }
