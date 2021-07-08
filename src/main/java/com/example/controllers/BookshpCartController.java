@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 
-@Controller
+@ControllerAdvice
 @RequestMapping("/books")
  class BookshpCartController {
 
@@ -26,6 +26,12 @@ import java.util.StringJoiner;
     @ModelAttribute(name = "bookCart")
     public List<Book> bookCart() {
         return new ArrayList<>();
+    }
+
+    List<Book> booksFromCookieSlugs = new ArrayList<>();
+
+    public List<Book> getBooksFromCookieSlugs() {
+        return booksFromCookieSlugs;
     }
 
     private final BookRepository bookRepository;
@@ -48,14 +54,11 @@ import java.util.StringJoiner;
             cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
             cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) : cartContents;
             String[] cookieSlugs = cartContents.split("/");
-            List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
+            booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
             model.addAttribute("bookCart", booksFromCookieSlugs);
             model.addAttribute("total", booksFromCookieSlugs.stream().reduce(0,(sum,p)->sum+=p.discountPrice(),(sum1,sum2)->sum1 + sum2));
 
         }
-
-
-
         return "cart";
     }
 
@@ -85,8 +88,6 @@ import java.util.StringJoiner;
             required = false) String cartContents, HttpServletResponse response, Model model) {
 
 
-
-
         if (cartContents == null || cartContents.equals("")) {
 
             Cookie cookie = new Cookie("cartContents", slug);
@@ -105,8 +106,7 @@ import java.util.StringJoiner;
 
         }
 
-        popularityAndRatingService.updateCartNumberAndPopRating(slug);
-
+         //popularityAndRatingService.updateCartNumber(slug);
 
 
         return "redirect:/books/" + slug;

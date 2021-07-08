@@ -14,9 +14,13 @@ import java.util.List;
 public class BaseMainModelAttribute {
 
     private final BookService bookService;
+    private final BookshpCartController bookshpCartController;
+    private final PostponedPageController postponedPageController;
 
-    public BaseMainModelAttribute(BookService bookService) {
+    public BaseMainModelAttribute(BookService bookService, BookshpCartController bookshpCartController, PostponedPageController postponedPageController) {
         this.bookService = bookService;
+        this.bookshpCartController = bookshpCartController;
+        this.postponedPageController = postponedPageController;
     }
 
 
@@ -30,5 +34,13 @@ public class BaseMainModelAttribute {
         return new ArrayList<>();
     }
 
+   @ModelAttribute("cartSize")
+    public Integer getCartSize(){
+        return bookshpCartController.getBooksFromCookieSlugs().size();
+    }
 
+    @ModelAttribute("postponedSize")
+    public Integer getPostponedSize(){
+        return postponedPageController.getBooksFromCookieSlugs().size();
+    }
 }

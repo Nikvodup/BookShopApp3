@@ -13,24 +13,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import static com.example.Util.StringToDateFormatter.formatToDate;
 
 @Controller
 public class MainPageController {
 
     private final BookService bookService;
+    private final BookRepository bookRepository;
+    private final PopularityAndRatingService popularityAndRatingService;
     final Calendar calendar = Calendar.getInstance();
 
     @Autowired
-    public MainPageController(BookService bookService) {
+    public MainPageController(BookService bookService, BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService) {
         this.bookService = bookService;
+        this.bookRepository = bookRepository;
+        this.popularityAndRatingService = popularityAndRatingService;
         calendar.add(Calendar.MONTH, -12);
+
     }
 
 
     @GetMapping("/")
     public String mainPage(Model model) {
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+     //  popularityAndRatingService.updatePopRating();
         return "index";
     }
 
@@ -39,14 +44,13 @@ public class MainPageController {
 
     @ModelAttribute("bestsellers")
     public List<Book> bestsellers(){
-        return  bookService.getPageOfBestsellers(0,6).getContent();
-
+        return  bookService.getPopularBooks(0,6).getContent();
     }
 
     @GetMapping("/books/popular")
     @ResponseBody
     public BooksPageDto getBestsellersPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfBestsellers(offset, limit).getContent());
+        return new BooksPageDto(bookService.getPopularBooks(offset, limit).getContent());
     }
 
 

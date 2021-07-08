@@ -67,8 +67,21 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     //============================================Popularity and Rating=============================
 
-    @Query("update Book b set b.popRating =:p where b.slug=:slug")
-    void updatePopRating(@Param("p") Double popRating, @Param("slug") String slug);
+    @Query(value = "SELECT COUNT (*) FROM books",nativeQuery = true)
+   Integer countAll();
+
+    @Query("select b.cartNumber from Book b where b.id=:id")
+    Integer findCartNumberById(@Param("id") Integer id);
+
+    @Query("select b.postponedNumber from Book b where b.id=:id")
+    Integer findPostponedNumberById(@Param("id") Integer id);
+
+    @Query("select b.buyNumber from Book b where b.id=:id")
+    Integer findBuyNumberById(@Param("id") Integer id);
+
+
+    @Query(value = "UPDATE books SET pop_rating=:popRating WHERE id=:id",nativeQuery = true)
+    void updatePopRatingById(@Param("popRating") Integer popRating, @Param("id") Integer id);
 
     @Transactional
     @Modifying
@@ -76,8 +89,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     void updateCartNumber(@Param("slug") String slug);
 
     @Modifying
-    @Query( "UPDATE Book b SET b.postponedNumber =?1 where b.slug = ?2")
-    void updatePostponedNumber(@Param("postponedNumber") Integer postponedNumber, @Param("slug") String slug);
+    @Query( value = "UPDATE books SET postponed_number =postponed_number+1 where slug =:slug",nativeQuery = true)
+    void updatePostponedNumber(@Param("slug") String slug);
 
 
     @Modifying
@@ -102,8 +115,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("select b.popRating from Book b where b.slug=:slug")
     Double findPopRatingBySlug(@Param("slug") String slug);
 
-    @Query(value = "SELECT * FROM books ORDER BY pop_rating", nativeQuery = true)
-    Page<Book> findBooksByPopRating (Double popRating, Pageable pageable);
+     @Query(value = "select * from books order by pop_rating desc",nativeQuery = true)
+    Page<Book> findBooksByPopRating (Pageable pageable);
 
 }
 

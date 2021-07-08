@@ -32,9 +32,9 @@ public class Books {
 
 
     @GetMapping("/popular_page")
-    public String popularPage(Date date, Model model){
+    public String popularPage(Model model){
       //  model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-        model.addAttribute("bestsellers", bookService.getPageOfBestsellers(0,6).getContent());
+        model.addAttribute("bestsellers", bookService.getPopularBooks(0,6).getContent());
         return "/books/popular_page";
     }
 
@@ -42,7 +42,7 @@ public class Books {
     @GetMapping("/books/popular")
     @ResponseBody
     public BooksPageDto getBestSellersPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
-        return new BooksPageDto(bookService.getPageOfBestsellers(offset, limit).getContent());
+        return new BooksPageDto(bookService.getPopularBooks(offset, limit).getContent());
     }
 
     //------------------------------Slug Page----------------------------

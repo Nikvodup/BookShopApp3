@@ -2,7 +2,6 @@ package com.example.controllers;
 
 import com.example.data.Book;
 import com.example.data.BookRepository;
-import com.example.data.BooksPageDto;
 import com.example.data.ResourceStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -28,11 +26,13 @@ public class BooksController {
 
     private final BookRepository bookRepository;
     private final ResourceStorage storage;
+    private final BookshpCartController bookshpCartController;
 
     @Autowired
-    public BooksController(BookRepository bookRepository, ResourceStorage storage) {
+    public BooksController(BookRepository bookRepository, ResourceStorage storage, BookshpCartController bookshpCartController) {
         this.bookRepository = bookRepository;
         this.storage = storage;
+        this.bookshpCartController = bookshpCartController;
     }
 
     @GetMapping("/{slug}")
@@ -40,6 +40,8 @@ public class BooksController {
          Book book = bookRepository.findBookBySlug(slug);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
        model.addAttribute("slugBook", book);
+       model.addAttribute("isInCart", bookshpCartController.getBooksFromCookieSlugs().contains(slug));
+
 
         return "/books/slug";
     }
@@ -87,14 +89,5 @@ public class BooksController {
         model.addAttribute("slugBook", book);
         return "postponed";
     }
-
-
-
-/**    @GetMapping("/{slug}")
-    @ResponseBody
-    public Book postponedBook(@Param(value = "slug") String slug){
-        return bookRepository.findBookBySlug(slug);
-    }  **/
-
 
 }

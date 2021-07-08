@@ -6,6 +6,7 @@ package com.example.controllers;
 
 import com.example.data.Book;
 import com.example.data.BookRepository;
+import com.example.data.PopularityAndRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,14 @@ import java.util.*;
 @RequestMapping("/books")
 public class PostponedPageController {
 
+    private final BookRepository bookRepository;
+    private final PopularityAndRatingService popularityAndRatingService;
+
+    @Autowired
+    public PostponedPageController(BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService) {
+        this.bookRepository = bookRepository;
+        this.popularityAndRatingService = popularityAndRatingService;
+    }
 
 
     @ModelAttribute("serverTime")
@@ -32,13 +41,15 @@ public class PostponedPageController {
         return new ArrayList<>();
     }
 
-    private final BookRepository bookRepository;
+    List<Book> booksFromCookieSlugs = new ArrayList<>();
 
-@Autowired
-    public PostponedPageController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public List<Book> getBooksFromCookieSlugs() {
+        return booksFromCookieSlugs;
     }
 
+    public void setBooksFromCookieSlugs(List<Book> booksFromCookieSlugs) {
+        this.booksFromCookieSlugs = booksFromCookieSlugs;
+    }
 
     @GetMapping("/postponed")
     public String handlePostponedRequest(@CookieValue(value = "postponedContents", required = false) String postponedContents,
@@ -50,7 +61,7 @@ public class PostponedPageController {
             postponedContents = postponedContents.startsWith("/") ? postponedContents.substring(1) : postponedContents;
             postponedContents = postponedContents.endsWith("/") ? postponedContents.substring(0, postponedContents.length() - 1) : postponedContents;
             String[] cookieSlugs = postponedContents.split("/");
-            List<Book> booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
+             booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
             model.addAttribute("bookPostponed", booksFromCookieSlugs);
            // model.addAttribute("total", booksFromCookieSlugs.stream().reduce(0,(sum,p)->sum+=p.discountPrice(),(sum1,sum2)->sum1 + sum2));
         }
@@ -95,6 +106,8 @@ public class PostponedPageController {
             response.addCookie(cookie);
             model.addAttribute("isPostponedEmpty", false);
         }
+
+       // popularityAndRatingService.updatePostponedNumber(slug);
 
         return "redirect:/books/" + slug;
     }

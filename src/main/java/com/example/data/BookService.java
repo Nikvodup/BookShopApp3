@@ -41,6 +41,12 @@ public class BookService {
         return bookRepository.findBooksByAuthorFirstNameContaining(authorName);
     }
 
+
+    public Page<Book> getBooksByAuthorId(Integer authorId, Integer page, Integer limit) {
+        Pageable nextPage = PageRequest.of(page, limit);
+        return bookRepository.findBooksByAuthorId(nextPage,authorId);
+    }
+
  /**   public List<Book> getBooksByTitle(String title) throws BookstoreApiWrongParameterException {
         if (title.equals("") || title.length() <= 1){
             throw new BookstoreApiWrongParameterException("Wrong values passed to one or more parameters");
@@ -82,10 +88,17 @@ public class BookService {
         return bookRepository.getBooksWithMaxDiscount();
     }
 
-    public Page<Book> getPageOfBestsellers(Integer offset, Integer limit){
+    //--------------------Popular books---------------
+
+ /**   public Page<Book> getPageOfBestsellers(Integer offset, Integer limit){
         Pageable nextPage = PageRequest.of(offset,limit);
         return  bookRepository.getBestsellers(nextPage);
-    }
+    }  **/
+
+      public Page<Book> getPopularBooks(Integer offset, Integer limit){
+          Pageable nextPage = PageRequest.of(offset,limit);
+          return bookRepository.findBooksByPopRating(nextPage);
+      }
 
    //-------------Recent Books-----------------
 
