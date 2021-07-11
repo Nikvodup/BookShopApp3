@@ -127,10 +127,23 @@ private Integer cartNumber;
  }
 
 
+    @ManyToMany(mappedBy = "bookList")
+    @JsonIgnore
+    private List<Tag> tagList = new ArrayList<>();
+
+
     public void setBookFileList(List<BookFile> bookFileList) {
         this.bookFileList = bookFileList;
     }
 
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
+    }
 
     public String getTag() {
         return tag;

@@ -2,20 +2,30 @@ package com.example.controllers;
 
 
 import com.example.data.BookService;
+import com.example.data.BooksPageDto;
+import com.example.data.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
-@RequestMapping("/tags")
+//@RequestMapping("/tags")
 public class TagController {
+     private final TagService tagService;
      private final BookService bookService;
 
-    public TagController(BookService bookService) {
+    public TagController(TagService tagService, BookService bookService) {
+        this.tagService = tagService;
         this.bookService = bookService;
     }
+
+
+
+
+/**
 
     @GetMapping("/modern_literature_page")
     public String getModernLiteraturePage(Model model){
@@ -78,6 +88,32 @@ public class TagController {
         model.addAttribute("countForChildren", bookService.getTagCount("books_for_children"));
         return "/tags/books_for_children_page";
 
+    }
+
+    @GetMapping("/test_page")
+    public String getTest(){
+        return "/tags/test_page";
+    }
+
+    **/
+
+    //-------------------
+
+    @GetMapping("/tags/{tagId}")
+    public String getTag(@PathVariable Integer tagId, Model model) {
+        model.addAttribute("tagBooks", bookService.getBooksByTag(tagId, 0, 5));
+        model.addAttribute("tag", tagService.getTag(tagId));
+        return "/tags/index";
+    }
+
+    @GetMapping("/books/tag/{tagId}")
+    @ResponseBody
+    public BooksPageDto getNextPage(
+            @PathVariable Integer tagId,
+            @RequestParam("offset") Integer offset,
+            @RequestParam("limit") Integer limit
+    ) {
+        return new BooksPageDto(bookService.getBooksByTag(tagId, offset, limit).getContent());
     }
 
 

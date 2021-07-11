@@ -18,18 +18,12 @@ public class BookService {
     private final AuthorRepository authorRepository;
 
 
-
-
-
-
-
     @Autowired
     public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
 
     }
-
 
 
     public List<Book> getBooksData() {
@@ -97,6 +91,7 @@ public class BookService {
 
       public Page<Book> getPopularBooks(Integer offset, Integer limit){
           Pageable nextPage = PageRequest.of(offset,limit);
+
           return bookRepository.findBooksByPopRating(nextPage);
       }
 
@@ -152,6 +147,11 @@ public class BookService {
     public Page<Book> findbooksByTag(Integer offset, Integer limit, String tag){
         Pageable nextPage = PageRequest.of(offset,limit);
         return bookRepository.findBooksByTag(tag,nextPage);
+    }
+
+    public Page<Book> getBooksByTag(Integer tagId, Integer page, Integer limit) {
+        Pageable nextPage = PageRequest.of(page, limit);
+        return bookRepository.findBooksByTag(tagId, nextPage);
     }
 
 

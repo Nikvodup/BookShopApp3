@@ -7,9 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.sql.Date;
-
 @Controller
 @RequestMapping("/books")
 public class Books {
@@ -31,11 +28,11 @@ public class Books {
     }  **/
 
 
-    @GetMapping("/popular_page")
+ /**   @GetMapping("/popular_page")
     public String popularPage(Model model){
       //  model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
         model.addAttribute("bestsellers", bookService.getPopularBooks(0,6).getContent());
-        return "/books/popular_page";
+        return "popular";
     }
 
 
@@ -43,7 +40,7 @@ public class Books {
     @ResponseBody
     public BooksPageDto getBestSellersPage(@RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit) {
         return new BooksPageDto(bookService.getPopularBooks(offset, limit).getContent());
-    }
+    }  **/
 
     //------------------------------Slug Page----------------------------
  /**   @GetMapping("/slug")

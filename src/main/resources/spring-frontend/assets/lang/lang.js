@@ -1,5 +1,3 @@
-
-
 $(document).ready(function () {
     $("#locales").change(function () {
         var selectedOption = $("#locales").val();

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,24 +21,31 @@ public class MainPageController {
     private final BookService bookService;
     private final BookRepository bookRepository;
     private final PopularityAndRatingService popularityAndRatingService;
+    private final TagService tagService;
     final Calendar calendar = Calendar.getInstance();
 
     @Autowired
-    public MainPageController(BookService bookService, BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService) {
+    public MainPageController(BookService bookService, BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService, TagService tagService) {
         this.bookService = bookService;
         this.bookRepository = bookRepository;
         this.popularityAndRatingService = popularityAndRatingService;
+        this.tagService = tagService;
         calendar.add(Calendar.MONTH, -12);
 
     }
 
+    @PostConstruct
+    public void updatePopRating(){
+        popularityAndRatingService.updatePopRating();
+    }
 
     @GetMapping("/")
     public String mainPage(Model model) {
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
-     //  popularityAndRatingService.updatePopRating();
         return "index";
     }
+
+
 
 
    //-------------------Popular----------------
@@ -122,6 +130,13 @@ public class MainPageController {
                                           @RequestParam("limit") Integer limit,
                                           @PathVariable(value = "searchWord", required = false) SearchWordDto searchWordDto) {
         return new BooksPageDto(bookService.getPageOfSearchResultBooks(searchWordDto.getExample(), offset, limit).getContent());
+    }
+
+    //-------------------------
+
+    @ModelAttribute("tags")
+    public List<TagCountI> tags() {
+        return tagService.getTagSize();
     }
 
 

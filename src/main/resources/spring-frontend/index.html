@@ -130,7 +130,7 @@
 
         <h2 class="Middle-title">Книги по тегам
         </h2>
-        <div class="Tags" id="tags">
+ <!--     <div class="Tags" id="tags">
           <div class="Tag Tag_xs"><a href="/tags/modern_literature_page">современная литература</a>
           </div>
           <div class="Tag Tag_sm"><a href="/tags/classic_literature_page">классическая литература</a>
@@ -229,7 +229,26 @@
           </div>
           <div class="Tag"><a href="/tags/index.html">english</a>
           </div>
+        </div>  -->
+
+
+
+        <div class="Tags" id="tags">
+          <div th:each="tag : ${tags}" class="Tag"
+               th:classappend="
+                     ${(tag.getSize() > 60 ? 'Tag_lg' : '') +
+                     (tag.getSize() <= 60 && tag.getSize() > 40  ? 'Tag_md' : '') +
+                     (tag.getSize() <= 40 && tag.getSize() > 20 ? 'Tag_sm' : '') +
+                     (tag.getSize() <= 20 && tag.getSize() >= 10 ? 'Tag_xs' : '')}">
+
+            <a th:href="${'/tags/' + tag.id}" th:text="${tag.getName()}">english</a>
+          </div>
+
         </div>
+
+
+
+
       </div>
     </main>
   </div>

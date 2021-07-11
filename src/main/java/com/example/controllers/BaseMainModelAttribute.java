@@ -1,9 +1,7 @@
 package com.example.controllers;
 
 
-import com.example.data.Book;
-import com.example.data.BookService;
-import com.example.data.SearchWordDto;
+import com.example.data.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -16,11 +14,13 @@ public class BaseMainModelAttribute {
     private final BookService bookService;
     private final BookshpCartController bookshpCartController;
     private final PostponedPageController postponedPageController;
+    private final TagService tagService;
 
-    public BaseMainModelAttribute(BookService bookService, BookshpCartController bookshpCartController, PostponedPageController postponedPageController) {
+    public BaseMainModelAttribute(BookService bookService, BookshpCartController bookshpCartController, PostponedPageController postponedPageController, TagService tagService) {
         this.bookService = bookService;
         this.bookshpCartController = bookshpCartController;
         this.postponedPageController = postponedPageController;
+        this.tagService = tagService;
     }
 
 
@@ -42,5 +42,10 @@ public class BaseMainModelAttribute {
     @ModelAttribute("postponedSize")
     public Integer getPostponedSize(){
         return postponedPageController.getBooksFromCookieSlugs().size();
+    }
+
+    @ModelAttribute("tags")
+    public List<TagCountI> tags() {
+        return tagService.getTagSize();
     }
 }

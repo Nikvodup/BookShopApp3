@@ -3,7 +3,10 @@ package com.example.data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -18,6 +21,8 @@ public class PopularityAndRatingService {
     }
 
     Lock lock = new ReentrantLock();
+
+
 
     public void updateCartNumber(String slug) {
         if (lock.tryLock()) {
@@ -49,7 +54,7 @@ public class PopularityAndRatingService {
 
                 Integer total = bookRepository.countAll();
 
-                for (int i = 1; i <= total; i++) {
+                for (int i = 1; i <=total; i++) {
                     Integer cartNumber = bookRepository.findCartNumberById(i);
                     Integer postponedNumber = bookRepository.findPostponedNumberById(i);
                     Integer buyNumber = bookRepository.findBuyNumberById(i);

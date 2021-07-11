@@ -69,6 +69,16 @@ public class AuthorsController {
 
 
 
+
+    @GetMapping("/books/author/{authorId}")
+    public String authorBooks(@PathVariable Integer authorId, Model model) {
+        model.addAttribute("author", authorService.getAuthorsById(authorId));
+        model.addAttribute("authorBooks", bookService.getBooksByAuthorId(authorId, 0, 5).getContent());
+        return "/books/author";
+    }
+
+
+
    @GetMapping("/books/author/page/{id}")
    @ResponseBody
    public BooksPageDto getNextAuthorBooksPage(
@@ -78,14 +88,5 @@ public class AuthorsController {
    ) {
        return new BooksPageDto( bookService.getBooksByAuthorId(id, offset, limit).getContent());
    }
-
-
-
-    @GetMapping("/books/author/{authorId}")
-    public String authorBooks(@PathVariable Integer authorId, Model model) {
-        model.addAttribute("author", authorService.getAuthorsById(authorId));
-        model.addAttribute("authorBooks", bookService.getBooksByAuthorId(authorId, 0, 5).getContent());
-        return "/books/author";
-    }
 
 }

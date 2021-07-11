@@ -107,7 +107,7 @@ public class PostponedPageController {
             model.addAttribute("isPostponedEmpty", false);
         }
 
-       // popularityAndRatingService.updatePostponedNumber(slug);
+        popularityAndRatingService.updatePostponedNumber(slug);
 
         return "redirect:/books/" + slug;
     }
