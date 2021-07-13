@@ -110,14 +110,15 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "UPDATE books SET pop_rating=:popRating WHERE id=:id",nativeQuery = true)
     void updatePopRatingById(@Param("popRating") Integer popRating, @Param("id") Integer id);
 
-
+    @Transactional
+    @Modifying
     //@Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "UPDATE books SET cart_number=cart_number+1 WHERE slug=:slug",nativeQuery = true)
     void updateCartNumber(@Param("slug") String slug);
 
 
-
-
+    @Transactional
+    @Modifying
    // @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query( value = "UPDATE books SET postponed_number =postponed_number+1 where slug =:slug",nativeQuery = true)
     void updatePostponedNumber(@Param("slug") String slug);
