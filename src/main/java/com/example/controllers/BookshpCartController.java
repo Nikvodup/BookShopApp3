@@ -106,7 +106,7 @@ import java.util.StringJoiner;
 
         }
 
-         popularityAndRatingService.updateCartNumber(slug);
+         //popularityAndRatingService.updateCartNumber(slug);
 
 
         return "redirect:/books/" + slug;

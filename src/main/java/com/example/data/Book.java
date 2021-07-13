@@ -103,6 +103,11 @@ private Integer cartNumber;
     }
 
 
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private List<BookReview> bookReviewList = new ArrayList<>();
+
+
     @Column(name = "genre")
     @JsonProperty("genre")
     @ApiModelProperty("the genre a book belongs to")
@@ -263,6 +268,14 @@ private Integer cartNumber;
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public List<BookReview> getBookReviewList() {
+        return bookReviewList;
+    }
+
+    public void setBookReviewList(List<BookReview> bookReviewList) {
+        this.bookReviewList = bookReviewList;
     }
 
     @Override

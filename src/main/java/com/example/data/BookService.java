@@ -154,6 +154,10 @@ public class BookService {
         return bookRepository.findBooksByTag(tagId, nextPage);
     }
 
+    public Book findBookBySlug(String slug) {
+        return bookRepository.findBookBySlug(slug);
+    }
+
 
 }
 

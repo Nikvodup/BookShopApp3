@@ -1,5 +1,6 @@
 package com.example.security;
 
+import com.example.data.BookstoreUser;
 import com.example.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
