@@ -1,5 +1,6 @@
 package com.example.data;
 
+import com.example.data.Genre.Genre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.persistence.LockModeType;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +56,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
      Integer countBooksByAuthorId(@Param(value = "id") Integer id);
 
 
-     @Query(value = "SELECT * FROM books WHERE author_id =:id", nativeQuery = true)
-     Page<Book> findBooksByAuthorId(Pageable pageable, @Param(value ="id") Integer id);
+    Page<Book> findByAuthorId(Integer authorId, Pageable nextPage);
 
      Book findBookBySlug(String slug);
 
@@ -73,6 +74,15 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("SELECT b FROM Book AS b JOIN b.tagList AS t WHERE t.id = ?1")
     Page<Book> findBooksByTag(Integer tagId, Pageable nextPage);
 
+
+    //----------------------------------------
+
+    @Query(value = "SELECT b.* " +
+            "FROM books AS b " +
+            "JOIN recently_viewed AS rv ON rv.book_id = b.id " +
+            "WHERE rv.user_id = ?2 AND rv.last_veiw_date_time >= ?1 " +
+            "ORDER BY rv.last_veiw_date_time DESC ", nativeQuery = true)
+    Page<Book> getPageOfRecentlyViewed(Timestamp limitDateTime, Integer userId, Pageable nextPage);
 
     //============================================Popularity and Rating=============================
    // @Lock(LockModeType.PESSIMISTIC_READ)
@@ -94,7 +104,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query("select b.buyNumber from Book b where b.id=:id")
     Integer findBuyNumberById(@Param("id") Integer id);
 
-    //@Lock(LockModeType.PESSIMISTIC_WRITE)
+// Pay attention to @Transactional and @Modifying
+    @Transactional
+    @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE books SET pop_rating=:popRating WHERE id=:id",nativeQuery = true)
     void updatePopRatingById(@Param("popRating") Integer popRating, @Param("id") Integer id);
 
@@ -107,7 +119,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query( value = "UPDATE books SET postponed_number =postponed_number+1 where slug =:slug",nativeQuery = true)
     void updatePostponedNumber(@Param("slug") String slug);
 
-
+    @Transactional
     @Modifying
     @Query( value = "UPDATE books SET buy_number =buy_number+1 where slug =:slug",nativeQuery = true)
     void updateBuyNumber(@Param("slug") String slug);
@@ -116,6 +128,14 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     // @Lock(LockModeType.OPTIMISTIC)
      @Query(value = "select * from books order by pop_rating desc ",nativeQuery = true)
     Page<Book> findBooksByPopRating (Pageable pageable);
+
+     //------------------------------------GENRE-----------------------------
+
+    Page<Book> findAllByGenreId(Integer genreId, Pageable nextPage);
+
+    Page<Book> findAllByGenre_GenreType(Genre.GenreType genreType, Pageable nextPage);
+
+    Page<Book> findAllByGenre(Genre genre, Pageable nextPage);
 
 }
 

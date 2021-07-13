@@ -1,6 +1,7 @@
 package com.example.data;
 
 
+import com.example.data.Genre.Genre;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -108,16 +109,17 @@ private Integer cartNumber;
     private List<BookReview> bookReviewList = new ArrayList<>();
 
 
-    @Column(name = "genre")
-    @JsonProperty("genre")
-    @ApiModelProperty("the genre a book belongs to")
-    private String genre;
+    @ManyToOne
+    @JoinColumn(name = "genre_id", referencedColumnName = "id", foreignKey =
+    @ForeignKey(name = "fk_book_genre"))
+    @JsonIgnore
+    private Genre genre;
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 

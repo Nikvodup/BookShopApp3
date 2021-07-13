@@ -1,8 +1,8 @@
 package com.example.data;
 
 
-import com.example.data.rating.RatingCountI;
 import com.example.data.rating.RatingBook;
+import com.example.data.rating.RatingCountI;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

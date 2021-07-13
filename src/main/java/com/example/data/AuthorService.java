@@ -34,8 +34,8 @@ public class AuthorService {
     }
 
 
-   public List<Author> getAuthorsById(Integer authorId){
-        return authorRepository.getAuthorsById(authorId);
+   public Author getAuthorsById(Integer authorId){
+        return authorRepository.findAuthorById(authorId);
     }
 
 }

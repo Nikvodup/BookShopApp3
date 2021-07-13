@@ -1,7 +1,7 @@
 package com.example.controllers;
 
 import com.example.data.*;
-import com.example.security.BookstoreUserDetails;
+import com.example.secutiry.BookstoreUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.repository.query.Param;

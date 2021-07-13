@@ -1,121 +1,48 @@
-
-<!DOCTYPE html>
- <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="~{fragments/tophead_fragment::topheadFragment}"></head>
-
+<!--END-->
+<!--END--><!DOCTYPE html><!--[if IE 7]>
+<html class="ie7" lang="ru">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie8" lang="ru">
+<![endif]-->
+<!--[if IE 9]>
+<html class="ie9" lang="ru">
+<![endif]-->
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{topbar.genres})}"></head>
 <body class="Site">
-
-<header class="Header" th:replace="~{fragments/headerTopmenu_fragment::topmenuFragment('Genres')}"></header>
-
-  <div class="Middle">
+<header th:replace="~{/fragments/header_fragment::headFragment}"></header>
+<div class="Middle">
     <div class="wrap">
-      <main class="Middle-main" >
-        <h1 class="Middle-title" th:text="#{genres}">Жанры
-        </h1>
-        <div class="Section">
-          <div class="Tags Tags_genres">
+        <main class="Middle-main">
+            <h1 class="Middle-title" th:text="#{topbar.genres}">Жанры
+            </h1>
+            <div class="Section">
+                <div class="Tags Tags_genres">
+                    <div class="Tags Tags_embed">
+                        <div class="Tags" th:if="${genres.size() > 0}" th:each="type:${genres}">
+                            <div class="Tags-title">
+                                <div class="Tag">
+                                    <a th:href="${'/genres/type' + type.key}" th:id="${type.key.toString()}">
+                                        <span th:text="${type.key.toString()}">Фантастика</span>
 
-
-           <!--/*@thymesVar id="bookService" type=""*/-->
-            <form th:object="${bookService}" method="post">
-
-            <div class="Tags Tags_embed">
-              <div class="Tags-title">
-                <div class="Tag"><a href="/genres/light_reading"><span style="color: red"> <strong>Лёгкое чтение</strong></span></a>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="Tag" th:each="genre:${genres.get(type.key)}">
+                                <a th:href="${'/genres/' + genre}">
+                                    <span th:text="${genre.name}">Фантастика</span>
+                                    <span class="undefined-amount" th:text="${'(' + genre.getBookListByGenre().size() + ')'}">(44333)</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="Tag"><a href="/genres/science_fiction">Фантастика (<span th:text="${countSF}">(0)</span>) </a>
-              </div>
-              <div class="Tag"><a href="/genres/action_story">Боевики    (<span th:text="${countActionStory}">(0)</span>) </a>
-              </div>
-              <div class="Tags">
-                <div class="Tags-title">
-                  <div class="Tag"><a href="/genres/crime_story"><span style="color: #ff0000"> <strong>Детективы</strong></span></a>
-                  </div>
-                </div>
-                <div class="Tag"><a href="/genres/thriller">Триллер   (<span th:text="${countThriller}">(0)</span>)</a>
-                </div>
-                <div class="Tag"><a href="/genres/ironic_crime">Иронический детектив   (<span th:text="${countIronicDetective}">(0)</span>) </a>
-                </div>
-                <div class="Tag"><a href="/genres/spy_crime">Шпионский детектив   (<span th:text="${countSpyDetective}">(0)</span>) </a>
-                </div>
-                <div class="Tag"><a href="/genres/classic_crime">Классический детектив    (<span th:text="${countClassicDetective}">(0)</span>)</a>
-                </div>
-                <div class="Tag"><a href="/genres/political_crime">Политический детектив   (<span th:text="${countPoliticalDetective}">(0)</span>)</a>
-                </div>
-              </div>
-              <div class="Tag"><a th:href="@{/genres/fantasy_page}">Фэнтези    (<span th:text="${countFantasy}">(0)</span>) </a>
-              </div>
-              <div class="Tag"><a href="/genres/horror">Ужасы    (<span th:text="${countHorror}">(0)</span>)</a>
-              </div>
-              <div class="Tag"><a href="/genres/adventures">Приключения    (<span th:text="${countAdventures}">(0)</span>)</a>
-              </div>
             </div>
-
-            </form>
-
-            <div class="Tags">
-              <div class="Tags-title">
-                <div class="Tag"><a href="/genres/serious_reading"><span style="color: red"> <strong>Серьезное чтение</strong></span></a>
-                </div>
-              </div>
-              <div class="Tag"><a href="/genres/life_story">Биографии   (<span th:text="${countLifeStory}">(0)</span>) </a>
-              </div>
-            </div>
-            <div class="Tags">
-              <div class="Tags-title">
-                <div class="Tag"><a href="/genres/business_books"><span style="color: red"> <strong>Деловая литература</strong></span></a>
-                </div>
-              </div>
-
-              <div class="Tag"><a href="/genres/slug.html">О бизнесе популярно<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Ценные бумаги / инвестиции<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Бухучет / налогообложение / аудит<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Российская практика<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Истории успеха<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Интернет-маркетинг<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Лидерство<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Проектный менеджмент<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление качеством<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Финансовый менеджмент<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление персоналом<span class="undefined-amount"></span></a>
-              </div>
-              <div class="Tag"><a href="/genres/slug.html">Управление бизнесом<span class="undefined-amount"></span></a>
-              </div>
-            </div>
-            <div class="Tags">
-              <div class="Tags-title">
-                <div class="Tag"><a th:href="@{/genres/dramaturgy}"><span style="color: red"> <strong>Драматургия</strong></span></a>
-                </div>
-              </div>
-              <div class="Tag"><a th:href="@{/genres/ancientdrama}">Античная драма    (<span th:text="${countAD}">(0)</span>)</a>
-              </div>
-              <div class="Tag"><a th:href="@{/genres/comedy}">Комедия   (<span th:text="${countComedy}">(0)</span>)</a>
-              </div>
-              <div class="Tag"><a th:href="@{/genres/movie_script}">Сценарий    (<span th:text="${countScript}">(0)</span>) </a>
-              </div>
-              <div class="Tag"><a th:href="@{/genres/drama}">Драма, пьеса   (<span th:text="${countDrama}">(0)</span>) </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
+        </main>
     </div>
-  </div>
-
+</div>
 <footer th:replace="~{fragments/footer_fragment::footFragment}"></footer>
-
-  <script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
-
-</body></html>
+<script src="/assets/plg/jQuery/jquery-3.5.1.min.js"></script>
+</body>
+</html>

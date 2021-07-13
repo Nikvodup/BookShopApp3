@@ -5,8 +5,6 @@ import com.example.annotations.MethodDurationLoggable;
 import com.example.data.rating.RatingBook;
 import com.example.data.rating.RatingCount;
 import com.example.data.rating.RatingCountI;
-import com.example.data.RatingRepository;
-import com.example.data.rating.RatingBook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

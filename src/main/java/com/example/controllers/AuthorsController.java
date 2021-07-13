@@ -49,12 +49,12 @@ public class AuthorsController {
 
 
 
-    @GetMapping("/authors/slug/{id}")
-    public String authorPage(@PathVariable("id") Integer id,  Model model){
+    @GetMapping("/authors/slug/{id:\\d+}")
+    public String slugPage(@PathVariable Integer id, Model model) {
         Page<Book> bookPage = bookService.getBooksByAuthorId(id, 0, 6);
-        model.addAttribute("authorSlug",authorRepository.findAuthorById(id));
-        model.addAttribute("thisauthorLine", bookPage.getContent());
-        model.addAttribute("countBooksByAuthorId", bookPage.getTotalElements());
+        model.addAttribute("author", authorService.getAuthorsById(id));
+        model.addAttribute("authorBooks", bookPage.getContent());
+        model.addAttribute("size", bookPage.getTotalElements());
         return "/authors/slug";
     }
 

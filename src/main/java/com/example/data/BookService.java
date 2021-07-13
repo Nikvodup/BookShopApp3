@@ -1,21 +1,35 @@
 package com.example.data;
 
 
+import com.example.data.Genre.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+
+import static java.time.LocalDateTime.now;
 
 @Service
 public class BookService {
 
+    // Лимит 7 дней для недавно просмотренных книг
+    public static Timestamp LIMIT_DATE_TIME_RECENTLY_VIEWED = Timestamp.valueOf(now().minusMinutes(60L * 24L * 7L));
+
+    // Лимит 1 день для недавно просмотренных книг для отображения в рекомендованных книгах
+    public static Timestamp LIMIT_DATE_TIME_RECENTLY_RECOMMEND = Timestamp.valueOf(now().minusMinutes(60L * 24L));
+
+
+
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+
 
 
     @Autowired
@@ -38,7 +52,7 @@ public class BookService {
 
     public Page<Book> getBooksByAuthorId(Integer authorId, Integer page, Integer limit) {
         Pageable nextPage = PageRequest.of(page, limit);
-        return bookRepository.findBooksByAuthorId(nextPage,authorId);
+        return bookRepository.findByAuthorId(authorId,nextPage);
     }
 
  /**   public List<Book> getBooksByTitle(String title) throws BookstoreApiWrongParameterException {
@@ -140,7 +154,7 @@ public class BookService {
 
     public Page<Book> findBooksByAuthorId(Integer offset, Integer limit, Integer id){
         Pageable nextPage = PageRequest.of(offset,limit);
-        return bookRepository.findBooksByAuthorId(nextPage,id);
+        return bookRepository.findByAuthorId(id,nextPage);
 
     }
 
@@ -156,6 +170,28 @@ public class BookService {
 
     public Book findBookBySlug(String slug) {
         return bookRepository.findBookBySlug(slug);
+    }
+
+
+    public Page<Book> getPageOfRecentlyViewedBooks(Integer offset, Integer limit, Integer userId) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.getPageOfRecentlyViewed(LIMIT_DATE_TIME_RECENTLY_VIEWED, userId, nextPage);
+    }
+
+    //--------------------------------------------------- GENRE-------------------------
+    public Page<Book> getPageBookByGenreType(Genre.GenreType genreType, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAllByGenre_GenreType(genreType, nextPage);
+    }
+
+    public Page<Book> getPageBookByGenre(Genre genre, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAllByGenre(genre, nextPage);
+    }
+
+    public Page<Book> getPageBookByGenreId(Integer genreId, Integer offset, Integer limit) {
+        Pageable nextPage = PageRequest.of(offset, limit);
+        return bookRepository.findAllByGenreId(genreId, nextPage);
     }
 
 
