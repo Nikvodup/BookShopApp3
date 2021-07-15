@@ -1,6 +1,8 @@
 package com.example.data;
 
 
+import com.example.security.BookstoreUser;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;

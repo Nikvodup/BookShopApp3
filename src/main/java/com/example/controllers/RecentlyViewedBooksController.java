@@ -1,7 +1,7 @@
 package com.example.controllers;
 
 import com.example.data.BooksPageDto;
-import com.example.secutiry.BookstoreUserDetails;
+import com.example.security.BookstoreUserDetails;
 import com.example.data.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

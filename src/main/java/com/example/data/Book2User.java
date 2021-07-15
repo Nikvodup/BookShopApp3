@@ -1,6 +1,7 @@
 package com.example.data;
 
 
+import com.example.security.BookstoreUser;
 import lombok.Getter;
 import lombok.Setter;
 

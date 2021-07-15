@@ -1,15 +1,13 @@
-package com.example.secutiry;
+package com.example.security;
 
-import com.example.data.BookstoreUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 
-public class BookstoreUserDetails implements UserDetailsI, OAuth2User {
+public class BookstoreUserDetails implements UserDetails {
 
     private final BookstoreUser bookstoreUser;
 
@@ -22,18 +20,8 @@ public class BookstoreUserDetails implements UserDetailsI, OAuth2User {
     }
 
     @Override
-    public <A> A getAttribute(String name) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getAttributes() {
-        return null;
-    }
-
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -43,7 +31,7 @@ public class BookstoreUserDetails implements UserDetailsI, OAuth2User {
 
     @Override
     public String getUsername() {
-        return bookstoreUser.getName();
+        return bookstoreUser.getEmail();
     }
 
     @Override
@@ -64,15 +52,5 @@ public class BookstoreUserDetails implements UserDetailsI, OAuth2User {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String getEmail() {
-        return bookstoreUser.getEmail();
-    }
-
-    @Override
-    public String getName() {
-        return null;
     }
 }

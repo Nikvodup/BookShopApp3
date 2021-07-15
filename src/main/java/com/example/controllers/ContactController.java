@@ -2,7 +2,8 @@ package com.example.controllers;
 
 import com.example.data.Message;
 import com.example.data.MessageRepo;
-import com.example.secutiry.BookstoreUserDetails;
+
+import com.example.security.BookstoreUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

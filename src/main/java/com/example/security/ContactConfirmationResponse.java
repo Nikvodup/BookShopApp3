@@ -1,4 +1,4 @@
-package com.example.secutiry;
+package com.example.security;
 
 public class ContactConfirmationResponse {
     private String result;

@@ -2841,7 +2841,7 @@ VALUES (0),
        (0);
 
 
-
+insert into users (id, email, name, password, phone) values (1, 'ransbach25@gmail.com', 'Alex', 123123, 89304753248);
 
 
 
