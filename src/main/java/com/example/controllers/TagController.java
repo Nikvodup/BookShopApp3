@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-//@RequestMapping("/tags")
 public class TagController {
     private final TagService tagService;
     private final BookService bookService;
@@ -21,10 +20,6 @@ public class TagController {
         this.tagService = tagService;
         this.bookService = bookService;
     }
-
-
-
-
 
     @GetMapping("/tags/{tagId}")
     public String getTag(@PathVariable Integer tagId, Model model) {
@@ -42,6 +37,4 @@ public class TagController {
     ) {
         return new BooksPageDto(bookService.getBooksByTag(tagId, offset, limit).getContent());
     }
-
-
 }
