@@ -1,7 +1,5 @@
 package com.example.data;
 
-import com.example.data.Book2Type;
-import com.example.data.Book2User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

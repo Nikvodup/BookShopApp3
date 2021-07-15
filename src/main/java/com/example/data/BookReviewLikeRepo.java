@@ -1,6 +1,5 @@
 package com.example.data;
 
-import com.example.data.BookstoreUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookReviewLikeRepo extends JpaRepository<BookReviewLike, Integer> {

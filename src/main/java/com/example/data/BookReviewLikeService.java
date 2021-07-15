@@ -1,7 +1,5 @@
 package com.example.data;
 
-import com.example.data.BookstoreUser;
-import com.example.data.BookReviewLikeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

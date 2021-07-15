@@ -1,7 +1,5 @@
 package com.example.data;
 
-import com.example.data.BookReview;
-import com.example.data.BookReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

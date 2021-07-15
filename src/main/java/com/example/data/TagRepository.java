@@ -1,7 +1,5 @@
 package com.example.data;
 
-import com.example.data.Tag;
-import com.example.data.TagCountI;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
