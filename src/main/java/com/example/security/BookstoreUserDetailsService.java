@@ -22,7 +22,7 @@ public class BookstoreUserDetailsService implements UserDetailsService {
         if (bookstoreUser != null){
             return new BookstoreUserDetails(bookstoreUser);
         }else{
-            throw new UsernameNotFoundException("user not found doh!");
+            return new BookstoreUserDetails(new BookstoreUser());
         }
     }
 }
