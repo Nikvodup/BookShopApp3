@@ -64,7 +64,7 @@ p.error-browser
                                 </button>
                             </div>
 
-                            <div class="ProductCard-assessment">
+                            <div sec:authorize="isAuthenticated()" class="ProductCard-assessment">
                                 <span class="ProductCard-titleProp">Оцените книгу:</span>
                                 <span class="Rating Rating_input" data-bookid="2121">
                                 <span class="Rating-stars">
