@@ -11,6 +11,7 @@ public class BookstoreUserDetails implements UserDetails {
 
     private final BookstoreUser bookstoreUser;
 
+
     public BookstoreUserDetails(BookstoreUser bookstoreUser) {
         this.bookstoreUser = bookstoreUser;
     }

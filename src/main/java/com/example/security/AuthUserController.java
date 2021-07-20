@@ -1,18 +1,22 @@
 package com.example.security;
 
+import com.example.data.UserUpdateData;
+import com.example.security.exceptions.WrongEmailException;
+import com.example.security.exceptions.WrongPhoneException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import static java.util.Objects.isNull;
 
 @Controller
 public class AuthUserController {
@@ -64,7 +68,7 @@ public class AuthUserController {
     }
 
     @PostMapping("/reg")
-    public String handleUserregistration(RegistrationForm registrationForm, Model model){
+    public String handleUserregistration(RegistrationForm registrationForm, Model model) throws WrongEmailException, WrongPhoneException {
         userRegister.registerNewUser(registrationForm);
         model.addAttribute("regOk", true);
         return "signin";
@@ -80,7 +84,33 @@ public class AuthUserController {
         return loginResponse;
     }
 
-    @GetMapping("/my")
+    @PostMapping("/profile/edit")
+    public String editProfile(
+            @RequestParam("phone") String phone,
+            @RequestParam("mail") String mail,
+            @RequestParam("name") String name,
+            @RequestParam("password") String password,
+            @RequestParam("passwordReply") String passwordReply,
+            Model model,
+            @AuthenticationPrincipal BookstoreUserDetails user) throws MessagingException {
+        model.addAttribute("curUsr", userRegister.getCurrentUser());
+        model = userRegister.editProfile(user.getBookstoreUser(), phone, mail, name, password, passwordReply, model);
+        return "profile";
+    }
+
+    @RequestMapping(value="/verification_token/{token}", method=RequestMethod.GET)
+    public String verificationToken(@PathVariable("token") String token){
+        UserUpdateData updateData = userRegister.getUpdateUser(token);
+        if(isNull(updateData)){
+            return "redirect:/profile";
+        }
+        userRegister.updateUser(updateData);
+        return "redirect:/logout";
+    }
+
+
+
+/**    @GetMapping("/my")
     public String handleMy(){
         return "my";
     }
@@ -89,7 +119,7 @@ public class AuthUserController {
     public String handleProfile(Model model){
         model.addAttribute("curUsr",userRegister.getCurrentUser());
         return "profile";
-    }
+    }  **/
 
 //    @GetMapping("/logout")
 //    public String handleLogout(HttpServletRequest request){

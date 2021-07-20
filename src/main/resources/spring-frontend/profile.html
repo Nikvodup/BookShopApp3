@@ -10,7 +10,7 @@
 <![endif]-->
 <!--[if gt IE 9]><!--> <html lang="ru"> <!--<![endif]-->
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
-<head th:replace="~{fragments/tophead_fragment::topheadFragment}"></head>
+<head th:replace="~{fragments/head_fragment :: headFragment (pageName='Профиль')}"></head>
 <body class="Site">
 <header th:replace="~{/fragments/header_fragment::headFragment}"></header>
 <div class="Middle">
@@ -100,6 +100,9 @@
               </form>
             </div>
           </div>
+
+
+
           <div class="Tabs-block" id="transactions">
             <div class="Transactions">
               <div class="tableWrap">

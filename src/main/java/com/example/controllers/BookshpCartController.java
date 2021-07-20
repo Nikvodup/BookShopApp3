@@ -3,20 +3,20 @@ package com.example.controllers;
 
 
 
-import com.example.data.Book;
-import com.example.data.BookRepository;
-import com.example.data.PopularityAndRatingService;
+import com.example.data.*;
+import com.example.security.BookstoreUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
+import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringJoiner;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RequestMapping("/books")
@@ -36,11 +36,19 @@ import java.util.StringJoiner;
 
     private final BookRepository bookRepository;
     private final PopularityAndRatingService popularityAndRatingService;
+    private final BookService bookService;
+    private final PaymentService paymentService;
+    private final BalanceTransactionRepository balanceTransactionRepository;
+    private final BalanceTransactionService balanceTransactionService;
 
     @Autowired
-    public BookshpCartController(BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService) {
+    public BookshpCartController(BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService, PaymentService paymentService, BookService bookService, BalanceTransactionRepository balanceTransactionRepository, BalanceTransactionService balanceTransactionService) {
         this.bookRepository = bookRepository;
         this.popularityAndRatingService = popularityAndRatingService;
+        this.bookService = bookService;
+        this.paymentService = paymentService;
+        this.balanceTransactionRepository = balanceTransactionRepository;
+        this.balanceTransactionService = balanceTransactionService;
     }
 
 
@@ -108,9 +116,31 @@ import java.util.StringJoiner;
 
          popularityAndRatingService.updateCartNumber(slug);
 
-
         return "redirect:/books/" + slug;
+    }
 
+
+
+
+    @GetMapping("/pay")
+    public String handlePay(@AuthenticationPrincipal BookstoreUserDetails user, Model model) {
+        List<Book> books = bookService.getCartBooks(user.getBookstoreUser().getId());
+        Double allSum = books.stream().mapToDouble(Book::discountPrice).sum();
+        Integer accountMoney = (Integer) ((BindingAwareModelMap) model).get("accountMoney");
+        if (accountMoney < allSum) {
+            return  "redirect:/books/cart" + "?noMoney=true";
+        }
+        books.forEach(book -> bookService.saveBook2User(book, user.getBookstoreUser(),Book2Type.TypeStatus.PAID));
+        String booksName = books.stream().map(book -> book.getTitle() + ", ").collect(Collectors.joining());
+        String bookSizeText = books.size() == 1 ? books.size() + " книги: " : books.size() + " книг: ";
+        BalanceTransaction balanceTransaction = new BalanceTransaction();
+        balanceTransaction.setUserId(user.getBookstoreUser().getId());
+        balanceTransaction.setValue((int) Math.round(allSum) * -1);
+        balanceTransaction.setDescription("Покупка " + bookSizeText + booksName);
+        balanceTransaction.setTime(new Date());
+        balanceTransaction.setTypeStatus(BalanceTransaction.TypeStatus.OK);
+        balanceTransactionRepository.save(balanceTransaction);
+        return  "redirect:/books/cart";
     }
 
 }

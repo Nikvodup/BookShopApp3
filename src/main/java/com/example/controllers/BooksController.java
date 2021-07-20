@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import com.example.annotations.UserActionToCartLoggable;
 import com.example.data.*;
 import com.example.security.BookstoreUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -34,11 +36,12 @@ public class BooksController {
     private final BookReviewService bookReviewService;
     private final RatingService ratingService;
     private final BookService bookService;
+    private final RecentlyViewedBooksService recentlyViewedBooksService;
 
     private final static String BOOKS_REDIRECT = "redirect:/books/";
 
     @Autowired
-    public BooksController(BookRepository bookRepository, ResourceStorage storage, BookshpCartController bookshpCartController, BookReviewLikeService reviewLikeService, BookReviewService bookReviewService, RatingService ratingService, BookService bookService) {
+    public BooksController(BookRepository bookRepository, ResourceStorage storage, BookshpCartController bookshpCartController, BookReviewLikeService reviewLikeService, BookReviewService bookReviewService, RatingService ratingService, BookService bookService, RecentlyViewedBooksService recentlyViewedBooksService) {
         this.bookRepository = bookRepository;
         this.storage = storage;
         this.bookshpCartController = bookshpCartController;
@@ -46,16 +49,25 @@ public class BooksController {
         this.bookReviewService = bookReviewService;
         this.ratingService = ratingService;
         this.bookService = bookService;
+        this.recentlyViewedBooksService = recentlyViewedBooksService;
     }
 
     @GetMapping("/{slug}")
-    public String bookPage(@PathVariable(value = "slug") String slug, Model model){
+    public String bookPage(@PathVariable(value = "slug") String slug, Model model,
+                           @AuthenticationPrincipal BookstoreUserDetails user ){
          Book book = bookRepository.findBookBySlug(slug);
         model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+        if (nonNull(user)) recentlyViewedBooksService.addRecentlyViewedBooksToUser(book, user.getBookstoreUser());
        model.addAttribute("slugBook", book);
         model.addAttribute("rating", ratingService.findBookById(book.getId()));
         model.addAttribute("ratingTotalAndAvg", ratingService.getTotalAndAvgStars(book.getId()));
        model.addAttribute("isInCart", bookshpCartController.getBooksFromCookieSlugs().contains(slug));
+
+        if(nonNull(model.asMap().get("noPaid"))){
+            boolean isPaid = (boolean) model.asMap().get("noPaid");
+            if(isPaid) model.addAttribute("errorArchive", "Вы не можете убрать в архив не купленную книгу");
+        }
+
         return "/books/slug";
     }
 
@@ -134,6 +146,22 @@ public class BooksController {
             reviewLikeService.saveReviewLike(user.getBookstoreUser(), reviewLikeValue.getReviewid(), reviewLikeValue.getValue());
         }
         return "redirect:/books/" + bookSlug;
+    }
+
+
+    @PostMapping("/schangeBookStatus/archive/{slug}")
+    @UserActionToCartLoggable
+    public String handleChangeBookStatus(
+            @PathVariable("slug") String slug,
+            @AuthenticationPrincipal BookstoreUserDetails user,
+            final RedirectAttributes redirectAttrs) {
+        Book book = bookService.findBookBySlug(slug);
+        if (bookService.isPaid(book, user.getBookstoreUser().getId(), true)) {
+            bookService.saveBook2User(book, user.getBookstoreUser(), Book2Type.TypeStatus.ARCHIVED);
+            return "redirect:/books/" + slug;
+        }
+        redirectAttrs.addFlashAttribute("noPaid", true);
+        return "redirect:/books/" + slug ;
     }
 
 }

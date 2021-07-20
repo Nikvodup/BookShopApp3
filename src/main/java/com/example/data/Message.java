@@ -28,4 +28,6 @@ public class Message implements Serializable {
     private String subject;
     private String text;
 
+
+
 }

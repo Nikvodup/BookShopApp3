@@ -1,13 +1,15 @@
 package com.example.data;
 
 
+import com.example.annotations.MethodDurationLoggable;
 import com.example.data.Genre.Genre;
+import com.example.data.Book2Type.TypeStatus;
+import com.example.security.BookstoreUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 
 import java.sql.Timestamp;
@@ -15,6 +17,8 @@ import java.util.Date;
 import java.util.List;
 
 import static java.time.LocalDateTime.now;
+import static java.util.Arrays.asList;
+import static java.util.Objects.nonNull;
 
 @Service
 public class BookService {
@@ -29,14 +33,16 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final Book2UserRepository book2UserRepository;
 
 
 
     @Autowired
-    public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BookService(BookRepository bookRepository, AuthorRepository authorRepository, Book2UserRepository book2UserRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
 
+        this.book2UserRepository = book2UserRepository;
     }
 
 
@@ -194,6 +200,56 @@ public class BookService {
         return bookRepository.findAllByGenreId(genreId, nextPage);
     }
 
+
+
+
+    public List<Book> getPaidBooks(Integer id) {
+        return bookRepository.getPaidBooks(id);
+    }
+
+
+    public boolean isPaid(Book book, Integer id, Boolean checkArchive) {
+        Book2User book2User = book2UserRepository.findByUserIdAndBookIdAndBook2Type_TypeStatusIn(id, book.getId(), asList(TypeStatus.PAID, TypeStatus.ARCHIVED));
+        if (checkArchive && nonNull(book2User)) {
+            return !book2User.getBook2Type().getTypeStatus().equals(TypeStatus.ARCHIVED);
+        }
+        return nonNull(book2User);
+    }
+
+
+    public List<Book> getArchiveBooks(Integer id) {
+        return bookRepository.getArchiveBooks(id);
+    }
+
+
+    @MethodDurationLoggable(className = "BookService", timeThreshold = 1200)
+    public void saveBook2User(Book book, BookstoreUser user, TypeStatus typeStatus) {
+        Book2User book2User = book2UserRepository.findByUserIdAndBookId(user.getId(), book.getId());
+
+        if (nonNull(book2User) && !book2User.getBook2Type().getTypeStatus().equals(typeStatus) &&
+                !book2User.getBook2Type().getTypeStatus().equals(TypeStatus.PAID)
+                && !book2User.getBook2Type().getTypeStatus().equals(TypeStatus.ARCHIVED)) {
+            book2User.getBook2Type().setTypeStatus(typeStatus);
+            book2UserRepository.save(book2User);
+        } else if (nonNull(book2User) && book2User.getBook2Type().getTypeStatus().equals(TypeStatus.PAID)) {
+            book2User.getBook2Type().setTypeStatus(typeStatus);
+            book2UserRepository.save(book2User);
+        } else {
+            Book2Type book2Type = new Book2Type();
+            Book2User newBook2User = new Book2User();
+            book2Type.setTypeStatus(typeStatus);
+            newBook2User.setBook(book);
+            newBook2User.setUser(user);
+            newBook2User.setBook2Type(book2Type);
+            book2UserRepository.save(newBook2User);
+        }
+    }
+
+
+    @MethodDurationLoggable(className = "BookService", timeThreshold = 1500)
+    public List<Book> getCartBooks(Integer id) {
+        return bookRepository.getCartBooks(id);
+    }
 
 }
 

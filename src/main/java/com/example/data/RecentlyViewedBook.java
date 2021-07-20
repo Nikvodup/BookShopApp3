@@ -1,5 +1,6 @@
- /** package com.example.data;
+package com.example.data;
 
+import com.example.security.BookstoreUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,4 +33,4 @@ public class RecentlyViewedBook implements Serializable {
     @Column(name="last_veiw_date_time")
     private Timestamp time;
 
-}  **/
+}

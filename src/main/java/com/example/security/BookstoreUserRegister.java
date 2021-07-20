@@ -1,5 +1,8 @@
 package com.example.security;
 
+import com.example.data.UserUpdateData;
+import com.example.security.exceptions.WrongEmailException;
+import com.example.security.exceptions.WrongPhoneException;
 import com.example.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,37 +11,53 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import javax.mail.MessagingException;
 
 @Service
 public class BookstoreUserRegister {
+
+    private static final String PASS_ERROR = "passErrorSize";
 
     private final BookstoreUserRepository bookstoreUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final BookstoreUserDetailsService bookstoreUserDetailsService;
     private final JWTUtil jwtUtil;
+    private final UpdateUserService updateUserService;
 
     @Autowired
     public BookstoreUserRegister(BookstoreUserRepository bookstoreUserRepository, PasswordEncoder passwordEncoder,
                                  AuthenticationManager authenticationManager,
-                                 BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil) {
+                                 BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil, UpdateUserService updateUserService) {
         this.bookstoreUserRepository = bookstoreUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.bookstoreUserDetailsService = bookstoreUserDetailsService;
         this.jwtUtil = jwtUtil;
+        this.updateUserService = updateUserService;
     }
 
-    public void registerNewUser(RegistrationForm registrationForm) {
+    public void registerNewUser(RegistrationForm registrationForm) throws WrongEmailException, WrongPhoneException {
 
-        if (bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail()) == null) {
+        BookstoreUser userByEmail = bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail());
+        BookstoreUser userByPhone = bookstoreUserRepository.findBookstoreUserByPhone(registrationForm.getPhone());
+
             BookstoreUser user = new BookstoreUser();
             user.setName(registrationForm.getName());
-            user.setEmail(registrationForm.getEmail());
-            user.setPhone(registrationForm.getPhone());
+
+            if(userByEmail==null) {
+                user.setEmail(registrationForm.getEmail());
+            } else { throw new WrongEmailException("This email is already in use!");}
+
+            if(userByPhone==null) {
+                user.setPhone(registrationForm.getPhone());
+            } else { throw new WrongPhoneException("This phone is already in use!");}
+
             user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
             bookstoreUserRepository.save(user);
-        }
+
     }
 
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
@@ -63,9 +82,99 @@ public class BookstoreUserRegister {
     }
 
 
-    public Object getCurrentUser() {
+    public ContactConfirmationResponse jwtLoginByPhoneNumber(ContactConfirmationPayload payload) throws WrongEmailException, WrongPhoneException {
+        RegistrationForm registrationForm = new RegistrationForm();
+        registrationForm.setPhone(payload.getContact());
+        registrationForm.setPass(payload.getCode());
+        registerNewUser(registrationForm);
+        BookstoreUserDetails userDetails = (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(payload.getContact());
+        String jwtToken = jwtUtil.generateToken(userDetails);
+        ContactConfirmationResponse response = new ContactConfirmationResponse();
+        response.setResult(jwtToken);
+        return response;
+    }
+
+
+    public BookstoreUser getCurrentUser() {
         BookstoreUserDetails userDetails =
                 (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDetails.getBookstoreUser();
     }
+
+
+    public void saveUser(BookstoreUser user) {
+        bookstoreUserRepository.save(user);
+    }
+
+    public String encodePass(String password) {
+        return passwordEncoder.encode(password);
+    }
+
+    public boolean isChange(BookstoreUser user, String phone, String mail, String name) {
+        return !(user.getEmail().equals(mail) && user.getName().equals(name)
+                && user.getPhone().equals(phone));
+    }
+
+
+
+    public Model checkPassword(Model model, String password, String passwordReply) {
+        if (password.length() < 6) {
+            model.addAttribute(PASS_ERROR, "Пароль менее 6 символов");
+        } else if (!password.equals(passwordReply)) {
+            model.addAttribute("passError", "Пароли не совпадают");
+        }
+        return model;
+    }
+
+
+    public void updateUser(UserUpdateData updateData) {
+        BookstoreUser user = bookstoreUserRepository.getOne(updateData.getUserId());
+        user.setEmail(updateData.getEmail());
+        user.setPhone(updateData.getPhone());
+        user.setName(updateData.getName());
+        if(!updateData.getPassword().equals("")){
+            user.setPassword(passwordEncoder.encode(updateData.getPassword()));
+        }
+        bookstoreUserRepository.save(user);
+        updateUserService.deleteUpdateData(updateData);
+    }
+
+
+    public Model editProfile(BookstoreUser user, String phone, String mail, String name, String password,
+                             String passwordReply, Model model) throws MessagingException {
+
+        if (!isChange(user, phone, mail, name) && password.equals("")) {
+            model.addAttribute("noChange", true);
+            return model;
+        }
+
+        if (!password.equals("") && !isChange(user, phone, mail, name)) {
+            model = checkPassword(model, password, passwordReply);
+            if (!model.containsAttribute(PASS_ERROR) && !model.containsAttribute("passError")) {
+                user.setPassword(encodePass(password));
+                saveUser(user);
+                model.addAttribute("change", true);
+            }
+            return model;
+        }
+
+        if (!password.equals("")) {
+            model = checkPassword(model, password, passwordReply);
+            if (model.containsAttribute(PASS_ERROR) || model.containsAttribute("passError")) {
+                return model;
+            }
+        }
+        updateUserService.sendEmailConfirm(phone, mail, name, password, user.getId());
+        model.addAttribute("changeAccept", true);
+        model.addAttribute("acceptMessage",
+                "Для подтверждения изменений необходимо перейти по ссылке, которая отправлена вам на email: " + mail);
+        return model;
+    }
+
+
+    public UserUpdateData getUpdateUser(String token) {
+        return updateUserService.getUpdateUser(token);
+    }
+
+
 }

@@ -152,12 +152,15 @@ p.error-browser
                                    placeholder="Введите Имя"
                                    data-validate="require"/>
                         </div>
+
+
                         <div class="form-group form-group_row">
                             <div class="form-group">
                                 <input class="form-input form-input_phone" id="phone" name="phone" th:field="*{phone}"
                                        type="text"
                                        placeholder="Введите телефон" data-mask="+7 (999) 999-99-99"
                                        data-validate="require"/>
+                                <span th:if="${wrongPhone}" th:text="${wrongPhone.getLocalizedMessage()}"></span>
                             </div>
                             <div class="form-group form-group_key">
                                 <input class="form-input form-input_code" id="phoneCode" name="phoneCode" type="text"
@@ -169,11 +172,16 @@ p.error-browser
                                 </button>
                             </div>
                         </div>
+
+
+
                         <div class="form-group form-group_row">
                             <div class="form-group">
                                 <input class="form-input form-input_mail" id="mail" name="mail" th:field="*{email}"
                                        type="text"
                                        placeholder="Введите e-mail" data-validate="mail require"/>
+                               <span th:if="${wrongEmail}"  th:text="${wrongEmail.getLocalizedMessage()}"></span>
+
                             </div>
                             <div class="form-group form-group_key">
                                 <input class="form-input form-input_code" id="mailCode" name="mailCode" type="text"
@@ -185,6 +193,8 @@ p.error-browser
                                 </button>
                             </div>
                         </div>
+
+
 
                         <div class="form-group">
                             <input class="form-input form-input_password" id="pass" name="pass" th:field="*{pass}"
