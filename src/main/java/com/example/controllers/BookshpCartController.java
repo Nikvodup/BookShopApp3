@@ -1,8 +1,7 @@
 package com.example.controllers;
 
 
-
-
+import com.example.annotations.UserActionToCartLoggable;
 import com.example.data.*;
 import com.example.security.BookstoreUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 @ControllerAdvice
 @RequestMapping("/books")
@@ -28,11 +30,11 @@ import java.util.stream.Collectors;
         return new ArrayList<>();
     }
 
-    List<Book> booksFromCookieSlugs = new ArrayList<>();
+   // List<Book> booksFromCookieSlugs = new ArrayList<>();
 
-    public List<Book> getBooksFromCookieSlugs() {
-        return booksFromCookieSlugs;
-    }
+  //  public List<Book> getBooksFromCookieSlugs() {
+ //       return booksFromCookieSlugs;
+ //   }
 
     private final BookRepository bookRepository;
     private final PopularityAndRatingService popularityAndRatingService;
@@ -40,51 +42,57 @@ import java.util.stream.Collectors;
     private final PaymentService paymentService;
     private final BalanceTransactionRepository balanceTransactionRepository;
     private final BalanceTransactionService balanceTransactionService;
+    private final Book2Type book2Type = new Book2Type();
+
 
     @Autowired
-    public BookshpCartController(BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService, PaymentService paymentService, BookService bookService, BalanceTransactionRepository balanceTransactionRepository, BalanceTransactionService balanceTransactionService) {
+    public BookshpCartController(BookRepository bookRepository, PopularityAndRatingService popularityAndRatingService,
+                                 PaymentService paymentService, BookService bookService,
+                                 BalanceTransactionRepository balanceTransactionRepository,
+                                 BalanceTransactionService balanceTransactionService) {
         this.bookRepository = bookRepository;
         this.popularityAndRatingService = popularityAndRatingService;
         this.bookService = bookService;
         this.paymentService = paymentService;
         this.balanceTransactionRepository = balanceTransactionRepository;
         this.balanceTransactionService = balanceTransactionService;
+
     }
 
 
     @GetMapping("/cart")
-    public String handleCartRequest(@CookieValue(value = "cartContents", required = false) String cartContents,
-                                    Model model) {
-        if (cartContents == null || cartContents.equals("")) {
-            model.addAttribute("isCartEmpty", true);
-        } else {
-            model.addAttribute("isCartEmpty", false);
-            cartContents = cartContents.startsWith("/") ? cartContents.substring(1) : cartContents;
-            cartContents = cartContents.endsWith("/") ? cartContents.substring(0, cartContents.length() - 1) : cartContents;
-            String[] cookieSlugs = cartContents.split("/");
-            booksFromCookieSlugs = bookRepository.findBooksBySlugIn(cookieSlugs);
-            model.addAttribute("bookCart", booksFromCookieSlugs);
-            model.addAttribute("total", booksFromCookieSlugs.stream().reduce(0,(sum,p)->sum+=p.discountPrice(),(sum1,sum2)->sum1 + sum2));
+    public String handleCartRequest(
+            Model model,
+            @AuthenticationPrincipal BookstoreUserDetails user,
+            @RequestParam(value = "noMoney", required = false) Boolean noMoney) {
 
+        List<Book> books = bookService.getCartBooks(user.getBookstoreUser().getId());
+        if (books.isEmpty()) {
+            model.addAttribute("isCartEmpty", true);
+
+        } else {
+
+
+            model.addAttribute("isCartEmpty", false);
+            model.addAttribute("bookCart", books);
+            model.addAttribute("total", books.stream().reduce(0,(sum,p)->sum+=p.discountPrice(),(sum1,sum2)->sum1 + sum2));
         }
+
+
         return "cart";
     }
 
+
+
+
+
     @PostMapping("/changeBookStatus/cart/remove/{slug}")
-    public String handleRemoveBookFromCartRequest(@PathVariable("slug") String slug, @CookieValue(name =
-            "cartContents", required = false) String cartContents, HttpServletResponse response, Model model){
-
-        if (cartContents != null && !cartContents.equals("")){
-            ArrayList<String> cookieBooks = new ArrayList<>(Arrays.asList(cartContents.split("/")));
-            cookieBooks.remove(slug);
-            Cookie cookie = new Cookie("cartContents", String.join("/", cookieBooks));
-            cookie.setPath("/books");
-            response.addCookie(cookie);
-            model.addAttribute("isCartEmpty", false);
-        }else {
-            model.addAttribute("isCartEmpty", true);
-        }
-
+    @UserActionToCartLoggable
+    public String handleRemoveBookFromCartRequest(
+            @PathVariable("slug") String slug,
+            @AuthenticationPrincipal BookstoreUserDetails user) {
+        Book book = bookService.findBookBySlug(slug);
+        bookService.removeFromBook2User(book, user.getBookstoreUser());
         return "redirect:/books/cart";
     }
 
@@ -92,29 +100,20 @@ import java.util.stream.Collectors;
 
 
     @PostMapping("/changeBookStatus/{slug}")
-    public String handleChangeBookStatus(@PathVariable("slug") String slug, @CookieValue(name = "cartContents",
-            required = false) String cartContents, HttpServletResponse response, Model model) {
-
-
-        if (cartContents == null || cartContents.equals("")) {
-
-            Cookie cookie = new Cookie("cartContents", slug);
-            cookie.setPath("/books");
-            response.addCookie(cookie);
-            model.addAttribute("isCartEmpty", false);
-
-        } else if (!cartContents.contains(slug)) {
-
-            StringJoiner stringJoiner = new StringJoiner("/");
-            stringJoiner.add(cartContents).add(slug);
-            Cookie cookie = new Cookie("cartContents", stringJoiner.toString());
-            cookie.setPath("/books");
-            response.addCookie(cookie);
-            model.addAttribute("isCartEmpty", false);
-
+    @UserActionToCartLoggable
+    public String handleChangeBookStatus(
+            @PathVariable("slug") String slug,
+            @AuthenticationPrincipal BookstoreUserDetails user) {
+        Book book = bookService.findBookBySlug(slug);
+   //     if (bookService.isPaid(book, user.getBookstoreUser().getId(), false)) {
+    //        return "redirect:/books/" + slug + "?isPaid=true";
+    //    }
+        if (bookService.getCartBooks(user.getBookstoreUser().getId()).contains(book)) {
+            return "redirect:/books/" + slug;
+        } else {
+            bookService.saveBook2User(book, user.getBookstoreUser(), book2Type.getTypeStatus().CART);
+            popularityAndRatingService.updateCartNumber(slug);
         }
-
-         popularityAndRatingService.updateCartNumber(slug);
 
         return "redirect:/books/" + slug;
     }

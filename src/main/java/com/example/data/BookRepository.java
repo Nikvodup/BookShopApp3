@@ -164,6 +164,14 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             " WHERE but.type = 1 AND bu.user_id = ?1", nativeQuery = true)
     List<Book> getCartBooks(Integer idUser);
 
+
+    @Query(value = "SELECT *" +
+            " FROM books AS b " +
+            " JOIN book2user AS bu ON bu.book_id = b.id" +
+            " JOIN book2user_type AS but ON but.id = bu.book_type_id" +
+            " WHERE but.type = 0 AND bu.user_id = ?1", nativeQuery = true)
+    List<Book> getPostponedBooks(Integer idUser);
+
 }
 
 

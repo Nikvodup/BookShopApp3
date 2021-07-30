@@ -61,7 +61,7 @@ public class BooksController {
        model.addAttribute("slugBook", book);
         model.addAttribute("rating", ratingService.findBookById(book.getId()));
         model.addAttribute("ratingTotalAndAvg", ratingService.getTotalAndAvgStars(book.getId()));
-       model.addAttribute("isInCart", bookshpCartController.getBooksFromCookieSlugs().contains(slug));
+    //   model.addAttribute("isInCart", bookshpCartController.getBooksFromCookieSlugs().contains(slug));
 
         if(nonNull(model.asMap().get("noPaid"))){
             boolean isPaid = (boolean) model.asMap().get("noPaid");

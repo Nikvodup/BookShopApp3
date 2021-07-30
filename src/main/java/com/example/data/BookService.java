@@ -246,9 +246,23 @@ public class BookService {
     }
 
 
+
+    public void removeFromBook2User(Book book, BookstoreUser user) {
+        Book2User book2User = book2UserRepository.findByUserIdAndBookId(user.getId(), book.getId());
+        if (nonNull(book2User)) {
+            book2UserRepository.delete(book2User);
+        }
+    }
+
+
     @MethodDurationLoggable(className = "BookService", timeThreshold = 1500)
     public List<Book> getCartBooks(Integer id) {
         return bookRepository.getCartBooks(id);
+    }
+
+    @MethodDurationLoggable(className = "BookService", timeThreshold = 500)
+    public List<Book> getPostponedBooks(Integer id) {
+        return bookRepository.getPostponedBooks(id);
     }
 
 }

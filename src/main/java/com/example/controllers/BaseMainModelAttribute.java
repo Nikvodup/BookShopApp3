@@ -3,13 +3,17 @@ package com.example.controllers;
 
 import com.example.data.*;
 import com.example.security.BookstoreUser;
+import com.example.security.BookstoreUserDetails;
 import com.example.security.BookstoreUserRegister;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Objects.nonNull;
 
 @ControllerAdvice
 public class BaseMainModelAttribute {
@@ -44,16 +48,20 @@ public class BaseMainModelAttribute {
         return new ArrayList<>();
     }
 
-    @PostConstruct
-   @ModelAttribute("cartSize")
-    public Integer getCartSize(){
-        return bookshpCartController.getBooksFromCookieSlugs().size();
+    @ModelAttribute("cartSize")
+    public Integer getCartSize(@AuthenticationPrincipal BookstoreUserDetails user) {
+        if (nonNull(user)) {
+            return bookService.getCartBooks(user.getBookstoreUser().getId()).size();
+        }
+        return 0;
     }
 
-    @PostConstruct
     @ModelAttribute("postponedSize")
-    public Integer getPostponedSize(){
-        return postponedPageController.getBooksFromCookieSlugs().size();
+    public Integer getPostponedSize(@AuthenticationPrincipal BookstoreUserDetails user) {
+        if (nonNull(user)) {
+            return bookService.getPostponedBooks(user.getBookstoreUser().getId()).size();
+        }
+        return 0;
     }
 
     @ModelAttribute("tags")
