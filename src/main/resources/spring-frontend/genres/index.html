@@ -11,7 +11,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"> <!--<![endif]-->
 <head th:replace="~{fragments/head_fragment :: headFragment (pageName=#{topbar.genres})}"></head>
 <body class="Site">
-<header th:replace="~{/fragments/header_fragment::headFragment}"></header>
+<header class="Header" th:replace="~{fragments/headerTopmenu_fragment::topmenuFragment('Genres')}"></header>
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">

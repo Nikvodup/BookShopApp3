@@ -84,17 +84,16 @@ p.error-browser
 
 
 
-                            <div class="ProductCard-tags">
+   <!--                         <div class="ProductCard-tags">
                                 <span class="ProductCard-titleProp">Тэги:</span>
-                                <!--                                https://www.baeldung.com/thymeleaf-iteration-->
+                                                               https://www.baeldung.com/thymeleaf-iteration
                                 <span th:each="tag, iStat :${slugBook.tagList}">
                                     <a th:text="${tag.name}" th:href="${'/tags/' + tag.id}"
                                        href="/tags/">Современные</a>
                                     <span th:if="${!iStat.last}">,&#32;</span>
                                 </span>
                                 </span>
-                            </div>
-
+                            </div>   -->
 
                             <div class="ProductCard-cost"><span class="ProductCard-titleProp"
                             >Цена:</span><span
