@@ -84,6 +84,24 @@ public class AuthUserController {
         return loginResponse;
     }
 
+
+    @PostMapping("/login-by-phone-number")
+    @ResponseBody
+    public ContactConfirmationResponse handleLoginByPhoneNumber(@RequestBody ContactConfirmationPayload payload
+            , HttpServletResponse httpServletResponse
+    ) throws WrongEmailException {
+       // if (smsService.verifyCode(payload.getCode())) {
+            ContactConfirmationResponse loginResponse = userRegister.jwtLoginByPhoneNumber(payload);
+            Cookie cookie = new Cookie("token", loginResponse.getResult());
+            httpServletResponse.addCookie(cookie);
+            return loginResponse;
+   //     } else {
+    //        return null;
+     //   }
+    }
+
+
+
     @PostMapping("/profile/edit")
     public String editProfile(
             @RequestParam("phone") String phone,

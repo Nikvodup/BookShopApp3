@@ -160,7 +160,7 @@ p.error-browser
                                        type="text"
                                        placeholder="Введите телефон" data-mask="+7 (999) 999-99-99"
                                        data-validate="require"/>
-                                <span th:if="${wrongPhone}" th:text="${wrongPhone.getLocalizedMessage()}"></span>
+                        <!--        <span th:if="${wrongEmail}" th:text="${wrongEmail.getLocalizedMessage()}"></span>  -->
                             </div>
                             <div class="form-group form-group_key">
                                 <input class="form-input form-input_code" id="phoneCode" name="phoneCode" type="text"
@@ -180,7 +180,7 @@ p.error-browser
                                 <input class="form-input form-input_mail" id="mail" name="mail" th:field="*{email}"
                                        type="text"
                                        placeholder="Введите e-mail" data-validate="mail require"/>
-                               <span th:if="${wrongEmail}"  th:text="${wrongEmail.getLocalizedMessage()}"></span>
+               <!--                <span th:if="${wrongEmail}"  th:text="${wrongEmail.getLocalizedMessage()}"></span>   -->
 
                             </div>
                             <div class="form-group form-group_key">
@@ -201,6 +201,10 @@ p.error-browser
                                    type="text"
                                    placeholder="Введите password" data-validate="password require"/>
                         </div>
+
+                        <p></p>
+
+                        <span th:if="${wrongEmail}"  th:text="${wrongEmail.getLocalizedMessage()}"></span>
 
                         <div class="form-group form-group_center">
                             <button class="btn btn_primary form-btn" type="submit" name="registration"

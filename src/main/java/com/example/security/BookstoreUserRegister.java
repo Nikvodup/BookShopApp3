@@ -2,9 +2,9 @@ package com.example.security;
 
 import com.example.data.UserUpdateData;
 import com.example.security.exceptions.WrongEmailException;
-import com.example.security.exceptions.WrongPhoneException;
 import com.example.security.jwt.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,10 +27,10 @@ public class BookstoreUserRegister {
     private final JWTUtil jwtUtil;
     private final UpdateUserService updateUserService;
 
-    @Autowired
+    //
+
     public BookstoreUserRegister(BookstoreUserRepository bookstoreUserRepository, PasswordEncoder passwordEncoder,
-                                 AuthenticationManager authenticationManager,
-                                 BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil, UpdateUserService updateUserService) {
+                                 AuthenticationManager authenticationManager, BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil, UpdateUserService updateUserService) {
         this.bookstoreUserRepository = bookstoreUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -39,27 +39,10 @@ public class BookstoreUserRegister {
         this.updateUserService = updateUserService;
     }
 
-    public void registerNewUser(RegistrationForm registrationForm) throws WrongEmailException, WrongPhoneException {
+    //
 
-        BookstoreUser userByEmail = bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail());
-        BookstoreUser userByPhone = bookstoreUserRepository.findBookstoreUserByPhone(registrationForm.getPhone());
 
-            BookstoreUser user = new BookstoreUser();
-            user.setName(registrationForm.getName());
-
-            if(userByEmail==null) {
-                user.setEmail(registrationForm.getEmail());
-            } else { throw new WrongEmailException("This email is already in use!");}
-
-            if(userByPhone==null) {
-                user.setPhone(registrationForm.getPhone());
-            } else { throw new WrongPhoneException("This phone is already in use!");}
-
-            user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
-            bookstoreUserRepository.save(user);
-
-    }
-
+    //
     public ContactConfirmationResponse login(ContactConfirmationPayload payload) {
         Authentication authentication =
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
@@ -71,18 +54,21 @@ public class BookstoreUserRegister {
     }
 
     public ContactConfirmationResponse jwtLogin(ContactConfirmationPayload payload) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(),
-                payload.getCode()));
-        BookstoreUserDetails userDetails =
-                (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(payload.getContact());
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(payload.getContact(), payload.getCode()));
+        BookstoreUserDetails userDetails = (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(payload.getContact());
         String jwtToken = jwtUtil.generateToken(userDetails);
         ContactConfirmationResponse response = new ContactConfirmationResponse();
         response.setResult(jwtToken);
         return response;
     }
 
+    public BookstoreUser getCurrentUser() {
+        BookstoreUserDetails userDetails =
+                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getBookstoreUser();
+    }
 
-    public ContactConfirmationResponse jwtLoginByPhoneNumber(ContactConfirmationPayload payload) throws WrongEmailException, WrongPhoneException {
+    public ContactConfirmationResponse jwtLoginByPhoneNumber(ContactConfirmationPayload payload) throws WrongEmailException {
         RegistrationForm registrationForm = new RegistrationForm();
         registrationForm.setPhone(payload.getContact());
         registrationForm.setPass(payload.getCode());
@@ -95,11 +81,29 @@ public class BookstoreUserRegister {
     }
 
 
-    public BookstoreUser getCurrentUser() {
-        BookstoreUserDetails userDetails =
-                (BookstoreUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails.getBookstoreUser();
+
+
+    public BookstoreUser registerNewUser(RegistrationForm registrationForm) throws WrongEmailException {
+        BookstoreUser userByEmail = bookstoreUserRepository.findBookstoreUserByEmail(registrationForm.getEmail());
+        BookstoreUser userByPhone = bookstoreUserRepository.findBookstoreUserByPhone(registrationForm.getPhone());
+        if (userByEmail == null && userByPhone == null) {
+            BookstoreUser user = new BookstoreUser();
+            user.setName(registrationForm.getName());
+            user.setEmail(registrationForm.getEmail());
+            user.setPhone(registrationForm.getPhone());
+            user.setPassword(passwordEncoder.encode(registrationForm.getPass()));
+            bookstoreUserRepository.save(user);
+            return user;
+        } else {
+          //  return userByPhone;
+            throw new WrongEmailException("Email or phone already in use!");
+
+        }
     }
+
+
+
+
 
 
     public void saveUser(BookstoreUser user) {
@@ -115,8 +119,6 @@ public class BookstoreUserRegister {
                 && user.getPhone().equals(phone));
     }
 
-
-
     public Model checkPassword(Model model, String password, String passwordReply) {
         if (password.length() < 6) {
             model.addAttribute(PASS_ERROR, "Пароль менее 6 символов");
@@ -125,7 +127,6 @@ public class BookstoreUserRegister {
         }
         return model;
     }
-
 
     public void updateUser(UserUpdateData updateData) {
         BookstoreUser user = bookstoreUserRepository.getOne(updateData.getUserId());
@@ -167,14 +168,11 @@ public class BookstoreUserRegister {
         updateUserService.sendEmailConfirm(phone, mail, name, password, user.getId());
         model.addAttribute("changeAccept", true);
         model.addAttribute("acceptMessage",
-                "Для подтверждения изменений необходимо перейти по ссылке, которая отправлена вам на email: " + mail);
+                "Для подтверждения изменений необходимо перейти по ссылку, которая отправлена вам на email: " + mail);
         return model;
     }
-
 
     public UserUpdateData getUpdateUser(String token) {
         return updateUserService.getUpdateUser(token);
     }
-
-
 }

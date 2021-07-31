@@ -1,5 +1,7 @@
 package com.example.security;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,29 @@ public class BookstoreUser {
     private String email;
     private String phone;
     private String password;
+
+    @Column(name = "is_oauth2")
+    @ColumnDefault("false")
+    private Boolean isOAuth2;
+    @Column(name = "id_oauth")
+    private String idOAuth;
+
+
+    public Boolean getOAuth2() {
+        return isOAuth2;
+    }
+
+    public void setOAuth2(Boolean OAuth2) {
+        isOAuth2 = OAuth2;
+    }
+
+    public String getIdOAuth() {
+        return idOAuth;
+    }
+
+    public void setIdOAuth(String idOAuth) {
+        this.idOAuth = idOAuth;
+    }
 
     public Integer getId() {
         return id;

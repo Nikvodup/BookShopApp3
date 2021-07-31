@@ -1,10 +1,13 @@
 package com.example.security.jwt;
 
-import com.example.security.BookstoreUserDetails;
 import com.example.security.BookstoreUserDetailsService;
+import com.example.security.UserDetailsI;
+import com.example.security.exceptions.JwtAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,45 +18,82 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @Component
 public class JWTRequestFilter extends OncePerRequestFilter {
 
     private final BookstoreUserDetailsService bookstoreUserDetailsService;
     private final JWTUtil jwtUtil;
+    private final JWTBlackListService jwtBlackListService;
 
-    public JWTRequestFilter(BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil) {
+    public JWTRequestFilter(BookstoreUserDetailsService bookstoreUserDetailsService, JWTUtil jwtUtil,
+                            JWTBlackListService jwtBlackListService) {
         this.bookstoreUserDetailsService = bookstoreUserDetailsService;
         this.jwtUtil = jwtUtil;
+        this.jwtBlackListService = jwtBlackListService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain
+    ) throws ServletException, IOException {
         String token = null;
         String username = null;
-        Cookie[] cookies = httpServletRequest.getCookies();
+        Cookie tokenCookie = null;
+        Cookie[] cookies = request.getCookies();
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    token = cookie.getValue();
-                    username = jwtUtil.extractUsername(token);
-                }
-
-                if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    BookstoreUserDetails userDetails =
-                            (BookstoreUserDetails) bookstoreUserDetailsService.loadUserByUsername(username);
-                    if (jwtUtil.validateToken(token, userDetails)) {
-                        UsernamePasswordAuthenticationToken authenticationToken =
-                                new UsernamePasswordAuthenticationToken(
-                                        userDetails, null, userDetails.getAuthorities());
-
-                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        try {
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("token")) {
+                        tokenCookie = cookie;
+                        token = cookie.getValue();
+                        try {
+                            username = jwtUtil.extractUsername(token);
+                        } catch (Exception e) {
+                            tokenCookie.setMaxAge(0);
+                            tokenCookie.setValue(null);
+                            response.addCookie(tokenCookie);
+                            throw new JwtAuthenticationException("JWT token is expired or invalid");
+                        }
+                        break;
                     }
                 }
+                if (nonNull(token) && !token.isEmpty() && nonNull(this.jwtBlackListService.getByToken(token))) {
+                    throw new JwtAuthenticationException("JWT token is expired or invalid");
+                } else if (nonNull(username) && isNull(SecurityContextHolder.getContext().getAuthentication())) {
+                    try {
+                        UserDetailsI userDetails = (UserDetailsI) bookstoreUserDetailsService.loadUserByUsername(username);
+                        if (jwtUtil.validateToken(token, userDetails)) {
+                            UsernamePasswordAuthenticationToken authenticationToken =
+                                    new UsernamePasswordAuthenticationToken(
+                                            userDetails, null, userDetails.getAuthorities());
+
+                            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                        } else {
+                            throw new JwtAuthenticationException("JWT token is expired or invalid");
+                        }
+                    } catch (UsernameNotFoundException e) {
+                        tokenCookie.setMaxAge(0);
+                        tokenCookie.setValue(null);
+                        response.addCookie(tokenCookie);
+                        SecurityContextHolder.clearContext();
+                        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+                        securityContextLogoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+                    }
+                }
+
             }
+       }
+        catch (JwtAuthenticationException e) {
+            SecurityContextHolder.clearContext();
+            filterChain.doFilter(request, response);
+            throw new JwtAuthenticationException("JWT token is expired or invalid");
         }
-        filterChain.doFilter(httpServletRequest,httpServletResponse);
+        filterChain.doFilter(request, response);
     }
 }
