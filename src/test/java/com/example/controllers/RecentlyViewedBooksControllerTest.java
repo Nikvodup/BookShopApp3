@@ -1,8 +1,8 @@
 package com.example.controllers;
 
-import com.example.MyBookShopApp.data.book.BookstoreUser;
-import com.example.MyBookShopApp.secutiry.BookstoreUserDetails;
-import com.example.MyBookShopApp.services.BookService;
+import com.example.security.BookstoreUser;
+import com.example.security.BookstoreUserDetails;
+import com.example.data.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

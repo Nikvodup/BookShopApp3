@@ -1,8 +1,9 @@
 package com.example.services;
 
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.tag.Tag;
-import com.example.MyBookShopApp.repo.TagRepository;
+import com.example.data.Book;
+import com.example.data.Tag;
+import com.example.data.TagRepository;
+import com.example.data.TagService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

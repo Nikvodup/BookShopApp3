@@ -12,7 +12,7 @@ public interface AuthorRepository extends JpaRepository<Author,Integer> {
 
     Author findAuthorById(Integer slug);
 
-    List<Author> getAuthorsById(Integer authorId);
+    Author findByFirstName(String name);
 
 
 

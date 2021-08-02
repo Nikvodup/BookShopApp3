@@ -1,7 +1,7 @@
 package com.example.controllers;
 
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.services.BookService;
+import com.example.data.Book;
+import com.example.data.BookService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

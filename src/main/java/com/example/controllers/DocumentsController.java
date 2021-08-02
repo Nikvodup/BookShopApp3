@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/documents")
-public class Documents {
+public class DocumentsController {
 
     @GetMapping("")
     public String documentsPage(Model model){
@@ -19,8 +19,8 @@ public class Documents {
     }
 
     @GetMapping("/slug")
-    public String slugPage(Model model){
-        model.addAttribute("serverTime", new SimpleDateFormat("hh:mm:ss").format(new Date()));
+    public String documentsSlugPage(){
+
         return "/documents/slug";
     }
 

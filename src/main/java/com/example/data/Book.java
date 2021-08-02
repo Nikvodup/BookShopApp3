@@ -7,23 +7,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.time.Period;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
 @Entity
 @Table(name = "books")
+@Qualifier
 @ApiModel(description = "entity representing a book")
-public class Book {
+public class Book extends RepresentationModel<Book> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

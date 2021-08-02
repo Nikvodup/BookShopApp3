@@ -172,6 +172,17 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             " WHERE but.type = 0 AND bu.user_id = ?1", nativeQuery = true)
     List<Book> getPostponedBooks(Integer idUser);
 
+
+    @Query(value = "SELECT b.* " +
+            "FROM books AS b " +
+            "JOIN rating_book AS rb ON rb.book_id = b.id " +
+            "LEFT JOIN book2user AS bu ON bu.book_id = b.id " +
+            "LEFT JOIN book2user_type AS but ON but.id = bu.book_type_id " +
+            "WHERE (type IS NULL OR type = 0) " +
+            "GROUP BY b.id, bu.book_id, rb.five_star " +
+            "ORDER BY rb.five_star DESC , COUNT(bu.book_id) DESC  ", nativeQuery = true)
+    Page<Book> getPageOfPopularBooks(Pageable nextPage);
+
 }
 
 

@@ -1,7 +1,11 @@
 package com.example.data.book;
 
+import com.example.data.Author;
+import com.example.data.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.Link;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 

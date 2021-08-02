@@ -1,7 +1,7 @@
 package com.example.secutiry;
 
-import com.example.MyBookShopApp.data.book.BookstoreUser;
-import com.example.MyBookShopApp.repo.BookstoreUserRepository;
+import com.example.security.BookstoreUser;
+import com.example.security.BookstoreUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

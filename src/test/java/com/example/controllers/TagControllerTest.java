@@ -1,9 +1,9 @@
 package com.example.controllers;
 
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.tag.Tag;
-import com.example.MyBookShopApp.services.BookService;
-import com.example.MyBookShopApp.services.TagService;
+import com.example.data.Book;
+import com.example.data.Tag;
+import com.example.data.BookService;
+import com.example.data.TagService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

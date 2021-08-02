@@ -115,6 +115,21 @@ public class BookService {
           return bookRepository.findBooksByPopRating(nextPage);
       }
 
+
+    /***
+     * Метод для получения популярных книг, основан на количестве оценок из 5* и количества отложенных книг всеми
+     * пользователями.
+     *
+     * @param page страница
+     * @param limit лимит
+     * @return Список популярных книг
+     */
+    @MethodDurationLoggable(className = "BookService", timeThreshold = 2000)
+    public Page<Book> getPageOfPopularBooks(Integer page, Integer limit) {
+        Pageable nextPage = PageRequest.of(page, limit);
+        return bookRepository.getPageOfPopularBooks(nextPage);
+    }
+
    //-------------Recent Books-----------------
 
  public Page<Book> getPageOfRecentBooksData(Date dateFrom, Date dateTo, Integer offset, Integer limit){

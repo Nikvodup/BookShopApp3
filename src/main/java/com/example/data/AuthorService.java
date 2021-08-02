@@ -26,7 +26,12 @@ public class AuthorService {
         List<Author> authors = authorRepository.findAll();
 
         return authors.stream().collect(Collectors.groupingBy((Author a)
-                -> {return a.getLastName().substring(0,1);}));
+                -> a.getLastName().substring(0,1)));
+    }
+
+    public Map<String, List<Author>> getAuthorsInAlphabetOrder() {
+        List<Author> authors = authorRepository.findAll();
+        return authors.stream().collect(Collectors.groupingBy((Author a) -> a.getLastName().substring(0,1)));
     }
 
 

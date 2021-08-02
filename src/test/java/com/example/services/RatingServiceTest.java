@@ -1,15 +1,10 @@
 package com.example.services;
 
-import com.example.MyBookShopApp.data.book.Author;
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.book.BookReview;
-import com.example.MyBookShopApp.data.book.Genre;
-import com.example.MyBookShopApp.data.file.BookFile;
-import com.example.MyBookShopApp.data.rating.RatingBook;
-import com.example.MyBookShopApp.data.rating.RatingCount;
-import com.example.MyBookShopApp.data.rating.RatingCountI;
-import com.example.MyBookShopApp.data.tag.Tag;
-import com.example.MyBookShopApp.repo.RatingRepository;
+import com.example.data.*;
+import com.example.data.Genre.Genre;
+import com.example.data.rating.RatingBook;
+import com.example.data.rating.RatingCount;
+import com.example.data.rating.RatingCountI;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {RatingService.class})
@@ -125,9 +121,9 @@ public class RatingServiceTest {
         ratingBook.setBook(book);
         ratingBook.setOneStar(1);
         ratingBook.setFourStart(1);
-        when(this.ratingRepository.findByBookId((Integer) any())).thenReturn(ratingBook);
+        when(this.ratingRepository.findBookById((Integer) any())).thenReturn(ratingBook);
         assertSame(ratingBook, this.ratingService.findBookById(11));
-        verify(this.ratingRepository).findByBookId((Integer) any());
+        verify(this.ratingRepository).findBookById((Integer) any());
     }
 
     @Test

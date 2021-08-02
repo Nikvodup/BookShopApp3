@@ -19,11 +19,7 @@ public class MultiController {
 
 
 
-/**    @GetMapping("/contacts")
-    public String contactsPage(){
 
-        return "contacts";
-    }  **/
 
     @GetMapping("/faq")
     public String faqPage(){

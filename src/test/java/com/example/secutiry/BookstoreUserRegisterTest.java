@@ -1,7 +1,10 @@
 package com.example.secutiry;
 
-import com.example.MyBookShopApp.data.book.BookstoreUser;
-import com.example.MyBookShopApp.repo.BookstoreUserRepository;
+import com.example.security.BookstoreUser;
+import com.example.security.BookstoreUserRegister;
+import com.example.security.BookstoreUserRepository;
+import com.example.security.RegistrationForm;
+import com.example.security.exceptions.WrongEmailException;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +50,7 @@ class BookstoreUserRegisterTest {
     }
 
     @Test
-    void registerNewUser() {
+    void registerNewUser() throws WrongEmailException {
         BookstoreUser user = userRegister.registerNewUser(registrationForm);
         assertNotNull(user);
         assertTrue(passwordEncoder.matches(registrationForm.getPass(),user.getPassword()));
@@ -58,7 +61,7 @@ class BookstoreUserRegisterTest {
     }
 
     @Test
-    void registerNewUserFail(){
+    void registerNewUserFail() throws WrongEmailException {
         Mockito.doReturn(new BookstoreUser())
                 .when(bookstoreUserRepositoryMock)
                 .findBookstoreUserByEmail(registrationForm.getEmail());

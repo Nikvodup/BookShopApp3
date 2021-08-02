@@ -1,8 +1,9 @@
 package com.example.services;
 
-import com.example.MyBookShopApp.data.book.Author;
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.repo.AuthorRepository;
+import com.example.data.Author;
+import com.example.data.AuthorRepository;
+import com.example.data.AuthorService;
+import com.example.data.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ContextConfiguration(classes = {AuthorService.class})

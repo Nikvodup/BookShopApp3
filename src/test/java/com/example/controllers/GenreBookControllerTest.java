@@ -1,11 +1,11 @@
 package com.example.controllers;
 
-import com.example.MyBookShopApp.data.book.Book;
-import com.example.MyBookShopApp.data.book.Genre;
-import com.example.MyBookShopApp.repo.BookRepository;
-import com.example.MyBookShopApp.repo.GenreRepo;
-import com.example.MyBookShopApp.services.BookService;
-import com.example.MyBookShopApp.services.GenreService;
+import com.example.data.Book;
+import com.example.data.Genre.Genre;
+import com.example.data.BookRepository;
+import com.example.data.Genre.GenreRepo;
+import com.example.data.BookService;
+import com.example.data.Genre.GenreService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

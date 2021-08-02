@@ -4,15 +4,17 @@ package com.example.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "authors")
 @ApiModel(description = "data model of author entity")
-public class Author {
+public class Author extends RepresentationModel<Author> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +33,9 @@ public class Author {
 
     private String slug;
 
+    @Column(name = "description", length = 1000)
+    private String description;
+
 
     @OneToMany(mappedBy = "author")
     @JsonIgnore
@@ -47,6 +52,15 @@ public class Author {
     @Override
     public String toString() {
         return firstName + ' ' + lastName;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getImage() {
