@@ -112,7 +112,7 @@ p.error-browser
                         <div class="ProductCard-cart">
                             <!--+div.-cartElement.-cartElement_amount-->
                             <!--    +Amount._product-->
-                            <div class="ProductCard-cartElement">
+                            <div sec:authorize="isAuthenticated()" class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="KEPT" data-bookid="[1111]"
                                         th:attr="data-bookid = ${'postponed/' + slugBook.slug}"
                                         data-btntype="check" data-btnradio="buyblock" data-check="false"
@@ -121,7 +121,7 @@ p.error-browser
                                         class="btn-content">Отложить</span>
                                 </button>
                             </div>
-                            <div class="ProductCard-cartElement">
+                            <div sec:authorize="isAuthenticated()" class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="CART" data-bookid="[1111]"
                                         th:attr="data-bookid = ${slugBook.slug}" data-btntype="check"
                                         data-btnradio="buyblock"
@@ -142,7 +142,7 @@ p.error-browser
                                                           alt="download.svg"/></span><span
                                     class="btn-content">Скачать демо</span></a>
                             </div>
-                            <div class="ProductCard-cartElement">
+                            <div sec:authorize="isAuthenticated()" class="ProductCard-cartElement">
                                 <button class="btn btn_primary btn_outline" data-sendstatus="ARCHIVED"
                                         th:attr="data-bookid = ${'archive/' + slugBook.slug}"
                                         data-bookid="[1111]" data-btntype="check" data-btnradio="buyblock"
